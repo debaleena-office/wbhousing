@@ -1,4 +1,5 @@
 <?php
+
 global $base_path;
 $isVal = $output[0];
 //echo "<pre>";print_r($page_status);die;
@@ -58,7 +59,10 @@ if($isVal){
     		 </tr>
              <tr>
     <?php
-		if(trim($entityType) == 'New Allotment') {
+////////// code off by debaleena/////
+
+
+		/* if(trim($entityType) == 'New Allotment') {
 			if($common_data->uri_doc != '') {
 				$path = substr($common_data->uri_doc, 9);
 				$custom_file_name = $custom_filename.'_Payslip';
@@ -82,8 +86,23 @@ if($isVal){
                 </td>
     <?php		
 			}
-		}
-		else if(trim($entityType) == 'Vertical Shifting') {
+    } */
+if($common_data->status == 'applicant_acceptance' || $common_data->status == 'ddo_verified_2' || $common_data->status == 'housing_sup_approved_2')
+{
+  ?>
+      <tr><td><?php echo l('<img height="30" width="30" src="'.$base_path.drupal_get_path('module', 'application_of_registration_list').'/images/download_icon.png " title="Download Offer Letter" alt="PDF Icon">Uploaded Current Pay Slip',$output['doc']['current_pay_slip_url'],array('html' => true , 'attributes'=> array('download' => $output['doc']['license_application_signed_form_fname'], 'style' => 'color: #0090C7;font-weight: 400;text-decoration: none; font-size:14px'))); ?></td></tr>
+
+      <tr><td><?php echo l('<img height="30" width="30" src="'.$base_path.drupal_get_path('module', 'application_of_registration_list').'/images/download_icon.png " title="Declaration Form" alt="PDF Icon">Uploaded Declaration Signed Form',$output['doc']['declaration_signed_form_url'],array('html'=>true,'attributes'=>array('download' => $output['doc']['declaration_signed_form_fname'], 'style' => 'color: #0090C7;font-weight: 400;text-decoration: none; font-size:14px'))); ?></td></tr>
+
+      <tr><td><?php echo l('<img height="30" width="30" src="'.$base_path.drupal_get_path('module', 'application_of_registration_list').'/images/download_icon.png " title="Licence Form" alt="PDF Icon">Uploaded Licence Application Signed Form',$output['doc']['license_application_signed_form_url'],array('html'=>true,'attributes'=>array('download' => $output['doc']['current_pay_slip_fname'], 'style' => 'color: #0090C7;font-weight: 400;text-decoration: none; font-size:14px'))); ?></td></tr>
+
+      <?php
+}
+
+      
+      
+		//}
+		if(trim($entityType) == 'Vertical Shifting') {
 			if($common_data->uri_vs != '') {
 				$path = substr($common_data->uri_vs, 9);
 				$custom_file_name = $custom_filename.'_Current_Licence';
@@ -161,7 +180,14 @@ if($isVal){
     </tr>
     <tr>
       <th style="background-color:#a1baef">Date of Action</th>
-      <td><?php echo implode('/', array_reverse(explode('-', $common_data->date_of_verified)));?></td>
+      <td><?php 
+              if(isset($common_data->date_of_verified))
+                echo implode('/', array_reverse(explode('-', $common_data->date_of_verified)));
+              else
+                echo 'Not Verified';
+
+
+          ?></td>
     </tr>
 
 <?php

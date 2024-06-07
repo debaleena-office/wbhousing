@@ -262,7 +262,8 @@
 			$db_and = db_and();
 			$db_and->condition('u.status', 0, '=');
 			$db_and->condition('ur.rid', 5, '=');
-			$db_and->condition('hoa.status', 'allotted', '=');
+			// $db_and->condition('hoa.status', 'allotted', '=');
+			$db_and->condition('hoa.status', 'existing_occupant', '=');
 			$db_and->condition('hoa.is_backlog_applicant', 2, '=');
 			$db_and->condition('hf.estate_id', $rhe_name, '=');
 			$db_and->condition('hf.flat_type_id', $flat_type, '=');
@@ -271,7 +272,7 @@
 			//$query = $query->extend('PagerDefault')->limit(5);
 			//$query = $query->extend('TableSort')->extend('PagerDefault')->limit(5);
 			
-			//echo $query;
+			// echo $query;
 			return $query->execute();	
 		}
 	}
@@ -376,7 +377,8 @@
 			$db_and->condition('hoa.online_application_id', $online_app_id, '=');
 			$db_and->condition('ur.rid', 5, '=');
 			$db_and->condition('hoa.is_backlog_applicant', 2, '=');
-			$db_and->condition('hoa.status', 'allotted', '=');
+			// $db_and->condition('hoa.status', 'allotted', '=');
+			$db_and->condition('hoa.status', 'existing_occupant', '=');
 			$query->condition($db_and);
 			$query->orderBy('u.uid', 'ASC');
 			return $query->execute();		
