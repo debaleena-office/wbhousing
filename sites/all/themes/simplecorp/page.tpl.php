@@ -283,14 +283,16 @@ global $base_url;
                         // $ddo_url = explode('/', $_SERVER['REQUEST_URI']);
                         // if($user_role == 11)
                         // {
-                        //     substr($_SERVER['REQUEST_URI'],-4,4)
+                        //     echo "<pre>";print_r($ddo_url);die;
+
                         // }
 
                         //end///
 
                         if(substr($_SERVER['REQUEST_URI'],-4,4) == 'user') { 
-                           // echo "nb";die;
+                            
                                 if(user_is_logged_in()){
+                                    //echo $housing_user_info;die;
 
                         ?> 
                             <?php if (($user_role == 4 || $user_role == 5)): ?><h1><?php  print 'Hello '.$user_info.', Welcome to e-Allotment of RHE'; ?></h1><?php endif; ?>
@@ -299,6 +301,7 @@ global $base_url;
                             <?php if ($user_role == 10): ?><h1><?php print 'Hello '.$housing_user_info.', Welcome to e-Allotment of RHE'; ?></h1><?php endif; ?>
                             <?php if ($user_role == 7): ?><h1><?php print 'Hello '.$housing_user_info.', Welcome to e-Allotment of RHE'; ?></h1><?php endif; ?>
                             <?php if ($user_role == 8): ?><h1><?php print 'Hello '.$housing_user_info.', Welcome to e-Allotment of RHE'; ?></h1><?php endif; ?>
+                            <?php if ($user_role == 11): ?><h1><?php print 'Hello '.$housing_user_info.', Welcome to e-Allotment of RHE'; ?></h1><?php endif; ?>
                             <?php if ($user_role == 3): ?><h1><?php print 'Hello Admin, Welcome to e-Allotment of RHE'; ?></h1><?php endif; ?>
                         <?php }
                             } else {                                    

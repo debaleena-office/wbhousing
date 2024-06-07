@@ -173,7 +173,8 @@
 		$form['flat_floor'] = array(
 			'#title' => t('Floor No.'),
 			'#type' => 'select',
-			'#options' => array('G' => 'Ground', 'F' => 'First', 'S' => 'Second', 'T' => 'Third'),
+			// '#options' => array('G' => 'Ground', 'F' => 'First', 'S' => 'Second', 'T' => 'Third'),
+			'#options' => array('Ground' => 'Ground', 'First' => 'First', 'Second' => 'Second', 'Third' => 'Third','Fourth'=>'Fourth','Fifth'=>'Fifth','Sixth'=>'Sixth','Seventh'=>'Seventh','Eighth'=>'Eighth','Ninth'=>'Ninth','Tenth'=>'Tenth','Top'=>'Top'),
 			'#required' => TRUE,
 			//'#weight' => -10,
 			'#prefix' => '<div class="two">',
@@ -404,7 +405,8 @@
 		$form['flat_floor'] = array(
 			'#title' => t('Floor No.'),
 			'#type' => 'select',
-			'#options' => array('G' => 'Ground', 'F' => 'First', 'S' => 'Second', 'T' => 'Third'),
+			// '#options' => array('G' => 'Ground', 'F' => 'First', 'S' => 'Second', 'T' => 'Third'),
+			'#options' => array('Ground' => 'Ground', 'First' => 'First', 'Second' => 'Second', 'Third' => 'Third','Fourth'=>'Fourth','Fifth'=>'Fifth','Sixth'=>'Sixth','Seventh'=>'Seventh','Eighth'=>'Eighth','Ninth'=>'Ninth','Tenth'=>'Tenth','Top'=>'Top'),
 			'#required' => TRUE,
 			'#default_value' => $edit->floor,
 			//'#weight' => -10,
