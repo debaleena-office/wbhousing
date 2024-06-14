@@ -33,6 +33,7 @@ function new_application_menu()
 
 function new_application_form_application_form_alter(&$form, &$form_state, $form_id)
 {
+
     global $custom_url; //comment off for live
     global $user;
 	$ddo_id = 18;
@@ -189,6 +190,13 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
             
         );
 
+        // $form['housing_preference'] = array(
+        //     '#type' => 'fieldset',
+        //     '#title' => t('Housing preference') ,
+        //     '#collapsible' => true, // Added
+        //     '#collapsed' => FALSE, // Added
+            
+        // );
         $form['housing_preference'] = array(
             '#type' => 'fieldset',
             '#title' => t('Housing preference') ,
@@ -197,7 +205,39 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
             
         );
 
-        $district_code = 17;
+        $form['housing_preference']['first_preference'] = array(
+            '#title' => t('First Preference'),
+            '#type' => 'select',
+            '#options' => get_housing_estate_preference($pay_band_id),
+            '#required' => TRUE,
+            '#prefix' => '<div class="one">',
+            '#suffix' => '</div>',
+            '#validated' => TRUE,
+            
+        );
+        $form['housing_preference']['second_preference'] = array(
+            '#title' => t('Second Preference'),
+            '#type' => 'select',
+            '#options' => get_housing_estate_preference($pay_band_id),
+            '#required' => TRUE,
+            '#prefix' => '<div class="one">',
+            '#suffix' => '</div>',
+            '#validated' => TRUE,
+            
+        );
+        $form['housing_preference']['third_preference'] = array(
+            '#title' => t('Third Preference'),
+            '#type' => 'select',
+            '#options' => get_housing_estate_preference($pay_band_id),
+            '#required' => TRUE,
+            '#prefix' => '<div class="one">',
+            '#suffix' => '</div>',
+            '#validated' => TRUE,
+            
+        );
+
+        // removed as estate preferences would come based on treasury
+        /*$district_code = 17;
         $query1 = db_select('housing_estate', "t1");
         $query1->join('housing_flat', 't2', 't1.estate_id = t2.estate_id');
         $query1->join('housing_pay_band_categories', 't3', 't2.flat_type_id = t3.flat_type_id');
@@ -209,14 +249,18 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
         $query1->condition('t3.pay_band_id', $pay_band_id, '=');
         $query1->groupBy('t1.estate_id, t1.estate_name');
         $query1->orderBy('t1.estate_name', '');
-        $result = $query1->execute();
+        $result = $query1->execute();*/
 
+        //old query 
         /* $result = db_query("select distinct t2.estate_id, t2.estate_name from housing_estate as t2
 				inner join housing_flat as t1 on t1.estate_id = t2.estate_id
 				where t2.district_code = " . $district_code . " AND 
                 t1.flat_type_id = (select flat_type_id from housing_pay_band_categories where pay_band_id = " . $pay_band_id . ")"); */
-                
-        $rowCount = $result->rowCount();
+        //old query end
+        
+
+        // removed as estate preferences would come based on treasury       
+        /*$rowCount = $result->rowCount();
         if ($rowCount > 0)
         {
             $form['housing_preference']['table_header'] = array(
@@ -252,7 +296,7 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
             $form['housing_preference']['table_footer'] = array(
                 '#markup' => '</table>',
             );
-        }
+        }*/
 
         $form['allotment_reason'] = array(
             '#type' => 'fieldset',
@@ -497,6 +541,8 @@ function new_application_validate(&$form, &$form_state)
     $file_scaned_sign = file_load($form_state['values']['scaned_sign']);
     $file_extra_doc = file_load($form_state['values']['extra_doc']);
 
+
+
     if (isset($form_state['values']['estate_preference']) && !empty($form_state['values']['estate_preference']))
     {
         //print_r($form_state['values']['estate_preference']);
@@ -551,8 +597,9 @@ function new_application_element_process($element, &$form_state, $form)
 }
 
 function new_application_submit($form, &$form_state)
-{
-    //print_r($form_state['values']['estate_preference']);
+{   
+    //echo 'dd';die;
+    //print_r($form_state['values']['first_preference']);die;
     //exit();
     /*echo '<pre>';
     print_r($form_state);
@@ -602,6 +649,40 @@ function new_application_permission()
         ) ,
     );
 }
+
+
+//debaleena start//
+
+function get_housing_estate_preference($pay_band_id=''){
+    
+        //echo $pay_band_id;die;
+        $district_code = 17;
+        $treasury_id=11;
+
+        $query1 = db_select('housing_estate', "t1");
+        $query1->join('housing_flat', 't2', 't1.estate_id = t2.estate_id');
+        $query1->join('housing_pay_band_categories', 't3', 't2.flat_type_id = t3.flat_type_id');
+        $query1->join('housing_treasury_estate_mapping', 't4', 't1.estate_id = t4.estate_id');
+        $query1->fields('t1', array(
+            'estate_id',
+            'estate_name',
+        ));
+        $query1->condition('t1.district_code', $district_code, '=');
+        $query1->condition('t3.pay_band_id', $pay_band_id, '=');
+        $query1->condition('t4.treasury_id', $treasury_id, '=');
+        $query1->condition('t4.is_active', 1, '=');
+        $query1->groupBy('t1.estate_id, t1.estate_name');
+        $query1->orderBy('t1.estate_name', '');
+        $result = $query1->execute();
+
+        $housing_estate_options=array();
+
+        foreach($result as $record){
+           $housing_estate_options[$record->estate_id] = $record->estate_name;
+        }
+        return $housing_estate_options;
+}
+//end//
 require_once ('new_application_schema.inc');
 require_once ('new_application_fetch_data.form.inc');
 require_once ('new_application_add_update_data.form.inc');

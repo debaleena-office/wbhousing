@@ -1,7 +1,7 @@
 <?php
 	//debolina start
 	function application_form_upload1($form, &$form_state, $online_application_id, $status_new = '', $status = '', $entity = '') {
-
+		
 		global $user,$user_role;
 		$online_application_id = decrypt_url($online_application_id);
 		$status_new = decrypt_url($status_new);
@@ -40,6 +40,19 @@
 
 			db_insert('housing_process_flow')->fields($process_flow_arr)->execute();
 
+			if($status == 'allotted')
+			{
+				$update_date = array(
+									'allotment_approve_or_reject_date' => date('Y-m-d H:i:s')
+								);
+				
+
+				db_update('housing_flat_occupant')
+				->fields($update_date)
+				->condition('online_application_id', $online_application_id, '=')
+				->execute();
+			}
+
 			
 			db_update('housing_online_application')
 			->fields($application_form_arr)
@@ -49,12 +62,12 @@
 
 		}
 		
-		drupal_set_message($app_type.' Application Approved successfully.');
-		drupal_goto('view_application/'.$status_new.'/'.$entity);
+		drupal_set_message(' Application Approved successfully.');
+		drupal_goto('view_application/'.$status_new.'/'.$entity.'/'.$page_status);
 	}
 	//debolina end
 	function application_form_upload($form, &$form_state, $online_application_id, $status_new = '', $status = '', $entity = '') {
-		
+		//echo "hui";die;
 		global $user_role;
 		$online_application_id = decrypt_url($online_application_id);
 		$status_new = decrypt_url($status_new);

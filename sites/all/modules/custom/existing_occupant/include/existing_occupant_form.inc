@@ -835,6 +835,11 @@
 		}
 		
 		$username = str_replace(".","",$name).rand(1, 100000);
+
+		// added by moumita 05-06-2024
+		// for login with HRMS id after existing occupant entry
+
+		// $username = trim($form_state['values']['hrms_id']);
 		
 		/*insert into user table*/
 		$newUser	   	   = array();
@@ -939,7 +944,8 @@
 		
 		$online_app_arr = array();
 		$online_app_arr['applicant_official_detail_id']  =  trim($data1->id);
-		$online_app_arr['status']  =  'allotted';
+		//$online_app_arr['status']  =  'allotted'; // 04-06-2024
+		$online_app_arr['status'] = 'existing_occupant'; // 04-06-2024
 		$online_app_arr['date_of_application']  =  NULL;
 		$online_app_arr['is_backlog_applicant']  =  2;		
 				
@@ -954,13 +960,12 @@
 		$result2 =$query2->execute();
 		$data2 = $result2->fetchObject();
 		
-		/*$online_app_arr_upd = array();
-		$online_app_arr_upd['application_no']  = 'NA-'.trim(date('dmY')).'-'.$data2->oid;
+		// update for application no generate by moumita 05-06-2024
 			
 		db_update('housing_online_application')
-		->fields($online_app_arr_upd)
+		->fields(array('application_no'=> 'EO-'.trim(date('dmY')).'-'.$data2->oid))
 		->condition('online_application_id', $data2->oid)
-		->execute();*/
+		->execute();
 		
 		/* add new alltment application*/  
 		$new_allotment_app_arr = array();

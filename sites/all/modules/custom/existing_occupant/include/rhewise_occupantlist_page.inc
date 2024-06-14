@@ -136,16 +136,20 @@
 	
 			foreach($result as $record) {
 				
-				if($record->floor == 'G')
-					$floor = 'Ground';
-				else if($record->floor == 'F')
-					$floor = 'First';
-				else if($record->floor == 'S')
-					$floor = 'Secend';
-				else if($record->floor == 'T')
-					$floor = 'Third';
-				else if($record->floor == '')
-					$floor = 'NIL';
+				// if($record->floor == 'G')
+				// 	$floor = 'Ground';
+				// else if($record->floor == 'F')
+				// 	$floor = 'First';
+				// else if($record->floor == 'S')
+				// 	$floor = 'Secend';
+				// else if($record->floor == 'T')
+				// 	$floor = 'Third';
+				// else if($record->floor == '')
+				// 	$floor = 'NIL';
+
+				// added by moumita 05-06-2024
+
+				$floor = $record->floor;
 				$options[$record->uid] = array(
 					'sl_no' => $i,
 					'district_name' => $record->district_name,
