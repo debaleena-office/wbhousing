@@ -2176,8 +2176,9 @@ function user_login_name_validate($form, &$form_state) {
  * is set to the matching user ID.
  */
 function user_login_authenticate_validate($form, &$form_state) {
-  //$password = trim($form_state['values']['pass']);
+  // $password = trim($form_state['values']['pass']);
   $password = trim(base64_decode(base64_decode(base64_decode($form_state['values']['pass']))));
+  // echo $password = trim(base64_decode(base64_decode(base64_decode($form_state['values']['pass'])))); die('cvcvv');
   if (!empty($form_state['values']['name']) && strlen(trim($password)) > 0) {
     // Do not allow any login from the current user's IP if the limit has been
     // reached. Default is 50 failed attempts allowed in one hour. This is

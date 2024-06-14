@@ -1,6 +1,12 @@
 <?php
 function hrms_login_form($form, &$form_state) {
     if(!user_is_logged_in()) {
+
+        $form['markup_header'] = array(
+            '#type' => 'markup',
+            '#markup' => '<div class="d-flex justify-content-center h-100 end-0"><div class="search">'
+        );
+
         $form['name'] = array(
             '#type' => 'item',
             '#prefix' => '<div id="hrms" class="login-panel">',
@@ -8,20 +14,28 @@ function hrms_login_form($form, &$form_state) {
         );
         $form['name']['hrms_id'] = array(
             '#type' => 'textfield',
-            '#required' => TRUE,	
-            '#title' => t('Enter HRMS Id'),
+            '#required' => TRUE,
+            '#attributes' => array('class'=>array('search_input'), 'placeholder'=> 'Enter HRMS Id'),	
+            // '#title' => t('Enter HRMS Id'),
         );
         $form['name']['submit'] = array(
             '#type' => 'submit',
-            '#value' => 'Login with HRMS',
+            '#attributes' => array('class'=>array('search_icon')),
+            '#value' => 'Go',
         );
-        $form['name']['rhe_user_login'] = array(
-            '#type'    => 'link',    
-            '#title'   => t('Click here for Housing users login'),    
-            '#href'  => '/user/login',
-            '#attributes' => array('class' => 'user-login-links'),
+        // $form['rhe_user_login'] = array(
+        //     '#type'    => 'link',  
+        //     '#prefix' => '<div class="m-3">',
+        //     '#suffix' => '</div>',  
+        //     '#title'   => t('Click here for Housing users login'),    
+        //     '#href'  => '/user/login',
+        //     '#attributes' => array('class' => array('btn btn-light btn-sm')),
         
-          );
+        // );
+        $form['markup_footer'] = array(
+            '#type' => 'markup',
+            '#markup' => '</div></div>'
+        );
         return $form;
     } else {
         drupal_goto('/user');
