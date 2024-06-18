@@ -63,7 +63,7 @@
 		}
 		
 		drupal_set_message(' Application Approved successfully.');
-		drupal_goto('view_application/'.$status_new.'/'.$entity.'/'.$page_status);
+		drupal_goto('view_application/'.$status_new.'/'.$entity);
 	}
 	//debolina end
 	function application_form_upload($form, &$form_state, $online_application_id, $status_new = '', $status = '', $entity = '') {

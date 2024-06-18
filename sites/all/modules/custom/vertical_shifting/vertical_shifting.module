@@ -25,7 +25,8 @@
   }
   
 function vertical_shifting_form_application_form_alter(&$form, &$form_state, $form_id) {
-	
+	//echo 'dddqqq';die;
+	global $user;
 	fetch_vs_data1($form);
 	
 	
@@ -38,11 +39,50 @@ function vertical_shifting_form_application_form_alter(&$form, &$form_state, $fo
 	$occupation_block = isset($form_state['values']['occupation_block']) && !empty($form_state['values']['occupation_block']) ? $form_state['values']['occupation_block'] : $occupation_block_default;
 	
 	
+	
 
 	
 	global $custom_url;	//comment off for live
 	if($form['#action'] == $custom_url.'/vs'){		//delete $custom_url. for live
 		
+		////////debaleena 14.06.24///////
+		$query = db_select('housing_applicant_official_detail', 'haod');
+		$query->innerJoin('housing_online_application', 'hoa',
+		'hoa.applicant_official_detail_id = haod.applicant_official_detail_id');
+		$query->innerJoin('housing_flat_occupant', 'hfo', 
+		'hfo.online_application_id = hoa.online_application_id');
+		
+		$query->innerJoin('housing_flat', 'hf', 'hf.flat_id = hfo.flat_id');
+		$query->innerJoin('housing_estate', 'he', 'hf.estate_id = he.estate_id');
+		$query->innerJoin('housing_flat_type', 'hft', 'hf.flat_type_id = hft.flat_type_id');
+		$query->innerJoin('housing_block', 'hb', 'hf.block_id = hb.block_id');
+		$query->addField('hf', 'flat_id');
+		$query->addField('hft', 'flat_type_id');
+		$query->addField('he', 'estate_id');
+		$query->addField('hb', 'block_id');
+		$query->addField('hb', 'block_name');
+		$query->addField('he', 'estate_name');
+		$query->addField('hf', 'flat_no');
+		
+		$query->addField('hfo', 'flat_occupant_id');
+		$query->condition('haod.uid', $user->uid, '=');
+
+		$fetch_data = $query->execute();
+		$fetch_data = $fetch_data->fetchObject();
+		
+
+		$housing_estate_arr_1[$fetch_data->estate_id]=$fetch_data->estate_name;
+		$housing_block_arr_1[$fetch_data->block_id]=$fetch_data->block_name;
+		$housing_flat_arr_1[$fetch_data->flat_id]=$fetch_data->flat_no;
+		//print_r($housing_estate_arr_1);
+		//print_r($housing_block_arr_1);
+		//print_r($housing_flat_arr_1);die;
+
+		//////end///////
+
+
+
+
 		$form['prrsonal_info']['online_vs_id'] = array(
 			'#type' => 'hidden',
 			'#default_value' => '0',
@@ -56,11 +96,12 @@ function vertical_shifting_form_application_form_alter(&$form, &$form_state, $fo
 			'#collapsible' => TRUE, // Added
 			'#collapsed' => TRUE,  // Added
 		);
-		
+		//echo $occupation_estate;die;
 		$form['current_occupation']['occupation_estate'] = array(
 			'#title' => t('Select Housing'),
 			'#type' => 'select',
-			'#options' => get_housing_estate(),
+			//'#options' => get_housing_estate(),
+			'#options' => $housing_estate_arr_1,
 			'#default_value' => $occupation_estate,
 			'#required' => TRUE,
 			'#ajax' => array(
@@ -98,12 +139,13 @@ function vertical_shifting_form_application_form_alter(&$form, &$form_state, $fo
 			)
 		);
 		
-		if($occupation_estate != '') {
+		if($fetch_data->estate_id != '') {
 			$form['current_occupation']['occupation_block'] = array(
 				'#title' => t('Select Block'),
 				'#type' => 'select',
-				'#options' => get_housing_block($occupation_estate),
+				//'#options' => get_housing_block($occupation_estate),
 				'#default_value' => $occupation_block,
+				'#options' => $housing_block_arr_1,
 				'#required' => TRUE,
 				'#ajax' => array(
 							   'event' => 'change',
@@ -142,12 +184,13 @@ function vertical_shifting_form_application_form_alter(&$form, &$form_state, $fo
 			)
 		);
 			
-		if($occupation_estate != '' && $occupation_block != '') {
+		if($fetch_data->estate_id != '' && $fetch_data->block_id != '') {
 			$form['current_occupation']['occupation_flat'] = array(
 				'#title' => t('Flat No'),
 				'#type' => 'select',
-				'#options' => get_housing_flat($occupation_estate, $occupation_block),
+				//'#options' => get_housing_flat($occupation_estate, $occupation_block),
 				'#default_value' => isset($form_state['values']['occupation_flat']) ? $form_state['values']['occupation_flat'] : '',
+				'#options' => $housing_flat_arr_1,
 				'#required' => TRUE,
 				'#prefix' => '<div class="two" id="flat_no_replace">',
 				'#suffix' => '</div>',
@@ -451,6 +494,32 @@ function get_housing_estate() {
 	
 }
 
+// debaleena 14-06-2024 start
+// function get_existing_occupant_housing_estate($flat_id='') {
+	
+// 	$housing_estate_arr = array(''=>'-- Select --');
+	
+// 	$query=db_select('housing_flat','hf');
+// 	//$query->innerJoin('housing_block', 'hb', 'hb.block_id = hf.block_id');
+// 	$query->innerJoin('housing_estate', 'he', 'he.estate_id = hf.estate_id');
+// 	$query->condition('hf.flat_id', $flat_id, '=');
+// 	$query->addField('he', 'estate_id');
+// 	$query->addField('he', 'estate_name');
+// 	$query->addField('hb', 'block_name');
+	
+// 	$result=$query->execute();
+	
+// 	foreach($result as $val) {
+// 		$housing_estate_arr[$val->estate_id] = $val->estate_name;
+// 	}
+	
+// 	return $housing_estate_arr;
+	
+// }
+
+//end
+
+
 
 /*function get_housing_block() {
 	
@@ -560,8 +629,8 @@ function fetch_current_occupantion_detail() {
 		$query->addField('hol', 'license_issue_date');
 		$query->addField('hfo', 'flat_occupant_id');
 		$query->condition('haod.uid', $user->uid, '=');
-		
-		//echo $query;
+		//echo $query;die;
+		//print_r($query->execute()->fetchObject());die;
 		return $query->execute();   
 	}
 

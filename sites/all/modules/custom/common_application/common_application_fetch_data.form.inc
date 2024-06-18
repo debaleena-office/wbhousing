@@ -71,11 +71,11 @@ function allotment_category_list($rhe_flat_type = '') {
 	$i = 0;
 	$allotment_reason_options = array('' => '--Choose Allotment Reason--');
 	if(!empty($rhe_flat_type)) {
-		if($rhe_flat_type == 'A' || $rhe_flat_type == 'A+') {
-			$query = db_select('housing_roaster4a_aplus_master', 'hrm');
+		if($rhe_flat_type == 'A+') {
+			$query = db_select('housing_roasterAplus_master', 'hrm');
 		}
-		else if($rhe_flat_type == 'B') {
-			$query = db_select('housing_roaster4b_master', 'hrm');
+		else if($rhe_flat_type == 'A' || $rhe_flat_type == 'B') {
+			$query = db_select('housing_roaster4ab_master', 'hrm');
 		}
 		else {
 			$query = db_select('housing_roaster4cd_master', 'hrm');
@@ -176,7 +176,7 @@ function allotment_category_list($rhe_flat_type = '') {
 	
    /*show applicant personal information*/
    function fetch_applicant_personal_info(&$form){
-	   
+	
 		global $user;
 		$query1 = db_select('users', 'u');
 		$query1->innerJoin('housing_applicant_official_detail', 'haod', 'u.uid = haod.uid');
@@ -187,7 +187,7 @@ function allotment_category_list($rhe_flat_type = '') {
 		$data1 = $result1->fetchObject();
 	   
 	   
-		$result = applicant_personal_info();
+		$result = applicant_personal_info(); //echo '<pre>'; print_r($result); die;
 		if($result->rowcount() > 0){
 			$data = $result->fetchObject();
 			$form['prrsonal_info']['applicant_name']['#default_value'] = strtoupper(trim($data->applicant_name));
@@ -196,6 +196,7 @@ function allotment_category_list($rhe_flat_type = '') {
 			}
 
 			$form['prrsonal_info']['applicant_father_name']['#default_value'] = (!empty($data->guardian_name)) ? strtoupper(trim($data->guardian_name)) : NULL;
+			
 		//permanent address
 			$form['prrsonal_info']['permanent_address']['permanent_street']['#default_value'] = (!empty($data->permanent_street)) ? strtoupper(trim($data->permanent_street)) : NULL;
 			$form['prrsonal_info']['permanent_address']['permanent_city_town_village']['#default_value'] = (!empty($data->permanent_city_town_village)) ? strtoupper(trim($data->permanent_city_town_village)) : NULL;
@@ -488,10 +489,38 @@ function allotment_category_list($rhe_flat_type = '') {
 				$ddo_desig_options[$val->ddo_id] = $val->ddo_designation;
 			}
 		}
+		//echo "<pre>";print_r($ddo_desig_options);die;
 		
 		return $ddo_desig_options;
 	}
 /*-------END---------*/
+
+///////////debaleena start 13.06.24/////
+
+function get_ddo_desig($ddo_code ='')
+{
+	$query = db_select('housing_ddo', 'hd');
+	$query->addExpression('ddo_id','ddo_id');
+	$query->addExpression('trim(hd.ddo_designation)','ddo_designation');
+	$query->condition('ddo_code', $ddo_code, '=');
+	$query->condition('is_active', 'Y', '=');
+	//echo $ddo_code;echo $query;die;
+	$result = $query->execute();
+	$result = $result->fetchObject();
+	if($result != NULL){
+		
+		foreach($result as $val) {
+			$ddo_desig_options1[$result->ddo_id] = $result->ddo_designation;
+		}
+	}else{
+		$ddo_desig_options1=[];
+	}
+	return $ddo_desig_options1;
+	//return $result->ddo_designation;
+}
+
+
+////end//////
 
 /*reload DDO address (Ajax Call)*/
  function _reload_ddo_address($form, &$form_state) {

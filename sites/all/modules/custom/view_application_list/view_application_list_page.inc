@@ -77,7 +77,7 @@ function view_app_page($status='', $entity = '',$page_status='') {
 		
 		// $result = fetch_all_application_detail1($entity,$status);
 		if($page_status=='action-list'){
-			$result = application_list_fetch($entity,$status);
+			$result = application_list_fetch($entity,$status);//sd
 		}else if($page_status=='verified-list'|| $page_status=='reject-list'){
 			$result = application_list_fetch_for_verified_reject($entity,$status);
 		}
@@ -102,7 +102,7 @@ function view_app_page($status='', $entity = '',$page_status='') {
 		// }
 		//$header[] = array('data' => 'Time of Application');
 		
-		if($entity == 'new-apply'){//echo $status;
+		if($entity == 'new-apply'||$entity == 'vs'||$entity == 'cs'){//echo $status;
 			if($page_status == 'verified-list'|| $page_status=='reject-list'){
 				$header['date_of_application'] = array('data' => 'Date of Application');
 				$header['flat_type'] = array('data' => 'Flat Type');
@@ -149,9 +149,9 @@ function view_app_page($status='', $entity = '',$page_status='') {
 		 while($data = $result->fetchObject()) {
 
 
-			//echo json_encode($data);//die;
+			//print_r($data);die;
 			$fields = array();
-			if($entity == 'new-apply'){
+			if($entity == 'new-apply' || $entity == 'vs'||$entity == 'cs' ){
 				//echo $page_status;
 
 				if($page_status == 'verified-list'|| $page_status == 'reject-list'){
@@ -160,8 +160,8 @@ function view_app_page($status='', $entity = '',$page_status='') {
 					$fields[] = $data->application_no;
 					$fields[] = implode('/', array_reverse(explode('-', $data->date_of_application)));
 					$fields[] = $data->flat_type;
-					$fields[] = $data->allotment_category;
-					$fields[] = $data->computer_serial_no;
+					$fields[] = ($data->allotment_category=='')?'Not Applicable':$data->allotment_category;
+					$fields[] = ($data->computer_serial_no=='')?'Not Applicable':$data->computer_serial_no;
 					$fields[] = $data->created_at;
 					$fields[] = $data->status_description;
 					global $base_path;
@@ -182,8 +182,8 @@ function view_app_page($status='', $entity = '',$page_status='') {
 					$fields[] = $data->application_no;
 					$fields[] = implode('/', array_reverse(explode('-', $data->date_of_application)));
 					$fields[] = $data->flat_type;
-					$fields[] = $data->allotment_category;
-					$fields[] = $data->computer_serial_no;
+					$fields[] = ($data->allotment_category=='')?'Not Applicable':$data->allotment_category;
+					$fields[] = ($data->computer_serial_no=='')?'Not Applicable':$data->computer_serial_no;
 					global $base_path;
 			 		$src=$base_path.drupal_get_path('module', 'view_application_list').'/images/view1.png';
 					$fields[] = l(

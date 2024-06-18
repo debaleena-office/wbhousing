@@ -29,7 +29,7 @@
   
   
   function shifting_of_category_form_application_form_alter(&$form, &$form_state, $form_id) {
-	  
+	global $user;  
 	fetch_cs_data1($form);
 	
 	$occupation_estate_default = isset($form['current_occupation_cs']['cs_occupation_estate']['#default_value']) && !empty($form['current_occupation_cs']['cs_occupation_estate']['#default_value']) ? $form['current_occupation_cs']['cs_occupation_estate']['#default_value'] : '';
@@ -48,6 +48,43 @@
 			'#default_value' => '0',
 			//'#validated' => TRUE,
 		);
+
+
+
+		////////debaleena 14.06.24///////
+		$query = db_select('housing_applicant_official_detail', 'haod');
+		$query->innerJoin('housing_online_application', 'hoa',
+		'hoa.applicant_official_detail_id = haod.applicant_official_detail_id');
+		$query->innerJoin('housing_flat_occupant', 'hfo', 
+		'hfo.online_application_id = hoa.online_application_id');
+		
+		$query->innerJoin('housing_flat', 'hf', 'hf.flat_id = hfo.flat_id');
+		$query->innerJoin('housing_estate', 'he', 'hf.estate_id = he.estate_id');
+		$query->innerJoin('housing_flat_type', 'hft', 'hf.flat_type_id = hft.flat_type_id');
+		$query->innerJoin('housing_block', 'hb', 'hf.block_id = hb.block_id');
+		$query->addField('hf', 'flat_id');
+		$query->addField('hft', 'flat_type_id');
+		$query->addField('he', 'estate_id');
+		$query->addField('hb', 'block_id');
+		$query->addField('hb', 'block_name');
+		$query->addField('he', 'estate_name');
+		$query->addField('hf', 'flat_no');
+		
+		$query->addField('hfo', 'flat_occupant_id');
+		$query->condition('haod.uid', $user->uid, '=');
+
+		$fetch_data = $query->execute();
+		$fetch_data = $fetch_data->fetchObject();
+		
+
+		$housing_estate_arr_1[$fetch_data->estate_id]=$fetch_data->estate_name;
+		$housing_block_arr_1[$fetch_data->block_id]=$fetch_data->block_name;
+		$housing_flat_arr_1[$fetch_data->flat_id]=$fetch_data->flat_no;
+		//print_r($housing_estate_arr_1);
+		//print_r($housing_block_arr_1);
+		//print_r($housing_flat_arr_1);die;
+
+		//////end///////
 		  
 	    $form['current_occupation_cs'] = array(
 			'#type' => 'fieldset',
@@ -59,7 +96,8 @@
 		$form['current_occupation_cs']['cs_occupation_estate'] = array(
 			'#title' => t('Select Housing'),
 			'#type' => 'select',
-			'#options' => get_housing_estate_cs(),
+			//'#options' => get_housing_estate_cs(),
+			'#options' => $housing_estate_arr_1,
 			'#default_value' => $occupation_estate,
 			'#required' => TRUE,
 			'#ajax' => array(
@@ -98,11 +136,12 @@
         	)
 		);
 		
-		if($occupation_estate != '') {
+		if($fetch_data->estate_id != '') {
 			$form['current_occupation_cs']['cs_occupation_block'] = array(
 				'#title' => t('Select Block'),
 				'#type' => 'select',
-				'#options' => get_housing_block_cs($occupation_estate),
+				//'#options' => get_housing_block_cs($occupation_estate),
+				'#options' => $housing_block_arr_1,
 				'#default_value' => $occupation_block,
 				'#required' => TRUE,
 				'#ajax' => array(
@@ -142,11 +181,12 @@
 		);
 		
 		
-		if($occupation_estate != '' && $occupation_block != '') {
+		if($fetch_data->estate_id  != '' && $fetch_data->block_id  != '') {
 			$form['current_occupation_cs']['cs_occupation_flat'] = array(
 				'#title' => t('Flat No'),
 				'#type' => 'select',
-				'#options' => get_housing_flat_cs($occupation_estate, $occupation_block),
+				'#options' => $housing_flat_arr_1,
+				//'#options' => get_housing_flat_cs($occupation_estate, $occupation_block),
 				'#default_value' => isset($form_state['values']['cs_occupation_flat']) ? $form_state['values']['cs_occupation_flat'] : '',
 				'#required' => TRUE,
 				'#prefix' => '<div class="two" id="flat_no_replace_cs">',
@@ -374,15 +414,15 @@
 		}
 		
 		$online_application_id = trim($form_state['values']['online_cs_id']);
-		//die($online_application_id);
+		//die($action);
 		
 		if($online_application_id == 0) {
-			//die('for new'); 
+			//die('for new'); //first time
 			$online_application_id = add_online_application($action,'CS',$form,$form_state);
 			add_category_shifting_application($form,$form_state,$online_application_id);
 		}
 		else {
-			//die('for existing');
+			//die('for existing');//draft
 			update_online_application($action,$form,$form_state,$online_application_id);
 			update_category_shifting_application($form,$form_state,$online_application_id);
 		}

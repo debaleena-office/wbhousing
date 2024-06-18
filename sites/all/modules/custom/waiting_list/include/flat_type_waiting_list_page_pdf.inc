@@ -19,7 +19,11 @@
 									where status = :status and hft.flat_type_id = :flat_type_id 
 									and substring(application_no,1,2) = :app_no
 									order by grade_pay desc, online_application_id asc", 
-									array(':status' => 'verified', ':flat_type_id' => $flat_type, ':app_no' => 'NA'));	
+									//array(':status' => 'verified', ':flat_type_id' => $flat_type, ':app_no' => 'NA'));
+									//debaleena start//
+									array(':status' => 'housing_sup_approved_1', ':flat_type_id' => $flat_type, ':app_no' => 'NA'));	
+
+									//end//	
 			} else {
 				$result = db_query("select applicant_name, hoa.online_application_id, status, application_no, flat_type, 	
 									allotment_category, computer_serial_no, grade_pay 
@@ -33,9 +37,12 @@
 									where status = :status and hft.flat_type_id = :flat_type_id 
 									and substring(application_no,1,2) = :app_no
 									order by online_application_id asc", 
-									array(':status' => 'verified', ':flat_type_id' => $flat_type, ':app_no' => 'NA'));
+									//array(':status' => 'verified', ':flat_type_id' => $flat_type, ':app_no' => 'NA'));
+									//debaleena start//
+									array(':status' => 'housing_sup_approved_1', ':flat_type_id' => $flat_type, ':app_no' => 'NA'));	
+
+									//end//
 			}
-		
 		//$data1 = $result->fetchObject();					
 		
 		$page_output = '

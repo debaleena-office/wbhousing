@@ -1,17 +1,17 @@
 <?php
-function rhe_allotment_update($allotment_type) {    
+function rhe_allotment_update($allotment_type='', $district_code=0) {    
     if(!empty($allotment_type)) {  
-        $all_vacant_estates = get_estatewise_vacancy($allotment_type);
+        $all_vacant_estates = get_estatewise_vacancy($allotment_type,$district_code);
            
         $transaction = db_transaction();
         try {
             update_housing_allotment_process($allotment_type);
             foreach($all_vacant_estates as $estate)  { // For each estate floor and category shifting is performed
                 $estate_id = $estate -> estate_id;
-                update_rhe_allotment_vs($allotment_type, $estate_id);
-                update_rhe_allotment_cs($allotment_type, $estate_id);
+                update_rhe_allotment_vs($allotment_type, $estate_id, $district_code);
+                update_rhe_allotment_cs($allotment_type, $estate_id, $district_code);
             }  // End of floor & category shifting
-            update_rhe_allotment_new($allotment_type); // Allotment for new applicant after completion of floor & category shifting
+            update_rhe_allotment_new($allotment_type, $district_code); // Allotment for new applicant after completion of floor & category shifting
             drupal_goto("/rhe_allotment");
         } catch (Exception $e) {
             $transaction->rollback();
@@ -20,10 +20,10 @@ function rhe_allotment_update($allotment_type) {
     }
 }
 
-function update_rhe_allotment_vs($allotment_type, $estate_id) {    
+function update_rhe_allotment_vs($allotment_type, $estate_id, $district_code = 0) {    
     $total_applicant = get_no_of_applicant_vs($allotment_type, $estate_id);
     if($total_applicant > 0) {
-        $vacancy_details = get_vacancy_details($allotment_type, $estate_id, 'vs');
+        $vacancy_details = get_vacancy_details($allotment_type, $estate_id, 'vs', $district_code);
         if(count($vacancy_details) > 0) {
             foreach($vacancy_details as $vacancy) {
                 $flat_id = $vacancy['flat_id'];
@@ -42,18 +42,18 @@ function update_rhe_allotment_vs($allotment_type, $estate_id) {
         }
     }
 }
-function update_rhe_allotment_cs($allotment_type, $estate_id) {
+function update_rhe_allotment_cs($allotment_type, $estate_id, $district_code = 0) {
     $total_applicant = get_no_of_applicant_cs($allotment_type, $estate_id);
-    $cs_alloted_counter = 1; // count the applicant who allotted at 1st & 2nd floor
+    $cs_alloted_counter = 1; // count the applicant who allotted between 1st to 10th floor
     if($total_applicant > 0) {
-        // checking for any vacancy at 1st or 2nd floor after floor shifting allotment
-        $vacancy_details_vs = get_vacancy_details($allotment_type, $estate_id, 'vs');
+        // checking for any vacancy between 1st to 10th floor after floor shifting allotment
+        $vacancy_details_vs = get_vacancy_details($allotment_type, $estate_id, 'vs', $district_code);
         $count_vacancy_details_vs = count($vacancy_details_vs);
-        if($count_vacancy_details_vs > 1) { // if total vacancy at 1st or 2nd floor is greater than 1
-            // get 40% of vacancy at 1st & 2nd floor after allotment for floor shifting
+        if($count_vacancy_details_vs > 1) { // if total vacancy between 1st to 10th floor is greater than 1
+            // get 40% of vacancy between 1st to 10th floor after allotment for floor shifting
             $cs_count_from_vs = round($count_vacancy_details_vs * 0.4);
 
-            // Start ----- Allot 40% of remaining 1st & 2nd floor vacancy for category shifting.
+            // Start ----- Allot 40% of remaining between 1st to 10th floor vacancy for category shifting.
             foreach($vacancy_details_vs as $vacancy) {
                 if($cs_alloted_counter > $cs_count_from_vs) {
                     break;
@@ -72,12 +72,12 @@ function update_rhe_allotment_cs($allotment_type, $estate_id) {
                 }                
                 $cs_alloted_counter++;
             }
-            // End ----- Allot 1st & 2nd floor vacancy for category shifting.
+            // End ----- Allot between 1st to 10th floor vacancy for category shifting.
         }        
     }
     // Start -----  Allot ground & top floor vacancy for category shifting.
-    if(--$cs_alloted_counter < $total_applicant) { // if applicant remains after alloted at 1st & 2nd floor.
-        $vacancy_details = get_vacancy_details($allotment_type, $estate_id, 'cs');
+    if(--$cs_alloted_counter < $total_applicant) { // if applicant remains after alloted at 1st to 10th floor.
+        $vacancy_details = get_vacancy_details($allotment_type, $estate_id, 'cs', $district_code);
         if(count($vacancy_details) > 0) {
             foreach($vacancy_details as $vacancy) {
                 $flat_id = $vacancy['flat_id'];
@@ -97,11 +97,11 @@ function update_rhe_allotment_cs($allotment_type, $estate_id) {
     }
     // End -----  Allot ground & top floor vacancy for category shifting.
 }
-function update_rhe_allotment_new($allotment_type) {    
+function update_rhe_allotment_new($allotment_type, $district_code = 0) {    
     $roaster_counter_start = 1; $roaster_counter_end = 29; 
     $applicant_allotted_counter = 0; $vacancy_filled_counter = 0; 
     $total_applicant = get_no_of_applicant_new($allotment_type);
-    $total_vacancy = get_total_vacancy_new($allotment_type);
+    $total_vacancy = get_total_vacancy_new($allotment_type, $district_code );
     $next_roaster_counter = get_next_roaster_counter($allotment_type);
      
     while($applicant_allotted_counter < $total_applicant) {
@@ -113,11 +113,11 @@ function update_rhe_allotment_new($allotment_type) {
                 $applicant = $applicant_result -> fetchObject();
                 // Vacancy fetching starts
                 // Fetch vacancy according to preference if any
-                $vacancy_on_preference = get_vacancy_on_preference($allotment_type, $applicant -> online_application_id);
+                $vacancy_on_preference = get_vacancy_on_preference($allotment_type, $applicant -> online_application_id, $district_code);
                 if($vacancy_on_preference -> rowCount() > 0) {
                     $vacancy = $vacancy_on_preference -> fetchObject();
                 } else { // Fetch vacancy from all vacant flat with the order F,S,G,T if no vacancy according to preference
-                    $vacancy_general = get_vacancy_details_new($allotment_type);
+                    $vacancy_general = get_vacancy_details_new($allotment_type,$district_code );
                     if($vacancy_general -> rowCount() > 0) {
                         $vacancy = $vacancy_general -> fetchObject();
                     }
@@ -160,6 +160,7 @@ function update_housing_allotment_process($allotment_type) {
         ->execute();
 }
 function update_housing_online_application($online_application_id) {
+    global $user;
     $allotment_upd_arr = array();
     $allotment_upd_arr['status']  = 'allotted';
     //$allotment_upd_arr['online_application_id']  = $data->online_application_id;	//commented off on 15.04.2023 because this line is not required
@@ -167,6 +168,18 @@ function update_housing_online_application($online_application_id) {
     ->fields($allotment_upd_arr)
     //->condition('online_application_id', $allotment_upd_arr['online_application_id'])	//commented off on 15.04.2023 because this line is not required
     ->condition('online_application_id', $online_application_id)
+    ->execute();
+
+    //code by moumita 06-06-2024
+    $process_flow_upd_arr = array(
+        'status_id'  => 6,
+        'online_application_id' => $online_application_id,
+        'uid' => $user->uid,
+        'short_code' => $allotment_upd_arr['status'],
+        'created_at' => date('Y-m-d H:i:s')
+     );
+    db_insert('housing_process_flow')
+    ->fields($process_flow_upd_arr)
     ->execute();
 }
 function update_housing_flat($flat_id) {
@@ -235,11 +248,12 @@ function get_applicant($estate_id, $flat_type_id, $shifting_type) {
     inner join {housing_applicant_official_detail} as haod on haod.applicant_official_detail_id = hoa.applicant_official_detail_id
     inner join {" . $shifting_applicant_table[$shifting_type] . "} as hca on hca.online_application_id = hoa.online_application_id
     where hoa.status = 'housing_sup_approved_1' and hca.occupation_estate = $estate_id and hca.flat_type_id = $flat_type_id
-    order by hoa.online_application_id ASC limit 1");
+    order by hoa.computer_serial_no ASC limit 1");// after (done by Moumita)
+    //order by hoa.online_application_id ASC limit 1"); before(done by prasenjit)
 
     return $result;
 }
-function get_vacancy_on_preference($flat_type_id, $online_application_id) {
+function get_vacancy_on_preference($flat_type_id, $online_application_id, $district_code = 0) {
     $result = db_query("SELECT t1.* FROM housing_flat AS t1
     INNER JOIN housing_estate AS t2 ON t1.estate_id = t2.estate_id
     INNER JOIN housing_district AS t3 ON t2.district_code = t3.district_code
@@ -249,26 +263,36 @@ function get_vacancy_on_preference($flat_type_id, $online_application_id) {
     limit 3) as t4 ON t2.estate_id = t4.estate_id
     WHERE t1.flat_type_id = " . $flat_type_id . "
     AND t1.flat_status_id = 1
-    AND t3.district_code = 17
+    AND t3.district_code = ".$district_code."
     ORDER BY t4.preference_order, t1.flat_id
     limit 1");
 
     return $result;
 }
-function get_vacancy_details_new($flat_type_id) {
+function get_vacancy_details_new($flat_type_id, $district_code = 0) {
     $result = db_query("SELECT t1.* FROM housing_flat AS t1
     INNER JOIN housing_estate AS t2 ON t1.estate_id = t2.estate_id
     INNER JOIN housing_district AS t3 ON t2.district_code = t3.district_code
     WHERE t1.flat_type_id = " . $flat_type_id . "
     AND t1.flat_status_id = 1    
-    AND t3.district_code = 17
+    AND t3.district_code = ".$district_code."
     ORDER BY CASE
-        when t1.floor = 'F' then 1
-        when t1.floor = 'S' then 2
-        when t1.floor = 'G' then 3
-        when t1.floor = 'T' then 4
+        when t1.floor = 'First' then 1
+        when t1.floor = 'Second' then 2
+        when t1.floor = 'Third' then 3
+        when t1.floor = 'Fourth' then 4
+        when t1.floor = 'Fifth' then 5
+        when t1.floor = 'Sixth' then 6
+        when t1.floor = 'Seventh' then 7
+        when t1.floor = 'Eighth' then 8
+        when t1.floor = 'Ninth' then 9
+        when t1.floor = 'Tenth' then 10
+        when t1.floor = 'Ground' then 11
+        when t1.floor = 'Top' then 12
         END, 
         t1.floor");
+
+        // last seen by Group 06-06-2024
 
     return $result;
 }
@@ -290,17 +314,17 @@ function get_next_roaster_counter($flat_type_id) {
 }
 function get_applicant_new($flat_type_id, $next_roaster_counter) {
     $roaster_tbl = ""; 
-    switch($flat_type_id) {
+    switch($flat_type_id) { // 1=>A, 2=>B, 3=>C, 4=>D, 5=> A+ // changed by Moumita 06-06-2024
         case 1:
-        case 5:
-            $roaster_tbl = "housing_roaster4a_aplus_master";
-            break;
         case 2:
-            $roaster_tbl = "housing_roaster4b_master";
+            $roaster_tbl = "housing_roaster4ab_master"; // housing_roaster4b_master
             break;
         case 3:
         case 4:
             $roaster_tbl = "housing_roaster4cd_master";
+            break;
+        case 5:
+            $roaster_tbl = "housing_roasterAplus_master"; // housing_roaster4a_aplus_master
             break;
     }
     
@@ -309,8 +333,9 @@ function get_applicant_new($flat_type_id, $next_roaster_counter) {
     WHERE t1.status = 'housing_sup_approved_1'
     and t2.flat_type_id = " . $flat_type_id . "
     and t2.allotment_category = (select category from " . $roaster_tbl . " where counter = " . $next_roaster_counter . ")
-    ORDER BY t1.online_application_id ASC
+    ORDER BY t1.computer_serial_no ASC
     limit 1");
+    // ORDER BY t1.online_application_id ASC
 
     return $result;
 }

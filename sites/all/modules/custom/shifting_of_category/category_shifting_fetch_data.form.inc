@@ -43,9 +43,10 @@
 			$form['current_occupation_cs']['cs_file_licence']['#default_value'] = trim($data->file_licence);
 		}
 	 }
-	 if($online_application_id != 0) {
+	 //debalina 14-06-2024 turned off
+	 /*if($online_application_id != 0) {
 	 	fetch_applicant_official_info($form,$online_application_id);
-	 }
+	 }*/
 		
 	return $form;
 	   	

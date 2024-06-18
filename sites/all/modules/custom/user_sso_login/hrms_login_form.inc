@@ -37,8 +37,10 @@ function hrms_login_form($form, &$form_state) {
             '#markup' => '</div></div>'
         );
         return $form;
-    } else {
-        drupal_goto('/user');
+    } else { 
+        // die('ekhanei dhukche');
+        // drupal_goto('/user');
+        drupal_goto('dashboard');
     }
     
 }

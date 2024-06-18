@@ -6,7 +6,8 @@ function user_sso_login($form, &$form_state, $userHRMSID)
     if (isset($user->uid) && !empty($user->uid))
     {
         //Print "This message is only visible for logged-in users.";
-        $form_state['redirect'] = 'user/' . $user->uid;
+        // $form_state['redirect'] = 'user/' . $user->uid;
+        $form_state['redirect'] = 'dashboard';
     }
     else
     {
@@ -113,7 +114,7 @@ function user_sso_login($form, &$form_state, $userHRMSID)
                     }
                 }
                 $user = user_load($userDetails->uid);
-                $form_state['redirect'] = 'user/' . $userDetails->uid;
+                // $form_state['redirect'] = 'user/' . $userDetails->uid;
                 watchdog('user', 'Session opened for %name.', array(
                     '%name' => $userDetails->name
                 ));

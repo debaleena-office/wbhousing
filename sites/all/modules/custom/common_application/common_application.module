@@ -71,7 +71,8 @@
 	}
   
 	function application_form($form, &$form_state) {
-		
+		echo'1st';
+		//echo "<pre>";print_r($form_state['values']);die;
 		global $user;
 		
 		/*if($user->name != 'housing' && $user->name != 'admin') {
@@ -163,7 +164,7 @@
 			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()"),
 		);
 		
-	//Permanent Address
+		//Permanent Address
 		$form['prrsonal_info']['permanent_address'] = array(
 			'#type' => 'fieldset',
 			'#title' => t('Permanent Address'),
@@ -223,7 +224,7 @@
 			'#suffix' => '</div>',
 			'#attributes' => array('class' => array('numeric_positive')),
 		);
-	//end
+		//end
 		
 		$form['prrsonal_info']['chk_permanent_address'] = array(
 			/*'#type' => 'checkboxes',
@@ -233,7 +234,8 @@
 			'#type' => 'checkbox',
 			'#title' => 'Check if Your Present Address is same as Your Permanent Address.',
 			'#default_value' => $applicant_info->permanent_present_same,
-			//'#attributes' => array('id' => 'chk_present_address'),     //for this ajax callback not working.
+			'#disabled' =>TRUE,
+			//'#attributes' => array('id' => 'edit-chk-permanent-address','readonly' => 'readonly'),     //for this ajax callback not working.
 			'#ajax' => array(
 					   'event' => 'change',
 					   'callback' => '_reload_present_address',
@@ -338,7 +340,7 @@
 				'#suffix' => '</div>',
 			);*/
 		}
-	//end
+		//end
 	
 		$form['prrsonal_info']['mobile'] = array(
 			'#title' => t('Mobile no'),
@@ -359,7 +361,8 @@
 			'#prefix' => '<div class="two">',
 			'#suffix' => '</div>',
 			'#element_validate' => array('element_validate_email', 'email_id_validate'),
-			'#default_value' => $user->mail,
+			// '#default_value' => $user->mail,
+			'#default_value' => '',
 			'#required' => TRUE,
 			//'#attributes' => array('oninput'=>"this.value=this.value.toLowerCase()"),
 			
@@ -375,6 +378,7 @@
 			//'#attributes' => array('readonly' => 'readonly', 'id' => 'edit-dob'),
 			'#attributes' => array('id' => 'edit-dob'),
 			'#required' => TRUE,
+			'#disabled'=>TRUE,
 			//'#validated' => TRUE,
 			/*'#ajax' => array(
 					   'event' => 'change',
@@ -396,7 +400,8 @@
 			'#type' => 'radios',
 			'#options' => array('M' => 'Male', 'F' => 'Female'),
 			'#attributes' => array('class' => array('gender')),
-			'#default_value' => 'M',
+			'#default_value' => '',
+			// '#default_value' => 'M',
 			'#prefix' => '<div class="three">',
 			'#suffix' => '</div>',
 			'#required' => TRUE,
@@ -697,7 +702,7 @@
 			'#markup' => '</div>',
 		);
 		
-		fetch_applicant_personal_info($form);
+		//fetch_applicant_personal_info($form);// turned off 14-06-2024
 		
 		// $form['#submit']= array('new_license_submit','new_application_submit');
 		

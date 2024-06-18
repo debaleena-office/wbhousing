@@ -7,7 +7,7 @@
 		
 		$result = occupant_entry_check($flat_id);
 		$occupant_rhe = get_occupant_rhe_details($flat_id)->fetchObject();
-		
+		//print_r($result);die;//$occupant_rhe)
 		//for both api and hrms custom table this line is needed
 		/*$hrms_details = fetch_hrms_details($hrms_id);*/
 		
@@ -119,7 +119,7 @@
 			'#attributes' => array('readonly' => 'readonly'),
 			'#prefix' => '<div class="two">',
 			'#suffix' => '</div>',
-			'#element_validate' => array('validate_flat_no'),
+			//'#element_validate' => array('validate_flat_no'),
 			'#required' => TRUE,
 		);
 		
@@ -405,8 +405,28 @@
 			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()"),
 			//'#attributes' => array('id' => 'edit-app-designation', 'oncopy' => "return false", 'onpaste' => "return false"),
 		);
-		
+
 		$form['official_info']['pay_band'] = array(
+			'#title' => t('Basic Pay Range'),
+			'#type' => 'select',
+			'#options' => pay_band_list(),
+			'#required' => TRUE,
+			'#prefix' => '<div class="two">',
+			'#suffix' => '</div>',
+			'#validated' => TRUE,
+			
+		);
+		$form['official_info']['pay_in'] = array(
+		 	'#title' => t('Basic Pay'),
+			'#type' => 'textfield',
+		 	'#required' => TRUE,
+		 	'#element_validate' => array('element_validate_numeric_positive'), 
+		 	'#prefix' => '<div class="four">',
+		 	'#suffix' => '</div>',
+		 	'#attributes' => array('class' => array('numeric_positive')),
+		);
+		
+		/*$form['official_info']['pay_band'] = array(
 			'#title' => t('Pay Band'),
 			'#type' => 'select',
 			'#options' => pay_band_list_specific($flat_type_id),
@@ -425,7 +445,7 @@
 			'#attributes' => array('class' => array('numeric_positive')),
 		);
 		
-		$form['official_info']['grade_pay'] = array(
+		 $form['official_info']['grade_pay'] = array(
 			'#title' => t('Grade Pay'),
 			'#type' => 'textfield',
 			'#required' => TRUE,
@@ -433,7 +453,7 @@
 			'#prefix' => '<div class="four">',
 			'#suffix' => '</div>',
 			'#attributes' => array('class' => array('numeric_positive')),
-		);
+		); */
 		
 		/*$form['official_info']['gpf_no'] = array(
 			'#title' => t('GPF No.'),
@@ -764,7 +784,7 @@
 		
 		}
 		
-		if($form_state['values']['pay_band'] == 1) {
+		/*if($form_state['values']['pay_band'] == 1) {
 			if($form_state['values']['pay_in'] < 0 || $form_state['values']['pay_in'] > 7999) {
 				form_set_error('pay_in', t('Please enter proper Pay in the Pay Band.'));	
 			}
@@ -798,7 +818,7 @@
 					form_set_error('grade_pay', t('Please enter proper Grade Pay.'));	
 				}		
 			}
-		}
+		}*/
 		
 	}
 	
@@ -834,12 +854,12 @@
 			}
 		}
 		
-		$username = str_replace(".","",$name).rand(1, 100000);
+		//$username = str_replace(".","",$name).rand(1, 100000);
 
 		// added by moumita 05-06-2024
 		// for login with HRMS id after existing occupant entry
 
-		// $username = trim($form_state['values']['hrms_id']);
+		$username = trim($form_state['values']['hrms_id']);
 		
 		/*insert into user table*/
 		$newUser	   	   = array();
@@ -916,7 +936,7 @@
 		$app_off_detail_arr['applicant_headquarter']  =  strtoupper(trim($form_state['values']['occupant_headquarter']));
 		$app_off_detail_arr['pay_band_id']  =  trim($form_state['values']['pay_band']);
 		$app_off_detail_arr['pay_in_the_pay_band']  =  trim($form_state['values']['pay_in']);
-		$app_off_detail_arr['grade_pay']  =  trim($form_state['values']['grade_pay']);
+		//$app_off_detail_arr['grade_pay']  =  trim($form_state['values']['grade_pay']);
 		//$app_off_detail_arr['gpf_no']  =  strtoupper(trim($form_state['values']['gpf_no']));
 		$app_off_detail_arr['date_of_joining']  =  trim( implode('-', array_reverse(explode('/', $form_state['values']['doj']))));
 		$app_off_detail_arr['date_of_retirement']  =  trim( implode('-', array_reverse(explode('/', $form_state['values']['dor']))));
@@ -978,12 +998,13 @@
   	  	->fields($new_allotment_app_arr)
   	  	->execute();
 		
+		// echo $flat_id;die;
 		/*Flat status update and Add flat occupant details*/
 		db_update('housing_flat')
 			->fields(array(
 						'flat_status_id' => 2
 					))
-			->condition('flat_id', $flat_id)
+			->condition('flat_id', $form_state['values']['flat_id'])
 			->execute();
 			
 		$allotment_ins_arr = array();

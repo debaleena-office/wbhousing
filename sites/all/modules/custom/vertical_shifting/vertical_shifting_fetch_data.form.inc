@@ -16,6 +16,7 @@
 
 /* fetch application detail*/
  function fetch_vs_data(&$form){
+
 	 $online_application_id = max_vs_application_id(array('reject','cancel'));
 	 $form['prrsonal_info']['online_vs_id']['#default_value'] = trim($online_application_id);
 	 if($online_application_id == 0){
@@ -57,9 +58,10 @@
 		
 	}*/
 	
-	if($online_application_id != 0) {
+	// debaleena 14-06-2024 turned off
+	/*if($online_application_id != 0) {
 	 	fetch_applicant_official_info($form,$online_application_id, 'vs');
-	}
+	}*/
 	
 	return $form;
  }

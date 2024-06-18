@@ -13,7 +13,7 @@ if($isVal){
 	print_r($entityList); die('ok');*/
 	
 	$entityType = $entityList['type'];
-	$application_data = $application_arr[1];
+	$application_data = $application_arr[1]; 
 	$common_data = $output[1];
 	$applicant_data = $output[3];
 
@@ -87,9 +87,7 @@ if($isVal){
     <?php		
 			}
     } */
-if($common_data->status == 'applicant_acceptance' || $common_data->status == 'ddo_verified_2' || $common_data->status == 'housing_sup_approved_2')
-{
-  ?>
+    if($common_data->status == 'applicant_acceptance' || $common_data->status == 'ddo_verified_2' || $common_data->status == 'housing_sup_approved_2' || $common_data->status == 'applicant_acceptance' || $common_data->status == 'applicant_reject' || $common_data->status == 'ddo_reject_2' || $common_data->status == 'housing_sup_reject_2'){ ?>
       <tr><td><?php echo l('<img height="30" width="30" src="'.$base_path.drupal_get_path('module', 'application_of_registration_list').'/images/download_icon.png " title="Download Offer Letter" alt="PDF Icon">Uploaded Current Pay Slip',$output['doc']['current_pay_slip_url'],array('html' => true , 'attributes'=> array('download' => $output['doc']['license_application_signed_form_fname'], 'style' => 'color: #0090C7;font-weight: 400;text-decoration: none; font-size:14px'))); ?></td></tr>
 
       <tr><td><?php echo l('<img height="30" width="30" src="'.$base_path.drupal_get_path('module', 'application_of_registration_list').'/images/download_icon.png " title="Declaration Form" alt="PDF Icon">Uploaded Declaration Signed Form',$output['doc']['declaration_signed_form_url'],array('html'=>true,'attributes'=>array('download' => $output['doc']['declaration_signed_form_fname'], 'style' => 'color: #0090C7;font-weight: 400;text-decoration: none; font-size:14px'))); ?></td></tr>
@@ -97,11 +95,8 @@ if($common_data->status == 'applicant_acceptance' || $common_data->status == 'dd
       <tr><td><?php echo l('<img height="30" width="30" src="'.$base_path.drupal_get_path('module', 'application_of_registration_list').'/images/download_icon.png " title="Licence Form" alt="PDF Icon">Uploaded Licence Application Signed Form',$output['doc']['license_application_signed_form_url'],array('html'=>true,'attributes'=>array('download' => $output['doc']['current_pay_slip_fname'], 'style' => 'color: #0090C7;font-weight: 400;text-decoration: none; font-size:14px'))); ?></td></tr>
 
       <?php
-}
-
       
-      
-		//}
+		}
 		if(trim($entityType) == 'Vertical Shifting') {
 			if($common_data->uri_vs != '') {
 				$path = substr($common_data->uri_vs, 9);
@@ -394,7 +389,7 @@ if($common_data->status == 'applicant_acceptance' || $common_data->status == 'dd
       </tr>
 
         <?php 
-      }else if(trim($entityType) == 'Vertical Shifting')
+      }else if(trim($entityType) == 'Vertical Shifting' || trim($entityType) == 'Category Shifting')
       {
         ?>
         <tr>
