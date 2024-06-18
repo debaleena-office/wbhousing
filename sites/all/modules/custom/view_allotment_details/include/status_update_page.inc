@@ -51,7 +51,7 @@ function status_update_page($online_application_id = '', $status = '') {
 			->execute();*/
 
 			db_update('housing_online_application')
-			->fields(array('status' => 'applicant_acceptance'))
+			->fields(array('status' => 'applicant_reject'))
 			->condition('online_application_id', $online_id, '=')
 			->execute();
 
@@ -60,7 +60,7 @@ function status_update_page($online_application_id = '', $status = '') {
 				'status_id' => 10,
 				'created_at' => date('Y-m-d H:i:s'),
 				'uid' => $user->uid,
-				'short_code' => 'applicant_acceptance'
+				'short_code' => 'applicant_reject'
 			);
 
 			db_insert('housing_process_flow')->fields($ins_arr)->execute();

@@ -139,8 +139,11 @@
 	
 	function rhewise_flatlist_form_submit($form, &$form_state) {
 		//$form_state['rebuild'] = TRUE;
+
+		//print_r($form_state['values']);die;
 		
-		$flat_id = $form_state['values']['flat_no'];
+		 $flat_id = $form_state['values']['flat_no'];
+		 $estate_id = $form_state['values']['rhe_name'];// 10-06-2024
 		
 		//$hrms_id = $form_state['values']['hrms_id'];
 		/*$result = fetch_hrms_details($hrms_id);
@@ -176,7 +179,7 @@
 			drupal_set_message('Invalid HRMS ID.', 'error');	
 		}*/
 		
-		drupal_goto('rhewise_occupant_data_entry/'.encrypt_url($flat_id));
+		drupal_goto('rhewise_occupant_data_entry/'.encrypt_url($flat_id).'/'.encrypt_url($estate_id));// 10-06-2024
 	}
 	
 	function _reload_rhewise_flat_type($form, &$form_state) {

@@ -292,7 +292,7 @@
 		);
 		
 		$form['official_info']['pay_band'] = array(
-			'#title' => t('Pay Band'),
+			'#title' => t('Basic Pay Range'),
 			'#type' => 'select',
 			'#options' => pay_band_list(),
 			'#required' => TRUE,
@@ -301,7 +301,7 @@
 			'#suffix' => '</div>',
 		);
 		$form['official_info']['pay_in'] = array(
-			'#title' => t('Pay in the Pay Band'),
+			'#title' => t('Basic Pay'),
 			'#type' => 'textfield',
 			'#required' => TRUE,
 			'#element_validate' => array('element_validate_numeric_positive'), 
@@ -310,7 +310,7 @@
 			'#attributes' => array('class' => array('numeric_positive')),
 		);
 		
-		$form['official_info']['grade_pay'] = array(
+		/*$form['official_info']['grade_pay'] = array(
 			'#title' => t('Grade Pay'),
 			'#type' => 'textfield',
 			//'#required' => TRUE,
@@ -671,7 +671,7 @@
 		}
 		
 		
-		if($form_state['values']['pay_band'] == 1) {
+		/*if($form_state['values']['pay_band'] == 1) {
 			if($form_state['values']['pay_in'] < 0 || $form_state['values']['pay_in'] > 7999) {
 				form_set_error('pay_in', t('Please enter proper Pay in the Pay Band.'));	
 			}
@@ -709,7 +709,7 @@
 					}
 				}		
 			}
-		}
+		}*/
 		
 	}
 	
@@ -744,18 +744,39 @@
 		}
 		
 		$username = str_replace(".","",$name).rand(1, 100000);
-		
-		/*insert into user table*/
-		$newUser	   	   = array();
-		$newUser['name']   = $username;
-		$newUser['pass']   = $username;
-		/*$str[0].$str[1].trim($form_state['values']['username']).'@'.$dob_t.strrev($str1[0].$str1[1]);*/
-		if($form_state['values']['email'] != '')																																																						
-			$newUser['mail']   = trim($form_state['values']['email']);
+
+		//debaleena start 11.06.24///
+
+		if($form_state['values']['hrms_id'] != '')
+		{
+			$newUser	   	   = array();
+			$newUser['name']   = trim($form_state['values']['hrms_id']);
+			$newUser['pass']   = trim($form_state['values']['hrms_id']);
+			/*$str[0].$str[1].trim($form_state['values']['username']).'@'.$dob_t.strrev($str1[0].$str1[1]);*/
+			if($form_state['values']['email'] != '')																																																						
+				$newUser['mail']   = trim($form_state['values']['email']);
+				
+			$newUser['status'] = 1;
+
+
+		}else{
+			/*insert into user table*/
+			$newUser	   	   = array();
+			$newUser['name']   = $username;
+			$newUser['pass']   = $username;
+			/*$str[0].$str[1].trim($form_state['values']['username']).'@'.$dob_t.strrev($str1[0].$str1[1]);*/
+			if($form_state['values']['email'] != '')																																																						
+				$newUser['mail']   = trim($form_state['values']['email']);
+				
+			$newUser['status'] = 1;
 			
-		$newUser['status'] = 1;
-		
+			
+
+		}
+
+		//end//
 		user_save(null, $newUser);
+
 		
 		/*get last inserted uid*/
 		
@@ -834,8 +855,8 @@
 		$app_off_detail_arr['applicant_designation']  =  strtoupper(trim($form_state['values']['app_designation']));
 		$app_off_detail_arr['pay_band_id']  =  trim($form_state['values']['pay_band']);
 		$app_off_detail_arr['pay_in_the_pay_band']  =  trim($form_state['values']['pay_in']);
-		if($form_state['values']['grade_pay'] != '')
-			$app_off_detail_arr['grade_pay']  =  trim($form_state['values']['grade_pay']);
+		// if($form_state['values']['grade_pay'] != '')
+		// 	$app_off_detail_arr['grade_pay']  =  trim($form_state['values']['grade_pay']);
 		
 		/*if($form_state['values']['gpf_no'] != '')
 			$app_off_detail_arr['gpf_no']  =  trim($form_state['values']['gpf_no']);*/
@@ -877,7 +898,8 @@
 		
 		$online_app_arr = array();
 		$online_app_arr['applicant_official_detail_id']  =  $data1->id;
-		$online_app_arr['status']  =  'verified';
+		$online_app_arr['status']  =  'housing_sup_approved_1';
+		$online_app_arr['date_of_verified']  =  date('Y-m-d');
 		$online_app_arr['date_of_application']  =  trim( implode('-', array_reverse(explode('/', $form_state['values']['doa']))));
 		$online_app_arr['is_backlog_applicant']  =  1;
 		$online_app_arr['computer_serial_no']  =  $form_state['values']['computer_serial_no'];
@@ -897,7 +919,8 @@
 		$data2 = $result2->fetchObject();
 		
 		$online_app_arr_upd = array();
-		$online_app_arr_upd['application_no']  = 'NA-'.trim( implode(explode('/', $form_state['values']['doa']))).'-'.$data2->oid;
+		//$online_app_arr_upd['application_no']  = 'NA-'.trim( implode(explode('/', $form_state['values']['doa']))).'-'.$data2->oid;
+		$online_app_arr_upd['application_no']  = 'PA-'.trim( implode(explode('/', $form_state['values']['doa']))).'-'.$data2->oid; // by debaleena 11.06.24
 			
 		db_update('housing_online_application')
 		->fields($online_app_arr_upd)

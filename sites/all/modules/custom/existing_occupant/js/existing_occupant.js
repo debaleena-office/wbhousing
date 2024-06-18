@@ -89,7 +89,7 @@
 			"flat_no":["Flat No.","selectBox"],
 			//"hrms_id":["Employee HRMS ID", "hrmsId"],
 		};
-			
+	//	console.log(formElements);	
 		if(!validateForm(formElements)) {
 			return false;
 		} else {
@@ -142,8 +142,8 @@
 			"hrmsid":["Employee HRMS ID", "hrmsId"],
 			"occupant_designation":["Designation", "textArea"],
 			"pay_band":["Pay Band", "selectBox"],
-			"pay_in":["Pay in the Pay Band", "onlyNo"],
-			"grade_pay":["Grade Pay", "onlyNo"],
+			//"pay_in":["Pay in the Pay Band", "onlyNo"],
+			//"grade_pay":["Grade Pay", "onlyNo"],
 			//"gpf_no":["GPF No", "gpfNo"],
 			"occupant_posting_place":["Place of Posting", "onlyAlphabet"],
 			"occupant_headquarter":["Headquarter", "onlyAlphabet"],

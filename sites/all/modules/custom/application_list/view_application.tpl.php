@@ -256,6 +256,10 @@ if($isVal){
 
 
     <!----debolina start housing preferences are displayed---->
+    <?php 
+    if($preference_data != NULL){
+
+     ?>
     <tr>
       <th colspan="2" style="background: none repeat scroll 0 0 #5996d9;text-align: center;font-size: 18px;line-height: 24px;font-weight: normal;font-family: 'Dosis',Arial,Verdana,serif;" class="first">Applicant's Housing Estate Preference</th>
     </tr>
@@ -271,7 +275,7 @@ if($isVal){
       <th style="background-color:#a1baef">Third Preference</th>
       <td><?php echo $preference_data[2]->estate_name;?></td>
     </tr>
-
+<?php } ?>
     <!---------end-------->
     
     <tr>
@@ -298,7 +302,7 @@ if($isVal){
       </tr>
 
         <?php 
-      }else if(trim($entityType) == 'Vertical Shifting')
+      }else if(trim($entityType) == 'Vertical Shifting'|| trim($entityType) == 'Category Shifting')
       {
          ?>
       <tr>

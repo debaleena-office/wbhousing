@@ -49,7 +49,7 @@
 	  		'access arguments' => array('administer RHE wise flat list Master'),
 		);
 		
-		$items['rhe_wise_flat_list_pdf/%/%']=array(
+		$items['rhe_wise_flat_list_pdf/%/%'] = array(
 			'title' => 'RHE Wise Flat List PDF',
 			'page callback' => 'rhe_wise_flat_list_page_pdf',
 			'page arguments' => array(1, 2),
@@ -57,8 +57,16 @@
 			'access arguments' => array('administer RHE wise flat list Master'),
 		);
 
+		/*Done by Subham*/
+		$items['view-occupant-list'] = array(
+			'title' => 'RHE wise occupant list',
+			'page callback' => 'view_occupant_list_form',
+			'page arguments' => array(),
+			'access arguments' => array('access content')
+		);
+
 		/*DDO Estate Mapping Start*/
-	    $items['ddo-estate-mapping-list']       = array(
+	    $items['ddo-estate-mapping-list'] = array(
 	        'title' => 'DDO Estate Mapping List',
 	        'page callback' => 'fss_price_list_page',
 	        'access arguments' => array(
@@ -67,7 +75,7 @@
 	        'file' => 'ddo_estate_mapping/ddo_estate_mappings_page.inc',
 	        'type' => MENU_NORMAL_ITEM
 	    );
-	    $items['add-ddo-estate-mapping/%ctools_js']                       = array(
+	    $items['add-ddo-estate-mapping/%ctools_js'] = array(
 	        'title' => 'Add DDO Estate Mapping',
 	        'page callback' => 'add_fss_price_page',
 	        'page arguments' => array(
@@ -81,7 +89,7 @@
 	        'type' => MENU_CALLBACK
 	    );
 
-	     $items['view-ddo-estate-mapping/%ctools_js/%']                       = array(
+	     $items['view-ddo-estate-mapping/%ctools_js/%'] = array(
 	        'title' => 'View DDO Estate Mapping',
 	        'page callback' => 'view_fss_price_page',
 	        'page arguments' => array(
@@ -623,6 +631,53 @@
 		$commands[] = ajax_command_replace("#flat_list_replace_update", drupal_render($form['all_list']));
 		
 		return array('#type' => 'ajax', '#commands' => $commands);
+	}
+
+	/*Done by Subham*/
+	function view_occupant_list_form() {
+		global $base_root, $base_path;
+		$output = '';
+
+		if (db_table_exists('housing_applicant')) {
+			$query = db_select('housing_applicant', 'ha');
+
+			$query->innerJoin('housing_applicant_official_detail', 'haod', 'ha.uid = haod.uid');
+			$query->innerJoin('housing_online_application', 'hoa', 'hoa.applicant_official_detail_id = haod.applicant_official_detail_id');
+			$query->innerJoin('housing_flat_occupant', 'hfo', 'hfo.online_application_id = hoa.online_application_id');
+			$query->innerJoin('housing_flat', 'hf', 'hf.flat_id = hfo.flat_id');
+			$query->innerJoin('housing_estate', 'he', 'he.estate_id = hf.estate_id');
+			$query->innerJoin('housing_flat_type', 'hft', 'hft.flat_type_id = hf.flat_type_id');
+
+			$query->condition('hoa.status', 'existing_occupant', '=');
+
+			$query->addField('ha', 'applicant_name');
+			$query->addField('he', 'estate_name');
+			$query->addField('hft', 'flat_type');
+			$result =$query->execute();
+			$result = $result->fetchAll();
+
+			if(!empty($result)){
+			$output .= '<table>';
+			$output .= '<tr><th>Serial No.</th><th>Applicant Name</th><th>Estate Name</th><th>Flat Type</th></tr>';
+			$serialNumber = 1;
+			foreach ($result as $row) {
+				$output .= '<tr>';
+				$output .= '<td>' . $serialNumber . '</td>';
+				$output .= '<td>' . $row->applicant_name . '</td>';
+				$output .= '<td>' . $row->estate_name . '</td>';
+				$output .= '<td>' . $row->flat_type . '</td>';
+				$output .= '</tr>';
+				$serialNumber++;
+			}
+			$output .= '</table>';
+			} else {
+			$output .= '<p>No data found!</p>';
+			}
+		} else {
+			$output .= '<p>The table housing_treasury_estate_mapping does not exist!</p>';
+		}
+
+		return $output;
 	}
 	
 	require_once("update_flat_fetch_data.form.inc");

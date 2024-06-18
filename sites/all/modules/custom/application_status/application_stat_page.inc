@@ -49,26 +49,40 @@ function application_status_form($form,&$form_state) {
 		
 		$output = '';
 		$online_application_id = 0;
-		$result = application_detail_fetch($online_application_id, trim($application_no));
+		// $result = application_detail_fetch($online_application_id, trim($application_no)); // turned off by debaleena
+
+		//debaleena start 11-06-2024
+		$result = fetch_full_application_status(trim($application_no));
+
+		//end
 		$rows =array();
 		$header = array();
-		$header[] = array('data' => 'Application Type');
-		$header[] = array('data' => 'Application No.', 'class' => array('text-align-c'));
-		$header[] = array('data' => 'Date of Application', 'class' => array('text-align-c'));
+		$fields = array();
+		//$header[] = array('data' => 'Application Type');
+		//$header[] = array('data' => 'Application No.', 'class' => array('text-align-c'));
+		//$header[] = array('data' => 'Date of Application', 'class' => array('text-align-c'));
 		$header[] = array('data' => 'Status', 'class' => array('text-align-c'));
 		$header[] = array('data' => 'Verification Date', 'class' => array('text-align-r'));
 		//$header[] = array('data' => 'Computer Serial No', 'class' => array('text-align-r'));
 		//$header[] = array('data' => 'Combined Waiting No', 'class' => array('text-align-r'));
 		//$header[] = array('data' => 'View Details');
 	
-		$flat_type_id = 0;
+		//$flat_type_id = 0;
+		
 		 while($data = $result->fetchObject()) {
+			
+			//print_r($data->status_description);die;
+			$fields[] = array('data' => $data->status_description, 'class' => array('text-align-c'));
+			$fields[] = array('data' => $data->created_at, 'class' => array('text-align-c'));
 			 /*if($flat_type_id != $data->flat_type_id){
 				$flat_type_id = $data->flat_type_id;
 				$data_arr = fetch_waiting_list($data->flat_type_id);
 			 }
 			 $data_val = isset($data_arr[$data->online_application_id])?$data_arr[$data->online_application_id]:NULL;*/
-			 if($data->status == 'allotted') {
+			 
+			 //turned off by debaleena 11-06-2024 start
+			 
+			 /*if($data->status == 'allotted') {
 				 $status = 'Allotted Offer';
 			 }
 			 else {
@@ -112,9 +126,12 @@ function application_status_form($form,&$form_state) {
 			 /*$fields[] = l('<img src="'.$base_path.drupal_get_path('module', 'application_status').'/images/view.png" alt="View Icon">', 				'view-application/'.encrypt_url($data->online_application_id), array(	  'html'=>TRUE,
 			  'attributes'=> array('target' => '_blank'),
 			 ));*/
-			 
-			 $rows[] = $fields;
-		 }
+			 //end
+			$rows[] = $fields;
+			// Remove data from array 
+			unset($fields); 
+		}
+		 
 		
 		$output = theme_table(
 		array(

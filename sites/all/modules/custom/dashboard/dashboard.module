@@ -1,0 +1,29 @@
+<?php
+
+function dashboard_menu(){
+    $items = array();
+
+    $items['dashboard'] = array(
+        'title' => 'Dashboard',	
+        'page callback' => 'dashboard_content',
+        'access callback' => 'user_access',
+        // 'page arguments' => array(1),
+        'access arguments' => array('access content'),
+        'type' => MENU_NORMAL_ITEM,
+    );
+
+    return $items;
+}
+
+function dashboard_content(){
+    return theme('custom_dashboard_template');
+}
+
+function dashboard_theme() {
+    return array(
+      'custom_dashboard_template' => array(
+        'variables' => array(),
+        'template' => 'custom-dashboard-template',
+      ),
+    );
+  }

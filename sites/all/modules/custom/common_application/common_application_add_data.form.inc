@@ -13,7 +13,6 @@
 
    function update_applicant_personal_detail($form, &$form_state){
    		/*update housing_applicant table data*/ 
-		
 		global $user;
 		
 		$applicant_personal_detail_arr = array();
@@ -73,10 +72,15 @@
 		$query1 = db_select('housing_applicant_official_detail', 'haod');
 		$query1->innerJoin('housing_online_application', 'hoa', 'haod.applicant_official_detail_id = hoa.applicant_official_detail_id');
 		$query1->addfield('haod', 'uid');
+		$query1->addfield('haod', 'applicant_official_detail_id');
 		$query1->condition('haod.uid', $user->uid, '=');
 		$result1 = $query1->execute();
+		//$result1=$result1->fetchObject();
+		//print_r($result1);die;
 		if($result1->rowCount() > 0) {
-		//echo "kjh";die;
+		 	$result1=$result1->fetchObject();
+			//echo $result1->applicant_official_detail_id;die;
+			//echo "kjh";die;
 			/*add applicant_official_detail data*/
 			$app_off_detail_arr = array();
 			$app_off_detail_arr['uid']  =  $user->uid;
@@ -103,6 +107,15 @@
 			db_insert('housing_applicant_official_detail')
 			->fields($app_off_detail_arr)
 			->execute();
+
+			//debaleena 14.06.2024 start
+			// set is_active of previous record to 0
+			$app_off_detail_arr_status_update['is_active']  =  0;
+			db_update('housing_applicant_official_detail')
+  	  		->fields($app_off_detail_arr_status_update)
+	  		->condition('applicant_official_detail_id', $result1->applicant_official_detail_id, '=')
+  	  		->execute();
+			//end
 			
 			/*fetching applicant_official_detail_id*/
 			$query = db_select('housing_applicant_official_detail', 'haod');
@@ -111,15 +124,21 @@
 			$result =$query->execute();
 			$data = $result->fetchObject();
 			
-			return $data->id;	
+			return $data->id;
+			
+			
 			
 		} else {
 			/*fetching applicant_official_detail_id*/
+			// for fresh application for new allotment //comment added by debolina 14-06-2024
+			
 			$query = db_select('housing_applicant_official_detail', 'haod');
 			$query->addExpression('MAX(applicant_official_detail_id)','id');
 			$query->condition('haod.uid', $user->uid, '=');
 			$result =$query->execute();
 			$data = $result->fetchObject();
+			//echo'data';
+			//print_r($data);die;
 			
 			update_applicant_official_detail($form, $form_state, $data->id);
 			

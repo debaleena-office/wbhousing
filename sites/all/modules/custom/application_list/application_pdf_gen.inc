@@ -328,11 +328,11 @@
 					<tr style="font-size:14px;">
 						<th style="border: 1px solid black; border-collapse: collapse;">DDO Address</th>
 						<td style="border: 1px solid black; border-collapse: collapse;">'.$common_data->ddo_address.'</td>
-					</tr>
+					</tr>';
 
 
-
-					<tr bgcolor="#CCCCCC">
+					if($preference_data != NULL){
+					'<tr bgcolor="#CCCCCC">
   						<th colspan="2" style="text-align: center;font-size: 16px;line-height: 24px;font-weight: normal;font-family: "Dosis",Arial,Verdana,serif; border: 1px solid black; border-collapse: collapse;">Applicant Housing Estate Preference</th>
   					</tr>
   					<tr style="font-size:14px;">
@@ -346,7 +346,8 @@
 					<tr style="font-size:14px;">
 						<th style="border: 1px solid black; border-collapse: collapse;">Third Preference</th>
 						<td style="border: 1px solid black; border-collapse: collapse;">'.$preference_data[2]->estate_name.'</td>
-					</tr>
+					</tr>';
+					}
 
 
 
@@ -359,7 +360,7 @@
 					
 
 
-					<tr bgcolor="#CCCCCC">
+					'<tr bgcolor="#CCCCCC">
   						<th colspan="2" style="text-align: center;font-size: 16px;line-height: 24px;font-weight: normal;font-family: "Dosis",Arial,Verdana,serif; border: 1px solid black; border-collapse: collapse;">'.$heading.'</th>
 					</tr>
 					';

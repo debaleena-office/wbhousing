@@ -108,7 +108,6 @@ function download_and_upload_submit($form, &$form_state) {
         $file->status = FILE_STATUS_PERMANENT;
         file_save($file);
         $fid = $file->fid;
-        $docArr['licence_file']['doc_type'] = 'license_application_signed_form';
         $docArr['licence_file']['fid'] = $fid;
         $docArr['licence_file']['filename'] = $file_name;
     }
@@ -124,7 +123,6 @@ function download_and_upload_submit($form, &$form_state) {
         $file->status = FILE_STATUS_PERMANENT;
         file_save($file);
         $fid = $file->fid;
-        $docArr['licence_file']['doc_type'] = 'declaration_signed_form';
         $docArr['declaration_file']['fid'] = $fid;
         $docArr['declaration_file']['filename'] = $file_name;
     }
@@ -139,27 +137,24 @@ function download_and_upload_submit($form, &$form_state) {
         $file->status = FILE_STATUS_PERMANENT;
         file_save($file);
         $fid = $file->fid;
-        $docArr['licence_file']['doc_type'] = 'current_pay_slip';
         $docArr['payslip_file']['fid'] = $fid;
         $docArr['payslip_file']['filename'] = $file_name;
     }
 
     if(!empty($docArr)){
-        foreach($docArr as $r){ //print_r($r);
+        foreach($docArr as $r){ print_r($r);
             $arrins = array(
                 'online_application_id' => decrypt_url($online_application_id),
                 'uid' => $user->uid,
                 'verified_date' => date('Y-m-d H:i:s'),
                 'is_active' => 1,
                 'doc_fid' => $r['fid'],
-                'doc_filename' => $r['filename'],
-                'doc_type' => $r['doc_type']
+                'doc_filename' => $r['filename']
             );
             db_insert('housing_online_application_upload_doc')->fields($arrins)->execute();
         }
     }
     drupal_set_message(t('The documents has been uploaded successfully.'));
-    drupal_goto('view_allotment_details');
 }
 
 

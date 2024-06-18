@@ -19,10 +19,10 @@
 		}
 		
 		
-		if($allotment_type == 1 || $allotment_type == 5) {
+		if($allotment_type == 5) {
 	
 			if(29 - $offset_val >= $no_of_vacancy) {
-				$result = db_query("select * from {housing_roaster4a_aplus_master} order by counter limit :no_of_vacancy offset :offset_val", array(':no_of_vacancy' => $no_of_vacancy, ':offset_val' => $offset_val)); 
+				$result = db_query("select * from {housing_roasterAplus_master} order by counter limit :no_of_vacancy offset :offset_val", array(':no_of_vacancy' => $no_of_vacancy, ':offset_val' => $offset_val)); 
 			} 
 			else {
 				
@@ -37,10 +37,10 @@
 				$rest_tab = '';
 				for($i=1; $i<= $no_of_iteration; $i++) {
 				$rest_tab .= " UNION ALL ";
-				$rest_tab .= "(select * from {housing_roaster4a_aplus_master} order by counter)";
+				$rest_tab .= "(select * from {housing_roasterAplus_master} order by counter)";
 				}
-				/*echo "(select * from housing_roaster4a_aplus_master order by counter limit ".$no_from_1st_tab." offset ".$offset_val.") ".$rest_tab;*/
-				$result = db_query(" (select * from housing_roaster4a_aplus_master order by counter limit ".$no_from_1st_tab." offset ".$offset_val.") ".$rest_tab);
+				/*echo "(select * from housing_roasterAplus_master order by counter limit ".$no_from_1st_tab." offset ".$offset_val.") ".$rest_tab;*/
+				$result = db_query(" (select * from housing_roasterAplus_master order by counter limit ".$no_from_1st_tab." offset ".$offset_val.") ".$rest_tab);
 				
 			}
 		
@@ -51,11 +51,11 @@
 			}
 	
 		}
-		else if($allotment_type == 2) {
+		else if($allotment_type == 1 || $allotment_type == 2) {
 		
 	
 			if(29 - $offset_val >= $no_of_vacancy) {
-				$result = db_query("select * from {housing_roaster4b_master} order by counter limit :no_of_vacancy offset :offset_val", array(':no_of_vacancy' => $no_of_vacancy, ':offset_val' => $offset_val)); 
+				$result = db_query("select * from {housing_roaster4ab_master} order by counter limit :no_of_vacancy offset :offset_val", array(':no_of_vacancy' => $no_of_vacancy, ':offset_val' => $offset_val)); 
 			} 
 			else {
 				
@@ -70,10 +70,10 @@
 				$rest_tab = '';
 				for($i=1; $i<= $no_of_iteration; $i++) {
 				$rest_tab .= " UNION ALL ";
-				$rest_tab .= "(select * from {housing_roaster4b_master} order by counter)";
+				$rest_tab .= "(select * from {housing_roaster4ab_master} order by counter)";
 				}
-				/*echo "(select * from housing_roaster4b_master order by counter limit ".$no_from_1st_tab." offset ".$offset_val.") ".$rest_tab;*/
-				$result = db_query(" (select * from housing_roaster4b_master order by counter limit ".$no_from_1st_tab." offset ".$offset_val.") ".$rest_tab);
+				/*echo "(select * from housing_roaster4ab_master order by counter limit ".$no_from_1st_tab." offset ".$offset_val.") ".$rest_tab;*/
+				$result = db_query(" (select * from housing_roaster4ab_master order by counter limit ".$no_from_1st_tab." offset ".$offset_val.") ".$rest_tab);
 				
 			}
 		
@@ -127,7 +127,7 @@
 		
 		}
 	
-		$floor = array('G', 'T');
+		$floor = array('Ground', 'Top');
 		$query_for_flat_vacancy = db_select('housing_flat', 'hf');
 		$query_for_flat_vacancy->innerJoin('housing_estate', 'he', 'he.estate_id = hf.estate_id');
 		$query_for_flat_vacancy->innerJoin('housing_block', 'hb', 'hb.block_id = hf.block_id');

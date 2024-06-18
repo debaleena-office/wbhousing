@@ -3,7 +3,7 @@
 	function waiting_list_menu() {
 		$items=array();
 		
-		$items['waiting_list']=array(
+		$items['waiting_list']=array(       // applicant sees waitling list
 			'title' => 'View Waiting List Status',
 			//'page callback' => 'waiting_list_page',
 			'page callback' => 'drupal_get_form',
@@ -238,6 +238,7 @@
 
 							//end//
 		} else {
+		
 			$result = db_query("select applicant_name, hoa.online_application_id, status, application_no, 	
 							flat_type, computer_serial_no, allotment_category, grade_pay
 							from {housing_applicant} ha
@@ -260,7 +261,10 @@
 		//print_r($result) ;die;
 		$i = 1;
 		$j = 0;
+		
+
 		while($data = $result->fetchObject()) {
+			
 			$app_data[$j]['waiting_no'] = $i;
 			$app_data[$j]['applicant_name'] = $data->applicant_name;
 			$app_data[$j]['application_no'] = $data->application_no;
@@ -284,14 +288,31 @@
 	function flat_type_wise_waiting_no($application_no = '', $flat_type_id = '') {
 		$app_data = array();
 		$flat_type_waiting_no = 0;
-		$app_data = flat_type_wise_waiting_detail($flat_type_id);
+		/////debaleena start 11.06.24////
+		$query = db_select('housing_online_application', 'hoa');
+		$query->innerJoin('housing_allotment_status_master', 'hasm',
+		'hoa.status = hasm.short_code');
+		$query->addField('hasm', 'status_description');
+		$query->addField('hoa', 'status');
+		$query->condition('hoa.application_no', $application_no);
+	 
+		$result = $query->execute();
+		$result = $result->fetchObject();
+
+		///end///
 		
-		for($i=0; $i<sizeof($app_data); $i++){
-			
-			if($application_no == $app_data[$i]['application_no'])
-			$flat_type_waiting_no = $app_data[$i]['waiting_no'];
+		if($result->status == 'housing_sup_approved_1')   // by debaleena 11.06.24
+		{
+			$app_data = flat_type_wise_waiting_detail($flat_type_id);
+		
+			for($i=0; $i<sizeof($app_data); $i++){
+				
+				if($application_no == $app_data[$i]['application_no'])
+					$flat_type_waiting_no = $app_data[$i]['waiting_no'];
+			}
+		}else{
+			$flat_type_waiting_no = $result->status_description;
 		}
-		
 		
 		return $flat_type_waiting_no;
 	}

@@ -44,21 +44,23 @@
 		}
 	}
 	
-function validate_flat_no($element, &$form_state) {
+/*function validate_flat_no($element, &$form_state) {
+	echo "<pre>";print_r($form_state['values']);die;
   	$flat_no = trim($element['#value']);
-	$estate_id = trim($form_state['values']['rhe_name']);
+	//$estate_id = trim($form_state['values']['rhe_name']);//10-06-2024
 	
 	$value = trim($element['#value']);
 	if($value !== '' && !preg_match("/^[\w\/\-]+$/",$value)) {
 		form_set_error($element['#name'], t('" %name " must be alphnumeric. Only special characters - and / allowed.', array('%name' => $element['#title'])));
 	}
 	else {
-		if($estate_id != '' && $flat_no != '') {
+		// if($estate_id != '' && $flat_no != '') {
+		if($flat_no != '') {
 			$query = db_select('housing_flat', 'hf');
 			$query->addField('hf', 'flat_no','flat_no');
 			$db_and = db_and();
 			$db_and->condition('hf.flat_no', trim($flat_no), '=');
-			$db_and->condition('hf.estate_id', $estate_id, '=');
+			//$db_and->condition('hf.estate_id', $estate_id, '='); //10-06-2024
 			$query->condition($db_and);
 			$result = $query->execute();
 			if($result->rowcount() > 0){
@@ -66,7 +68,7 @@ function validate_flat_no($element, &$form_state) {
 			}
 		}
 	}
-}
+}*/
 
 function edit_validate_flat_no($element, &$form_state) {
   	$flat_no = trim($element['#value']);

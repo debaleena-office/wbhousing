@@ -111,7 +111,7 @@
 		return theme('application_template', array('output' => $output));
 	}	
 	function view_app_detail_page($app_id = '',$page_status='',$status='') {
-		global $base_root, $base_path;
+
 		//echo decrypt_url($status);die;
 		$app_id = decrypt_url($app_id);
 		//echo $app_id;die;
@@ -164,12 +164,11 @@
 
 				// get document info
 				$fetchDoc = get_applicant_upload_docs($app_id);
-				//print_r($fetchDoc->fetchAllKeyed());die;
 				
 				if($fetchDoc->rowCount() >0){
 					$doc_arr = $fetchDoc->fetchAllKeyed($key_index = 8, $value_index = 7);
 
-					 //print_r($doc_arr); die;
+					// print_r($doc_arr); die;
 					
 					$output['doc']['license_application_signed_form_url'] = $base_root.$base_path.'sites/default/files/doc/'.$applicant_uid.'/'.$doc_arr['license_application_signed_form'];
 					$output['doc']['license_application_signed_form_fname'] = $doc_arr['license_application_signed_form'];
@@ -362,6 +361,10 @@ function fetch_all_application_detail($entity = '',$status = ''){
 		$query->addField('hoa', 'date_of_verified');
 		$query->addField('hoa', 'uploaded_app_form');
 		$query->addField('fm_app_form', 'uri', 'uri_app_form');
+
+		//18-06-2024 start
+		$query->condition('haod.is_active',1);
+		//end
 		
 		if($entity == 'new-apply'){
 			$query->addField('hna', 'allotment_category');
@@ -741,6 +744,8 @@ function application_list_fetch($entity = '',$status = ''){
 		else if($entity == 'vs'){
 			$query->innerJoin('housing_vs_application', 'hva',
 			'hva.online_application_id = hoa.online_application_id');
+			$query->innerJoin('housing_flat_type', 'hft',
+			'hva.flat_type_id = hft.flat_type_id');
 			
 			$query->leftJoin('file_managed', 'fm_vs',
 			'fm_vs.fid = hva.file_licence');
@@ -748,6 +753,8 @@ function application_list_fetch($entity = '',$status = ''){
 		else if($entity == 'cs'){
 			$query->innerJoin('housing_cs_application', 'hca',
 			'hca.online_application_id = hoa.online_application_id');
+			$query->innerJoin('housing_flat_type', 'hft',
+			'hca.flat_type_id = hft.flat_type_id');
 			
 			$query->leftJoin('file_managed', 'fm_cs',
 			'fm_cs.fid = hca.file_licence');
@@ -808,6 +815,10 @@ function application_list_fetch($entity = '',$status = ''){
 		$query->addField('hoa', 'computer_serial_no');
 		$query->addField('hoa', 'uploaded_app_form');
 		$query->addField('fm_app_form', 'uri', 'uri_app_form');
+
+		//18-06-2024 start
+		$query->condition('haod.is_active',1);
+		//end
 		
 		if($entity == 'new-apply'){
 			$query->addField('hna', 'allotment_category');
@@ -819,10 +830,12 @@ function application_list_fetch($entity = '',$status = ''){
 		else if($entity == 'vs'){
 			$query->addField('hva', 'allotment_category');
 			$query->addField('fm_vs', 'uri', 'uri_vs');
+			$query->addField('hft', 'flat_type');
 		}
 		else if($entity == 'cs'){
 			$query->addField('hca', 'allotment_category');
 			$query->addField('fm_cs', 'uri', 'uri_cs');
+			$query->addField('hft', 'flat_type');
 		}
 		else if($entity == 'new_license' || $entity == 'vs_licence' || $entity == 'cs_licence' || $entity == 'renew_license'){
 			$query->addField('fm_licence', 'uri', 'uri_licence');
@@ -847,7 +860,7 @@ function application_list_fetch($entity = '',$status = ''){
 }
 
 function application_list_fetch_for_verified_reject($entity = '',$status = ''){
-	// echo $status;die;
+	//echo $status;die;
 	global $user, $user_role;
 
 		// $query = db_select('housing_process_flow', 'hpf');
@@ -891,6 +904,9 @@ function application_list_fetch_for_verified_reject($entity = '',$status = ''){
 		else if($entity == 'vs'){
 			$query->innerJoin('housing_vs_application', 'hva',
 			'hva.online_application_id = hoa.online_application_id');
+
+			$query->innerJoin('housing_flat_type', 'hft',
+			'hva.flat_type_id = hft.flat_type_id');
 			
 			$query->leftJoin('file_managed', 'fm_vs',
 			'fm_vs.fid = hva.file_licence');
@@ -898,6 +914,9 @@ function application_list_fetch_for_verified_reject($entity = '',$status = ''){
 		else if($entity == 'cs'){
 			$query->innerJoin('housing_cs_application', 'hca',
 			'hca.online_application_id = hoa.online_application_id');
+
+			$query->innerJoin('housing_flat_type', 'hft',
+			'hca.flat_type_id = hft.flat_type_id');
 			
 			$query->leftJoin('file_managed', 'fm_cs',
 			'fm_cs.fid = hca.file_licence');
@@ -976,10 +995,26 @@ function application_list_fetch_for_verified_reject($entity = '',$status = ''){
 		else if($entity == 'vs'){
 			$query->addField('hva', 'allotment_category');
 			$query->addField('fm_vs', 'uri', 'uri_vs');
+
+			$query->addField('hft', 'flat_type');
+
+			$query->addField('hpf', 'status_id');
+			$query->addField('hpf', 'short_code');
+			$query->addField('hpf','created_at');
+			$query->addField('hpf','online_application_id');
+			$query->addField('hsm','status_description');
 		}
 		else if($entity == 'cs'){
 			$query->addField('hca', 'allotment_category');
 			$query->addField('fm_cs', 'uri', 'uri_cs');
+			
+			$query->addField('hft', 'flat_type');
+			
+			$query->addField('hpf', 'status_id');
+			$query->addField('hpf', 'short_code');
+			$query->addField('hpf','created_at');
+			$query->addField('hpf','online_application_id');
+			$query->addField('hsm','status_description');
 		}
 		else if($entity == 'new_license' || $entity == 'vs_licence' || $entity == 'cs_licence' || $entity == 'renew_license'){
 			$query->addField('fm_licence', 'uri', 'uri_licence');
@@ -988,6 +1023,10 @@ function application_list_fetch_for_verified_reject($entity = '',$status = ''){
 		
 		$query->condition('hpf.uid', $user->uid, '=');
 		$query->condition('hpf.short_code', $status, '=');
+
+		//18-06-2024 start
+		$query->condition('haod.is_active',1);
+		//end
 
 		
 		

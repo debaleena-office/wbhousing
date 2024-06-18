@@ -32,11 +32,10 @@ function new_application_menu()
 }
 
 function new_application_form_application_form_alter(&$form, &$form_state, $form_id)
-{
-
-    global $custom_url; //comment off for live
-    global $user;
-	$ddo_id = 18;
+{   
+    //echo "2nd";die;
+    global $custom_url, $user; //comment off for live
+	$ddo_id = 17;//for kolkata district
 	$pay_band_id = isset($form_state['values']['pay_band']) && !empty($form_state['values']['pay_band']) ? $form_state['values']['pay_band'] : 0;
 	//$rhe_flat_type = rhe_flat_type_rst_pay_band_id($pay_band_id);
 	$reason = isset($form_state['values']['reason']) ? $form_state['values']['reason'] : '';
@@ -44,28 +43,86 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
     /*API Call to get HRMS API Data*/
     #sample HRMS ID
     #1999002754,1995002970,1981000029
-    $userHRMSID = '1981000029';
-    $userData = getHRMSUserData($userHRMSID);
-    // echo "<pre>";
+    // $userHRMSID = '1981000029';
+    $userHRMSID = $user->name;
+    $userData = getHRMSUserData($userHRMSID); 
+    //echo "<pre>"; print_r($userData); die;
     
-    if (!empty($userData) && isset($userData['payInThePayBand']) && !empty($userData['payInThePayBand']))
-    {
+    // $userHRMSID = '';
+    // added by Moumita on 10-06-2024 
+    // fetch HRMS id by uid from housing_applicant_official_detail
+    /*$result = db_query("select * from housing_applicant_official_detail where uid =:uid",array(':uid'=>$user->uid))->fetchAssoc();
+    if(!empty($result) && $result['hrms_id'] !=''){
+        $userHRMSID = $result['hrms_id'];
+        // data fetch from HRMS which is updated
+        $userData = getHRMSUserData($result['hrms_id']);
+        if(empty($userData)){
+            // fetch data from existing occupant data
+
+            $sql = "select haod.*,haod.pay_in_the_pay_band as payInThePayBand, ha.* 
+                    from housing_applicant ha
+                    join housing_applicant_official_detail haod on ha.uid=haod.uid and haod.is_active = 1
+                    where ha.uid = :uid";
+            $result2 = db_query($sql,array(':uid'=>$user->uid))->fetchAssoc();
+            $userData = $result2;
+            $userData['payInThePayBand'] = $userData['payinthepayband'];
+        }
+    }*/
+    // echo "<pre>"; print_r($userData); die;
+    
+    // if (!empty($userData) && isset($userData['payInThePayBand']) && !empty($userData['payInThePayBand'])){ 
+
+    if (!empty($userData)){   
+        //print_r($userData);die; 
+       
         $form['ddo']['district']['#default_value'] = $ddo_id;
         $form['ddo']['district']['#disabled'] = true;
-        $form['ddo']['designation']['#options'] = ddo_desig_list($ddo_id);
-		$form['ddo']['designation']['#default_value'] = 7;
-        $form['ddo']['designation']['#disabled'] = true;
-		$basicPay = $userData['payInThePayBand'];
+        //$form['ddo']['designation']['#options'] = ddo_desig_list($ddo_id);
+        
+        //fetch ddo_code from HRMS
+        //$form['ddo']['designation']['#options']= get_ddo_desig("CABHFA102");
+        $form['ddo']['designation']['#options'] = get_ddo_desig($userData['ddoId']);
+        //$form['ddo']['designation']['#disabled'] = true;
+       // print_r(get_ddo_desig("CABHFA102"));die;
+
+       //get treasury_id 14.06.2024
+        $query = db_select('housing_ddo', 'hd');
+		$query->addField('hd', 'treasury_id');
+        $query->condition('ddo_code',$userData['ddoId'],'=');
+		$treasury_id=$query->execute();
+        $treasury_id=$treasury_id->fetchObject();
+        
+        if (!empty($treasury_id)){
+            $treasury_id=$treasury_id->treasury_id;
+        }
+        
+        
+        //print_r($treasury_id);die;
+
+
+
+
+		//$form['ddo']['designation']['#default_value'] = 7;
+        //$form['ddo']['designation']['#disabled'] = true; 
 		if (isset($userData['guardianName']) && !empty($userData['guardianName'])) {
 			$form['prrsonal_info']['applicant_father_name']['#default_value'] = $userData['guardianName'];
             $form['prrsonal_info']['applicant_father_name']['#attributes'] = array('readonly' => 'readonly');
 		}
-		//if (isset($userData['payInThePayBand']) && !empty($userData['payInThePayBand'])) {
+        if (isset($userData['applicantName']) && !empty($userData['applicantName'])) {
+		 	$form['prrsonal_info']['applicant_name']['#default_value'] = $userData['applicantName'];
+            $form['prrsonal_info']['applicant_name']['#attributes'] = array('readonly' => 'readonly');
+		}
+        if (isset($userData['dateOfBirth']) && !empty($userData['dateOfBirth'])) {
+            $form['prrsonal_info']['dob']['#default_value'] = $userData['dateOfBirth'];
+            $form['prrsonal_info']['dob']['#attributes'] = array('readonly' => 'readonly');
+       }
+		if (isset($userData['payInThePayBand']) && !empty($userData['payInThePayBand'])) {
             /* echo $basicPay;
             exit(); */
-            $form['official_info']['pay_in']['#default_value'] = $basicPay;
+            $basicPay = $userData['payInThePayBand'];
+            $form['official_info']['pay_in']['#default_value'] = $userData['payInThePayBand'];
             $form['official_info']['pay_in']['#attributes'] = array('readonly' => 'readonly');
-		//}
+		}
 		if (isset($userData['permanentStreet']) && !empty($userData['permanentStreet'])) {
 			$form['prrsonal_info']['permanent_address']['permanent_street']['#default_value'] = $userData['permanentStreet'];
 			$form['prrsonal_info']['permanent_address']['permanent_street']['#attributes'] = array('readonly' => 'readonly');
@@ -92,6 +149,8 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
 			$form['prrsonal_info']['present_address']['present_street']['#default_value'] = $userData['presentStreet'];
             $form['prrsonal_info']['present_address']['present_street']['#attributes'] = array('readonly' => 'readonly');
 		}
+        $form['prrsonal_info']['chk_permanent_address']['#attributes'] = array('readonly' => 'readonly');
+
 		if (isset($userData['presentCityTownVillage']) && !empty($userData['presentCityTownVillage'])) {
 			$form['prrsonal_info']['present_address']['present_city_town_village']['#default_value'] = $userData['presentCityTownVillage'];
             $form['prrsonal_info']['present_address']['present_city_town_village']['#attributes'] = array('readonly' => 'readonly');
@@ -108,6 +167,40 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
 			$form['prrsonal_info']['present_address']['present_pincode']['#default_value'] = $userData['presentPincode'];
             $form['prrsonal_info']['present_address']['present_pincode']['#attributes'] = array('readonly' => 'readonly');
 		}
+        if (isset($userData['mobileNo']) && !empty($userData['mobileNo'])) {
+			$form['prrsonal_info']['mobile']['#default_value'] = $userData['mobileNo'];
+			$form['prrsonal_info']['mobile']['#attributes'] = array('readonly' => 'readonly');
+		}
+        if (isset($userData['email']) && !empty($userData['email'])) {
+			$form['prrsonal_info']['email']['#default_value'] = $userData['email'];
+			$form['prrsonal_info']['email']['#attributes'] = array('readonly' => 'readonly');
+		}
+        if (isset($userData['gender']) && !empty($userData['gender'])) {
+            if($userData['gender']=='Male'){
+                $gender='M';
+            }elseif($userData['gender']=='Female'){
+                $gender='F';
+            }else{
+                $gender='';
+            }
+			$form['prrsonal_info']['gender']['#default_value'] = $gender;
+			$form['prrsonal_info']['gender']['#attributes'] = array('readonly' => 'readonly');
+		}
+        if (isset($userData['hrmsId']) && !empty($userData['hrmsId'])) {
+			$form['official_info']['hrms_id']['#default_value'] = $userData['hrmsId'];
+            $form['official_info']['hrms_id']['#attributes'] = array('readonly' => 'readonly');
+		}
+        if (isset($userData['applicantDesignation']) && !empty($userData['applicantDesignation'])) {
+			$form['official_info']['app_designation']['#default_value'] = $userData['applicantDesignation'];
+            $form['official_info']['app_designation']['#attributes'] = array('readonly' => 'readonly');
+		}
+        if (isset($userData['officeName']) && !empty($userData['officeName'])) {
+			$form['office_add']['office_name']['#default_value'] = $userData['officeName'];
+            $form['office_add']['office_name']['#attributes'] = array('readonly' => 'readonly');
+		}
+
+
+
 		if (isset($userData['applicantPostingPlace']) && !empty($userData['applicantPostingPlace'])) {
 			$form['official_info']['app_posting_place']['#default_value'] = $userData['applicantPostingPlace'];
             $form['official_info']['app_posting_place']['#attributes'] = array('readonly' => 'readonly');
@@ -208,7 +301,7 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
         $form['housing_preference']['first_preference'] = array(
             '#title' => t('First Preference'),
             '#type' => 'select',
-            '#options' => get_housing_estate_preference($pay_band_id),
+            '#options' => get_housing_estate_preference($pay_band_id,$treasury_id),
             '#required' => TRUE,
             '#prefix' => '<div class="one">',
             '#suffix' => '</div>',
@@ -218,7 +311,7 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
         $form['housing_preference']['second_preference'] = array(
             '#title' => t('Second Preference'),
             '#type' => 'select',
-            '#options' => get_housing_estate_preference($pay_band_id),
+            '#options' => get_housing_estate_preference($pay_band_id,$treasury_id),
             '#required' => TRUE,
             '#prefix' => '<div class="one">',
             '#suffix' => '</div>',
@@ -228,7 +321,7 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
         $form['housing_preference']['third_preference'] = array(
             '#title' => t('Third Preference'),
             '#type' => 'select',
-            '#options' => get_housing_estate_preference($pay_band_id),
+            '#options' => get_housing_estate_preference($pay_band_id,$treasury_id),
             '#required' => TRUE,
             '#prefix' => '<div class="one">',
             '#suffix' => '</div>',
@@ -496,7 +589,7 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
         );
 
         //$form['#attributes'] = array('onsubmit' => 'return validate_new_application_form()');
-        fetch_application_data($form);
+        //fetch_application_data($form);//turned off debaleena 14-06-2024
 
         $form['#attributes'] = array(
             'onsubmit' => 'return validate_new_application_form()'
@@ -653,11 +746,11 @@ function new_application_permission()
 
 //debaleena start//
 
-function get_housing_estate_preference($pay_band_id=''){
+function get_housing_estate_preference($pay_band_id='',$treasury_id=''){
     
-        //echo $pay_band_id;die;
+        // echo $pay_band_id;die;
         $district_code = 17;
-        $treasury_id=11;
+        //$treasury_id=11;
 
         $query1 = db_select('housing_estate', "t1");
         $query1->join('housing_flat', 't2', 't1.estate_id = t2.estate_id');
@@ -674,6 +767,8 @@ function get_housing_estate_preference($pay_band_id=''){
         $query1->groupBy('t1.estate_id, t1.estate_name');
         $query1->orderBy('t1.estate_name', '');
         $result = $query1->execute();
+
+        //echo '<pre>'; print_r($result); die;
 
         $housing_estate_options=array();
 

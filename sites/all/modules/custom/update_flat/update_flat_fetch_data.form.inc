@@ -181,8 +181,7 @@
 		$data = $result->fetchObject();
 		return $data->flat_status_id;
 	}
-
-
+	
 //RHE wise flat list	
 	function rhe_wise_flat_list_detail($rhe_name = '') {
 		

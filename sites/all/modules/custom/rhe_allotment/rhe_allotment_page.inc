@@ -2,7 +2,7 @@
 function rhe_allotment_form($form, $form_state) {	
 	$allotment_type =  !empty($form_state['values']['allotment_type']) ? $form_state['values']['allotment_type'] : '';
 	if(isset($form_state['values']['show_vacancy'])) {
-		$report_content = get_vacancy_applicant($allotment_type);
+		$report_content = get_vacancy_applicant($allotment_type, $form_state['values']['district_code']);
 	} else {
 		$report_content = '';
 	}
@@ -15,6 +15,11 @@ function rhe_allotment_form($form, $form_state) {
 		'#prefix' => '<div class="three">',
 		'#suffix' => '</div>',
 	);  
+
+	$form['district_code'] = array(
+		'#type' => 'hidden',
+		'#value' => 17
+	);
 	  
 	$form['show_vacancy'] = array(
 		'#type' => 'submit',
@@ -45,21 +50,22 @@ function rhe_allotment_form_submit($form, &$form_state) {
 	if($op == 'Allot flat') {
 		module_load_include('inc', 'rhe_allotment', 'rhe_allotment_update');
 		$allotment_type = $form_state['values']['allotment_type'];
-		rhe_allotment_update($allotment_type);
+		$district_code = $form_state['values']['district_code'];
+		rhe_allotment_update($allotment_type, $district_code);
 	}
 	$form_state['rebuild'] = TRUE;
 }
 
-function get_vacancy_applicant($allotment_type) {
+function get_vacancy_applicant($allotment_type, $district_code = 0) {
 	global $base_url;
 
 	$allvacancy = "";
-	$allvacancy = get_estatewise_vacancy($allotment_type);
+	$allvacancy = get_estatewise_vacancy($allotment_type, $district_code );
 
 	$report_table = '<table class="allotment">
 		<tr>
 			<th rowspan="2">Housing</th>
-			<th colspan="4">No. of Vacancy</th>
+			<th colspan="12">No. of Vacancy</th>
 			<th colspan="3">No. of Applicant</th>
 		</tr>
 		<tr>
@@ -67,6 +73,14 @@ function get_vacancy_applicant($allotment_type) {
 			<th>Floor-1</th>
 			<th>Floor-2</th>
 			<th>Floor-3</th>
+			<th>Floor-4</th>
+			<th>Floor-5</th>
+			<th>Floor-6</th>
+			<th>Floor-7</th>
+			<th>Floor-8</th>
+			<th>Floor-9</th>
+			<th>Floor-10</th>
+			<th>Floor-Top</th>
 			<th>Floor shifting</th>
 			<th>Category shifting</th>
 			<th>New/ Fresh</th>
@@ -75,11 +89,9 @@ function get_vacancy_applicant($allotment_type) {
 		if($allvacancy -> rowCount() > 0) {
 			$total_record = $allvacancy -> rowCount();
 			$counter = 1; $applicant_new = 0; $rowspan = 0;
-			foreach($allvacancy as $record) {
-
-				
-				$applicant_vs = get_no_of_applicant_vs($allotment_type, $record -> estate_id);
-				$applicant_cs = get_no_of_applicant_cs($allotment_type, $record -> estate_id);
+			foreach($allvacancy as $record) { 
+				$applicant_vs = get_no_of_applicant_vs($allotment_type, $record->estate_id);
+				$applicant_cs = get_no_of_applicant_cs($allotment_type, $record->estate_id);
 				if($counter == 1) {
 					$applicant_new = get_no_of_applicant_new($allotment_type);
 					$rowspan = $total_record;
@@ -94,6 +106,14 @@ function get_vacancy_applicant($allotment_type) {
 						<td>' . $record -> floor_1 . '</td>
 						<td>' . $record -> floor_2 . '</td>
 						<td>' . $record -> floor_3 . '</td>
+						<td>' . $record -> floor_4 . '</td>
+						<td>' . $record -> floor_5 . '</td>
+						<td>' . $record -> floor_6 . '</td>
+						<td>' . $record -> floor_7 . '</td>
+						<td>' . $record -> floor_8 . '</td>
+						<td>' . $record -> floor_9 . '</td>
+						<td>' . $record -> floor_10 . '</td>
+						<td>' . $record -> floor_top . '</td>
 						<td>' . $applicant_vs . '</td>
 						<td>' . $applicant_cs . '</td>
 						<td rowspan = "' . $rowspan . '">' . $applicant_new . '</td>
@@ -105,6 +125,14 @@ function get_vacancy_applicant($allotment_type) {
 						<td>' . $record -> floor_1 . '</td>
 						<td>' . $record -> floor_2 . '</td>
 						<td>' . $record -> floor_3 . '</td>
+						<td>' . $record -> floor_4 . '</td>
+						<td>' . $record -> floor_5 . '</td>
+						<td>' . $record -> floor_6 . '</td>
+						<td>' . $record -> floor_7 . '</td>
+						<td>' . $record -> floor_8 . '</td>
+						<td>' . $record -> floor_9 . '</td>
+						<td>' . $record -> floor_10 . '</td>
+						<td>' . $record -> floor_top . '</td>
 						<td>' . $applicant_vs . '</td>
 						<td>' . $applicant_cs . '</td>
 					</tr>';

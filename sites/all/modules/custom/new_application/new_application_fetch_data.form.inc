@@ -17,6 +17,7 @@ function fetch_new_app_status($status){
 
 /* fetch application detail*/
  function fetch_application_data(&$form){
+	//echo '3rd';die;
 	 $online_application_id = max_new_allotment_application_id(array('reject','cancel'));
 	 $form['prrsonal_info']['online_new_app_id']['#default_value'] = trim($online_application_id);
 	 if($online_application_id == 0){
