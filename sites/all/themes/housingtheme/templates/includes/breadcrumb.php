@@ -1,9 +1,9 @@
 <div class="d-flex flex-row justify-content-between">
     <div class="title">
-        <h3>Dashboard</h3>
+        <h3><?= $title?></h3>
         <ul class="breadcrumb text-muted fs-6 fw-normal ms-1">
         <li class="breadcrumb-item text-muted"><a href="dashboard.html" class="text-muted text-hover-primary">Home</a></li>
-        <li class="breadcrumb-item text-dark">Dashboards</li>
+        <li class="breadcrumb-item text-dark"><?= $title?></li>
         </ul>
     </div>
     <div class="dropdown">

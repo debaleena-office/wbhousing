@@ -1,4 +1,4 @@
-<?php include('includes/header.php'); ?>
+<?php include('templates/includes/header.php'); ?>
 <section class="container-lg pt-5 pb-4">
     <div class="row">
         <h1 class="fw-bold text-body-emphasis">Contact Us</h1>
@@ -11,4 +11,4 @@
         </div>
     </div>
 </section>
-<?php include('includes/footer.php'); ?>
+<?php include('templates/includes/footer.php'); ?>

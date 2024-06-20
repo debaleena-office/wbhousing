@@ -22,7 +22,7 @@
                 if($user_role == 11){
                     $new_status = 'applied';
                     $next_status_app = 'ddo_verified_1';
-                    $next_status_rej = 'ddo_reject_1';
+                    $next_status_rej = 'ddo_rejected_1';
 
                 }else if($user_role == 10){
                     $new_status = 'ddo_verified_1';
@@ -56,7 +56,7 @@
                 if($user_role == 11){//ddo
                     $new_status = 'applicant_acceptance';
                     $next_status_app = 'ddo_verified_2';
-                    $next_status_rej = 'ddo_reject_2';
+                    $next_status_rej = 'ddo_rejected_2';
 
                 }else if($user_role == 10){// housing-supervisor
                     $new_status = 'ddo_verified_2';

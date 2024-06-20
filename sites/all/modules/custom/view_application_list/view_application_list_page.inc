@@ -1,11 +1,11 @@
 <?php
 
-function view_app_page($status='', $entity = '',$page_status='') {
-	//echo $page_status;die;
+function view_app_page($status ='', $entity = '',$page_status ='') {
+	//echo $status;die;
 	global $user_role;
 	$status = decrypt_url($status);
 	$entity = decrypt_url($entity);
-	//echo $status,$entity;
+	//echo $status; die();
 	$output = '';
 	$rows =array();
 	$header = array();
@@ -16,7 +16,7 @@ function view_app_page($status='', $entity = '',$page_status='') {
 			$statusMsg = 'Submitted ';
 		}else if($status == 'ddo_verified_1'){
 			$statusMsg = 'DDO (Level-1) Verified ';
-		}else if($status == 'ddo_reject_1'){
+		}else if($status == 'ddo_rejected_1'){
 			$statusMsg = 'DDO (Level-1) Rejected ';
 		}else if($status == 'housing_sup_approved_1'){
 			$statusMsg = 'Housing Supervisor(Level-1) Verified ';
@@ -28,7 +28,7 @@ function view_app_page($status='', $entity = '',$page_status='') {
 			$statusMsg = 'Housing Official Rejected ';
 		}else if($status == 'ddo_verified_2'){
 			$statusMsg = 'DDO (Level-2) Verified ';
-		}else if($status == 'ddo_reject_2'){
+		}else if($status == 'ddo_rejected_2'){
 			$statusMsg = 'DDO (Level-2) Rejected ';
 		}else if($status == 'housing_sup_approved_2'){
 			$statusMsg = 'Housing Supervisor(Level-2) Verified ';
@@ -197,7 +197,7 @@ function view_app_page($status='', $entity = '',$page_status='') {
 
 					if($status == 'applied') {
 						$update_status = 'ddo_verified_1';
-						$reject_status = 'ddo_reject_1';
+						$reject_status = 'ddo_rejected_1';
 					}else if($status == 'ddo_verified_1'){
 						$update_status = 'housing_sup_approved_1';
 						$reject_status = 'housing_sup_reject_1';
@@ -206,7 +206,7 @@ function view_app_page($status='', $entity = '',$page_status='') {
 						$reject_status='housing_official_reject';
 					}else if($status == 'applicant_acceptance'){
 						$update_status = 'ddo_verified_2';
-						$reject_status='ddo_reject_2';
+						$reject_status='ddo_rejected_2';
 					}else if($status == 'ddo_verified_2'){
 						$update_status = 'housing_sup_approved_2';
 						$reject_status='housing_sup_reject_2';
