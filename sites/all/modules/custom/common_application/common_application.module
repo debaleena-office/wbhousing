@@ -71,7 +71,7 @@
 	}
   
 	function application_form($form, &$form_state) {
-		echo'1st';
+		// echo'1st';
 		//echo "<pre>";print_r($form_state['values']);die;
 		global $user;
 		
@@ -141,7 +141,11 @@
 			//'#validated' => TRUE,
 		);*/
 		
-		
+		// $form['prrsonal_info']['header_part1'] = array(
+		// 	'#type' => 'markup',
+		// 	'#type' => 'textfield',
+		// 	'#markup' =>'<div class="row"><div class="row g-3"></'
+		// );
 		
 		$form['prrsonal_info']['applicant_name'] = array(
 			'#title' => t('Applicant\'s Name'),

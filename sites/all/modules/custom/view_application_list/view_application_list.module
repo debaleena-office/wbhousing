@@ -79,6 +79,7 @@
 		// echo $url;  die;
 		$output = array();
 		if($status !== '' && $url !== '' && preg_match("/^[a-zA-Z0-9\-\_]*$/",$status) && preg_match("/^[a-zA-Z0-9\-\_]*$/",$url1)){
+		//if($status !== '' && $url !== ''){
 			// && preg_match("/^[a-zA-Z0-9\-\_]*$/",$status) && preg_match("/^[a-zA-Z0-9\-\_]*$/",$url1
 
 
@@ -106,6 +107,7 @@
 			// new code added by sayantika 28-05-24
 			$output['page_status']=$page_status;
 		}
+		
 		// echo "<pre>";print_r($output);die;
 		
 		return theme('application_template', array('output' => $output));
@@ -681,15 +683,19 @@ function encrypt_url($string) {
 }
 /*URL Decryption*/
 function decrypt_url($string) {
+	//echo $string;
     $key = "MAL_979805"; //key to encrypt and decrypts.
     $result = '';
     $string = base64_decode(urldecode($string));
+	
+	
    for($i=0; $i<strlen($string); $i++) {
      $char = substr($string, $i, 1);
      $keychar = substr($key, ($i % strlen($key))-1, 1);
      $char = chr(ord($char)-ord($keychar));
      $result.=$char;
    }
+  // print($result);//die;
    return $result;
 }
 
