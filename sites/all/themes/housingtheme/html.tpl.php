@@ -9,6 +9,7 @@
         <title>:: Welcome to e-Allotment of Rental Housing Estate | e-Allotment of Rental Housing Estate ::</title>
         <?php print $styles; ?>
         <link rel="stylesheet" href="<?= $base_root.$base_path ?>sites/all/themes/housingtheme/css/bootstrap.min.css">
+        <link rel="stylesheet" href="<?= $base_root.$base_path ?>sites/all/themes/housingtheme/css/bootstrap-icons.min.css">
         <link rel="stylesheet" href="<?= $base_root.$base_path ?>sites/all/themes/housingtheme/css/style.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Freeman&display=swap">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">

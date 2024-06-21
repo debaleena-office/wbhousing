@@ -44,8 +44,9 @@
 			}
 			$rows[] = $fields;
 		}
-			
-		$output = theme_table(
+		
+		//sd 20-06-2024 turned off
+		/*$output = theme_table(
 			array(
 			'header' => $header,
 			'rows' => $rows,
@@ -55,7 +56,19 @@
 			'colgroups' => array(),
 			'empty' => t("No data found!") // The message to be displayed if table is empty
 			)
-		).theme('pager');
+		).theme('pager');*/
+
+		//sd 20-06-2024 start
+		$variables = array(
+			'attributes' => array('class'=>array('table table-list')),
+			'header' => $header,
+			'rows' => $rows,
+			'sticky' => true,
+			'empty' => t("No data found!") // The message to be displayed if table is empty
+		  );
+  
+		  $output = theme('datatable', $variables);
+		  //sd 20-06-2024 end
 		
 		//
 		if($result1->rowCount() > 0) {

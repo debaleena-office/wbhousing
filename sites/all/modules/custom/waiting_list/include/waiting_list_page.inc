@@ -8,17 +8,23 @@
 			'#title' => t('Enter Application No.'),
 			'#type' => 'textfield',
 			'#default_value' => '',
-			'#attributes' => array('placeholder' => 'Enter application no.'),
+			'#attributes' => array('placeholder' => 'Enter application no.','class'=>array('form-control form-control-sm')),//sd 20-06-2024
+			//'#attributes' => array('placeholder' => 'Enter application no.'),
 			'#required' => TRUE,
-			'#prefix' => '<div class="two">',
-			'#suffix' => '</div>',
+			/*'#prefix' => '<div class="two">',
+			'#suffix' => '</div>',*/
+			'#prefix' => '<div class="row"><div class="col-md-8"><div class="form-floating">',//sd 20-06-2024
+			'#suffix' => '</div></div>',//sd 20-06-2024
 			'#weight' =>2
 		);
 		$form['search'] = array(
 			'#value' => t('Search'),
 			'#type' => 'submit',
-			'#prefix' => '<div class="two" style="margin-top:43px;height: 30px;">',
-			'#suffix' => '</div>',
+			/*'#prefix' => '<div class="two" style="margin-top:43px;height: 30px;">',
+			'#suffix' => '</div>',*/
+			'#prefix' => '<div class="col-md-4"><div class="form-floating">',//sd 20-06-2024
+			'#suffix' => '</div></div></div>',//sd-20-06-2024
+			'#attributes'=>array('class'=>array('text-centre btn bg-primary btn-sm px-5 mt-5 rounded-pill text-white fw-bolder')),//sd-20-06-2024
 			'#weight' =>3
 	  	);
 		
