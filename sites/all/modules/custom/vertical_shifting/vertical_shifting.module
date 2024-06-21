@@ -93,34 +93,41 @@ function vertical_shifting_form_application_form_alter(&$form, &$form_state, $fo
 		$form['current_occupation'] = array(
 			'#type' => 'fieldset',
 			'#title' => t('Current Occupation Specification'),
-			'#collapsible' => TRUE, // Added
-			'#collapsed' => TRUE,  // Added
+			'#collapsible' => FALSE, // Added
+			'#collapsed' => FALSE,  // Added
 		);
-		//echo $occupation_estate;die;
+		
+		$form['current_occupation']['occupation_estate_start'] = array(
+			'#type' => 'markup',
+			'#markup' => '<div class="row">'
+		);
+
 		$form['current_occupation']['occupation_estate'] = array(
 			'#title' => t('Select Housing'),
 			'#type' => 'select',
 			//'#options' => get_housing_estate(),
-			'#options' => $housing_estate_arr_1,
-			'#default_value' => $occupation_estate,
+			'#options' => ($fetch_data->estate_id !='') ? $housing_estate_arr_1 : get_housing_estate(),
+			//'#options' => $housing_estate_arr_1,
+			'#default_value' => ($fetch_data->estate_id != '') ? $fetch_data->estate_id : $occupation_estate,
 			'#required' => TRUE,
 			'#ajax' => array(
 						   'event' => 'change',
 						   'callback' => '_reload_block_no_vs',
 						   'effect' => 'fade',
 						   'progress' => array(
-							  'type' => '',
+							  'type' => 'throbber',
 							  'message' => '',
 							),
 				),
-			'#prefix' => '<div class="two">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="col-md-6"><div class="form-floating">',
+			'#suffix' => '</div></div>',
 			'#validated' => TRUE,
-			'#select2' => array(
-				'width' => '500',
-				//'placeholder' => '- Select -',
-				'allowClear' => TRUE
-			)
+			'#attributes' => array('class' => array('form-select')),
+			// '#select2' => array(
+			// 	'width' => '500',
+			// 	//'placeholder' => '- Select -',
+			// 	'allowClear' => TRUE
+			// )
 		);
 		
 		$form['current_occupation']['occupation_block'] = array(
@@ -129,14 +136,15 @@ function vertical_shifting_form_application_form_alter(&$form, &$form_state, $fo
 			'#options' => array('' => '-- Select --'),
 			'#default_value' => $occupation_block,
 			'#required' => TRUE,
-			'#prefix' => '<div class="two" id="block_replace">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="col-md-6" id="block_replace"><div class="form-floating">',
+			'#suffix' => '</div></div>',
+			'#attributes' => array('class' => array('form-select')),
 			'#validated' => TRUE,
-			'#select2' => array(
-				'width' => '500',
-				//'placeholder' => '- Select -',
-				'allowClear' => TRUE
-			)
+			// '#select2' => array(
+			// 	'width' => '500',
+			// 	//'placeholder' => '- Select -',
+			// 	'allowClear' => TRUE
+			// )
 		);
 		
 		if($fetch_data->estate_id != '') {
@@ -144,7 +152,7 @@ function vertical_shifting_form_application_form_alter(&$form, &$form_state, $fo
 				'#title' => t('Select Block'),
 				'#type' => 'select',
 				//'#options' => get_housing_block($occupation_estate),
-				'#default_value' => $occupation_block,
+				'#default_value' =>$fetch_data->block_id,
 				'#options' => $housing_block_arr_1,
 				'#required' => TRUE,
 				'#ajax' => array(
@@ -152,20 +160,58 @@ function vertical_shifting_form_application_form_alter(&$form, &$form_state, $fo
 							   'callback' => '_reload_flat_no',
 							   'effect' => 'fade',
 							   'progress' => array(
-								  'type' => '',
+								  'type' => 'throbber',
 								  'message' => '',
 								),
 					),
-				'#prefix' => '<div class="two" id="block_replace">',
-				'#suffix' => '</div>',
+				'#prefix' => '<div class="col-md-6" id="block_replace"><div class="form-floating">',
+				'#suffix' => '</div></div>',
+				'#attributes' => array('class' => array('form-select')),
 				'#validated' => TRUE,
-				'#select2' => array(
-					'width' => '500',
-					//'placeholder' => '- Select -',
-					'allowClear' => TRUE
-				)
+				// '#select2' => array(
+				// 	'width' => '500',
+				// 	//'placeholder' => '- Select -',
+				// 	'allowClear' => TRUE
+				// )
 			);	
+		}else{
+			$form['current_occupation']['occupation_block'] = array(
+				'#title' => t('Select Block'),
+				'#type' => 'select',
+				'#options' => get_housing_block($form_state['values']['occupation_estate']),
+				'#default_value' => $occupation_block,
+				'#required' => TRUE,
+				'#ajax' => array(
+								'event' => 'change',
+								'callback' => '_reload_flat_no',
+								'effect' => 'fade',
+								'progress' => array(
+									'type' => 'throbber',
+									'message' => '',
+									),
+						),
+				'#prefix' => '<div class="col-md-6" id="block_replace"><div class="form-floating">',
+				'#suffix' => '</div></div>',
+				'#attributes' => array('class' => array('form-select')),
+				'#validated' => TRUE,
+				// '#select2' => array(
+				// 	'width' => '500',
+				// 	//'placeholder' => '- Select -',
+				// 	'allowClear' => TRUE
+				// )
+			);
+
 		}
+
+		$form['current_occupation']['occupation_block_end'] = array(
+			'#type' => 'markup',
+			'#markup' => '</div>'
+		);
+
+		$form['current_occupation']['occupation_flat_start'] = array(
+			'#type' => 'markup',
+			'#markup' => '<div class="row">'
+		);
 		
 		
 		$form['current_occupation']['occupation_flat'] = array(
@@ -174,14 +220,15 @@ function vertical_shifting_form_application_form_alter(&$form, &$form_state, $fo
 			'#options' => array('' => '-- Select --'),
 			'#default_value' => isset($form_state['values']['occupation_flat']) ? $form_state['values']['occupation_flat'] : '',
 			'#required' => TRUE,
-			'#prefix' => '<div class="two" id="flat_no_replace">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="col-md-6" id="flat_no_replace"><div class="form-floating">',
+			'#suffix' => '</div></div>',
+			'#attributes' => array('class' => array('form-select')),
 			'#validated' => TRUE,
-			'#select2' => array(
-				'width' => '500',
-				//'placeholder' => '- Select -',
-				'allowClear' => TRUE
-			)
+			// '#select2' => array(
+			// 	'width' => '500',
+			// 	//'placeholder' => '- Select -',
+			// 	'allowClear' => TRUE
+			// )
 		);
 			
 		if($fetch_data->estate_id != '' && $fetch_data->block_id != '') {
@@ -192,27 +239,52 @@ function vertical_shifting_form_application_form_alter(&$form, &$form_state, $fo
 				'#default_value' => isset($form_state['values']['occupation_flat']) ? $form_state['values']['occupation_flat'] : '',
 				'#options' => $housing_flat_arr_1,
 				'#required' => TRUE,
-				'#prefix' => '<div class="two" id="flat_no_replace">',
-				'#suffix' => '</div>',
+				'#prefix' => '<div class="col-md-6" id="flat_no_replace"><div class="form-floating">',
+				'#suffix' => '</div></div>',
 				'#validated' => TRUE,
-				'#select2' => array(
-					'width' => '500',
-					//'placeholder' => '- Select -',
-					'allowClear' => TRUE
-				)
+				'#attributes' => array('class' => array('form-select')),
+				// '#select2' => array(
+				// 	'width' => '500',
+				// 	//'placeholder' => '- Select -',
+				// 	'allowClear' => TRUE
+				// )
 			);
+		}else{
+				
+				$form['current_occupation']['occupation_flat'] = array(
+				'#title' => t('Flat No'),
+				'#type' => 'select',
+				'#options' => get_housing_flat($occupation_estate, $occupation_block),
+				'#default_value' => isset($form_state['values']['occupation_flat']) ? $form_state['values']['occupation_flat'] : '',
+				'#required' => TRUE,
+				'#prefix' => '<div class="col-md-6" id="flat_no_replace"><div class="form-floating">',
+				'#suffix' => '</div></div>',
+				'#attributes' => array('class' => array('form-select')),
+				'#validated' => TRUE,
+				// '#select2' => array(
+				// 	'width' => '500',
+				// 	//'placeholder' => '- Select -',
+				// 	'allowClear' => TRUE
+				// )
+			);
+
 		}
 		
 		$form['current_occupation']['possession_date'] = array(
 			'#title' => t('Date of Possession'),
 			'#type' => 'textfield',
 			'#required' => TRUE,
-			'#attributes' => array('readonly' => 'readonly', 'id' => 'dop_vs'),
+			'#attributes' => array('readonly' => 'readonly', 'id' => 'dop_vs', 'class' => array('form-control form-control-sm')),
 			'#default_value' => '',
 			//'#validated' => TRUE,
-			'#prefix' => '<div class="two">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="col-md-6"><div class="form-floating">',
+			'#suffix' => '</div></div>',
 			'#element_validate' => array('element_validate_date'),
+		);
+
+		$form['current_occupation']['possession_date_end'] = array(
+			'#type' => 'markup',
+			'#markup' => '</div>'
 		);
 		
 		$form['current_occupation']['file_licence'] = array(

@@ -8,7 +8,8 @@
 		$items = array();
 		
 		$items['view_allotment_details'] = array(
-			'title' => 'View Offer of Allotment Details(New Allotment)',
+			/*'title' => 'View Offer of Allotment Details(New Allotment)',*/ //sd turned off 20-06-2024
+			'title' => 'Allotment Details (New Allotment)',// sd 20-06-2024
 			'page callback' => 'view_allotment_details_page',
 			'file' => 'include/view_allotment_details_page.inc',
 			'access arguments' => array('administer View Allotment Details')

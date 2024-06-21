@@ -5,7 +5,7 @@
         
         <div class="p-5 text-center position-absolute start-0 end-0">
             <div class="container">
-                <a href="index.html">
+                <a href="<?= $base_root ?>">
                     <div class="logo"><img src="<?= $base_root.$base_path ?>sites/all/themes/housingtheme/images/wb-logo.png" class="img-fluid" /></div>
                     <div class="logo-text">
                     <h1 class="text-white">e-Allotment of Rental Housing Estate</h1>

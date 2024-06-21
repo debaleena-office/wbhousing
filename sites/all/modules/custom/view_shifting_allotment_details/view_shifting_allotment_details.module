@@ -8,7 +8,8 @@
 		$items = array();
 		
 		$items['view_vs_allotment_details'] = array(
-			'title' => 'View Offer of Allotment Details(Floor Shifting)',
+			//'title' => 'View Offer of Allotment Details(Floor Shifting)', //sd turned off 20-06-2024
+			'title' => 'Allotment Details (Floor Shifting)', // sd 20-06-2024
 			'page callback' => 'view_vs_allotment_details_page',
 			'file' => 'include/view_vs_allotment_details_page.inc',
 			'access arguments' => array('administer View Shifting Allotment Details')
@@ -16,7 +17,8 @@
 		);
 		
 		$items['view_cs_allotment_details'] = array(
-			'title' => 'View Offer of Allotment Details(Category Shifting)',
+			//'title' => 'View Offer of Allotment Details(Category Shifting)', //sd turned off 20-06-2024
+			'title' => 'Allotment Details (Category Shifting)', // sd 20-06-2024
 			'page callback' => 'view_cs_allotment_details_page',
 			'file' => 'include/view_cs_allotment_details_page.inc',
 			'access arguments' => array('administer View Shifting Allotment Details')

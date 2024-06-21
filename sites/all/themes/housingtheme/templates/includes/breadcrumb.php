@@ -10,17 +10,13 @@
         <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
         <img src="<?= $base_root.$base_path ?>sites/all/themes/housingtheme/images/profile_icon.png" alt="" width="50" height="50" class="rounded-circle me-2">
         <div class="user-name">
-            <strong>DDO Name</strong></br>
-            <small><b>Email:</b> test@gmail.com</small>
+            <strong><?php echo $user->name;?></strong></br>
+            
         </div>
         </a>
         <ul class="dropdown-menu text-small shadow" style="">
         <li><a class="dropdown-item" href="#">Profile</a></li>
-        <li><a class="dropdown-item" href="#">Settings</a></li>
-        <li>
-            <hr class="dropdown-divider">
-        </li>
-        <li><a class="dropdown-item" href="#">Sign out</a></li>
+        
         </ul>
     </div>
 </div>

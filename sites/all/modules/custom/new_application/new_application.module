@@ -106,34 +106,34 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
         //$form['ddo']['designation']['#disabled'] = true; 
 		if (isset($userData['guardianName']) && !empty($userData['guardianName'])) {
 			$form['prrsonal_info']['applicant_father_name']['#default_value'] = $userData['guardianName'];
-            $form['prrsonal_info']['applicant_father_name']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+            $form['prrsonal_info']['applicant_father_name']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 		}
         if (isset($userData['applicantName']) && !empty($userData['applicantName'])) {
 		 	$form['prrsonal_info']['applicant_name']['#default_value'] = $userData['applicantName'];
-            $form['prrsonal_info']['applicant_name']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+            $form['prrsonal_info']['applicant_name']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 		}
         if (isset($userData['dateOfBirth']) && !empty($userData['dateOfBirth'])) {
             $form['prrsonal_info']['dob']['#default_value'] = $userData['dateOfBirth'];
-            $form['prrsonal_info']['dob']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+            $form['prrsonal_info']['dob']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
        }
 		if (isset($userData['payInThePayBand']) && !empty($userData['payInThePayBand'])) {
             /* echo $basicPay;
             exit(); */
             $basicPay = $userData['payInThePayBand'];
             $form['official_info']['pay_in']['#default_value'] = $userData['payInThePayBand'];
-            $form['official_info']['pay_in']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+            $form['official_info']['pay_in']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 		}
 		if (isset($userData['permanentStreet']) && !empty($userData['permanentStreet'])) {
 			$form['prrsonal_info']['permanent_address']['permanent_street']['#default_value'] = $userData['permanentStreet'];
-			$form['prrsonal_info']['permanent_address']['permanent_street']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+			$form['prrsonal_info']['permanent_address']['permanent_street']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 		}
 		if (isset($userData['permanentCityTownVillage']) && !empty($userData['permanentCityTownVillage'])) {
 			$form['prrsonal_info']['permanent_address']['permanent_city_town_village']['#default_value'] = $userData['permanentCityTownVillage'];
-            $form['prrsonal_info']['permanent_address']['permanent_city_town_village']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+            $form['prrsonal_info']['permanent_address']['permanent_city_town_village']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 		}
 		if (isset($userData['permanentPostOffice']) && !empty($userData['permanentPostOffice'])) {
 			$form['prrsonal_info']['permanent_address']['permanent_post_office']['#default_value'] = $userData['permanentPostOffice'];
-            $form['prrsonal_info']['permanent_address']['permanent_post_office']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+            $form['prrsonal_info']['permanent_address']['permanent_post_office']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 
 		}
 		if (isset($userData['permanentDistrictCode']) && !empty($userData['permanentDistrictCode'])) {
@@ -142,22 +142,22 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
 		}
 		if (isset($userData['permanentPincode']) && !empty($userData['permanentPincode'])) {
 			$form['prrsonal_info']['permanent_address']['permanent_pincode']['#default_value'] = $userData['permanentPincode'];
-			$form['prrsonal_info']['permanent_address']['permanent_pincode']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+			$form['prrsonal_info']['permanent_address']['permanent_pincode']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 		}
 		//$form['prrsonal_info']['chk_permanent_address']['#default_value'] = 1;
 		if (isset($userData['presentStreet']) && !empty($userData['presentStreet'])) {
 			$form['prrsonal_info']['present_address']['present_street']['#default_value'] = $userData['presentStreet'];
-            $form['prrsonal_info']['present_address']['present_street']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+            $form['prrsonal_info']['present_address']['present_street']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 		}
         $form['prrsonal_info']['chk_permanent_address']['#attributes'] = array('readonly' => 'readonly');
 
 		if (isset($userData['presentCityTownVillage']) && !empty($userData['presentCityTownVillage'])) {
 			$form['prrsonal_info']['present_address']['present_city_town_village']['#default_value'] = $userData['presentCityTownVillage'];
-            $form['prrsonal_info']['present_address']['present_city_town_village']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+            $form['prrsonal_info']['present_address']['present_city_town_village']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 		}
 		if (isset($userData['presentPostOffice']) && !empty($userData['presentPostOffice'])) {
 			$form['prrsonal_info']['present_address']['present_post_office']['#default_value'] = $userData['presentPostOffice'];
-            $form['prrsonal_info']['present_address']['present_post_office']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+            $form['prrsonal_info']['present_address']['present_post_office']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 		}
 		if (isset($userData['presentDistrictCode']) && !empty($userData['presentDistrictCode'])) {
 			$form['prrsonal_info']['present_address']['present_district']['#default_value'] = $userData['presentDistrictCode'];
@@ -165,15 +165,15 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
 		}
 		if (isset($userData['presentPincode']) && !empty($userData['presentPincode'])) {
 			$form['prrsonal_info']['present_address']['present_pincode']['#default_value'] = $userData['presentPincode'];
-            $form['prrsonal_info']['present_address']['present_pincode']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+            $form['prrsonal_info']['present_address']['present_pincode']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 		}
         if (isset($userData['mobileNo']) && !empty($userData['mobileNo'])) {
 			$form['prrsonal_info']['mobile']['#default_value'] = $userData['mobileNo'];
-			$form['prrsonal_info']['mobile']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+			$form['prrsonal_info']['mobile']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 		}
         if (isset($userData['email']) && !empty($userData['email'])) {
 			$form['prrsonal_info']['email']['#default_value'] = $userData['email'];
-			$form['prrsonal_info']['email']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+			$form['prrsonal_info']['email']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 		}
         if (isset($userData['gender']) && !empty($userData['gender'])) {
             if($userData['gender']=='Male'){
@@ -184,30 +184,30 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
                 $gender='';
             }
 			$form['prrsonal_info']['gender']['#default_value'] = $gender;
-			$form['prrsonal_info']['gender']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+			$form['prrsonal_info']['gender']['#attributes'] = array('readonly' => 'readonly');
 		}
         if (isset($userData['hrmsId']) && !empty($userData['hrmsId'])) {
 			$form['official_info']['hrms_id']['#default_value'] = $userData['hrmsId'];
-            $form['official_info']['hrms_id']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+            $form['official_info']['hrms_id']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 		}
         if (isset($userData['applicantDesignation']) && !empty($userData['applicantDesignation'])) {
 			$form['official_info']['app_designation']['#default_value'] = $userData['applicantDesignation'];
-            $form['official_info']['app_designation']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+            $form['official_info']['app_designation']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 		}
         if (isset($userData['officeName']) && !empty($userData['officeName'])) {
 			$form['office_add']['office_name']['#default_value'] = $userData['officeName'];
-            $form['office_add']['office_name']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+            $form['office_add']['office_name']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 		}
 
 
 
 		if (isset($userData['applicantPostingPlace']) && !empty($userData['applicantPostingPlace'])) {
 			$form['official_info']['app_posting_place']['#default_value'] = $userData['applicantPostingPlace'];
-            $form['official_info']['app_posting_place']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+            $form['official_info']['app_posting_place']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 		}
 		if (isset($userData['applicantHeadquarter']) && !empty($userData['applicantHeadquarter'])) {
 			$form['official_info']['app_headquarter']['#default_value'] = $userData['applicantHeadquarter'];
-            $form['official_info']['app_headquarter']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+            $form['official_info']['app_headquarter']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 		}
 		if (isset($userData['dateOfJoining']) && !empty($userData['dateOfJoining'])) {
 			$form['official_info']['doj']['#default_value'] = $userData['dateOfJoining'];
@@ -219,15 +219,15 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
 		}
         if (isset($userData['officeStreetCharacter']) && !empty($userData['officeStreetCharacter'])) {
 			$form['office_add']['office_street']['#default_value'] = $userData['officeStreetCharacter'];
-            $form['office_add']['office_street']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+            $form['office_add']['office_street']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 		}
 		if (isset($userData['officeCityTownVillage']) && !empty($userData['officeCityTownVillage'])) {
 			$form['office_add']['office_city']['#default_value'] = $userData['officeCityTownVillage'];
-            $form['office_add']['office_city']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+            $form['office_add']['office_city']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 		}
 		if (isset($userData['officePostOffice']) && !empty($userData['officePostOffice'])) {
 			$form['office_add']['office_post_office']['#default_value'] = $userData['officePostOffice'];
-            $form['office_add']['office_post_office']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+            $form['office_add']['office_post_office']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 		}
 		if (isset($userData['officeDistrict']) && !empty($userData['officeDistrict'])) {
 			$form['office_add']['office_district']['#default_value'] = $userData['officeDistrict'];
@@ -235,11 +235,11 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
 		}
 		if (isset($userData['officePinCode']) && !empty($userData['officePinCode'])) {
 			$form['office_add']['office_pincode']['#default_value'] = $userData['officePinCode'];
-            $form['office_add']['office_pincode']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+            $form['office_add']['office_pincode']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 		}
 		if (isset($userData['mobileNo']) && !empty($userData['mobileNo'])) {
 			$form['office_add']['office_phone_no']['#default_value'] = $userData['mobileNo'];
-            $form['office_add']['office_phone_no']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control'));
+            $form['office_add']['office_phone_no']['#attributes'] = array('readonly' => 'readonly', 'class'=>array('form-control form-control-sm'));
 		}
 		$query = db_select("housing_pay_band_categories", "t1");
 		$query->join('housing_flat_type', 't2', 't1.flat_type_id = t2.flat_type_id');
@@ -255,7 +255,10 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
 		$flat_type = $record->flat_type;
         $form['official_info']['pay_band']['#default_value'] = $pay_band_id;
         $form['official_info']['pay_band']['#disabled'] = true;
-        $form['allotment_reason']['rhe_flat_type']['#default_value'] = $flat_type;        
+        $form['allotment_reason']['rhe_flat_type']['#default_value'] = $flat_type; 
+        $form['allotment_reason']['rhe_flat_type']['#prefix'] = '<div class="col-md-6"><div class="form-floating">';
+        $form['allotment_reason']['rhe_flat_type']['#attributes'] = array('class' => array('form-control form-control-sm'));
+        $form['allotment_reason']['rhe_flat_type']['#suffix'] = '</div></div>';       
     }
     else
     {
@@ -293,7 +296,7 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
         $form['housing_preference'] = array(
             '#type' => 'fieldset',
             '#title' => t('Housing preference') ,
-            '#collapsible' => true, // Added
+            '#collapsible' => FALSE, // Added
             '#collapsed' => FALSE, // Added
             
         );
@@ -394,7 +397,7 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
         $form['allotment_reason'] = array(
             '#type' => 'fieldset',
             '#title' => t('Allotment Category') ,
-            '#collapsible' => true, // Added
+            '#collapsible' => FALSE, // Added
             '#collapsed' => FALSE, // Added
             
         );
@@ -407,8 +410,8 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
             ) ,
             '#default_value' => trim($flat_type) ,
             '#required' => true,
-            //'#prefix' => '<div class="two" id="replace_rhe_flat_type" >',
-            //'#suffix' => '</div>',
+            '#prefix' => '<div class="col-md-6" id="replace_rhe_flat_type"><div class="form-floating">',
+            '#suffix' => '</div></div>',
             //'#element_validate' => array('element_validate_flat_type'),
             
         );
@@ -421,8 +424,8 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
             '#default_value' => $reason,
             '#required' => true,
             '#validated' => true,
-            '#prefix' => '<div id="replace_allotment_category" class="two">',
-            '#suffix' => '</div>',
+            '#prefix' => '<div id="replace_allotment_category" class="col-md-6"><div class="form-floating">',
+            '#suffix' => '</div></div>',
             '#attributes' => array('id' => 'check_allotment_reason'),
             
         );
@@ -430,7 +433,7 @@ function new_application_form_application_form_alter(&$form, &$form_state, $form
         $form['document_upload'] = array(
             '#type' => 'fieldset',
             '#title' => t('Upload Documents') ,
-            '#collapsible' => true, // Added
+            '#collapsible' => FALSE, // Added
             '#collapsed' => FALSE, // Added
             
         );
