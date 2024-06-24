@@ -14,8 +14,12 @@
 			'#options' => rhe_list_specific(),
 			'#required' => TRUE,
 			//'#weight' => -10,
-			'#prefix' => '<div>',
-			'#suffix' => '</div>',
+			// '#prefix' => '<div>',// sd 24-06-2024 turned off
+			// '#suffix' => '</div>',// sd 24-06-2024 turned off
+			//'#attributes' => array('class' => array('dropdown3')),
+			'#attributes' => array('class' => array('form-select')),//sd 24-06-2024
+			'#prefix' => '<div class="col-md-12"><div class="form-floating">',//sd 24-06-2024
+			'#suffix' => '</div></div>',//sd 24-06-2024
 			'#ajax' => array(
 				'event' => 'change',
 				//'wrapper' => 'no_of_vacancy',
@@ -23,7 +27,7 @@
 				'method' => 'replace',
 			),
 			'#select2' => array(
-				'width' => '500',
+				//'width' => '500',// sd 24-06-2024 turned off
 				//'placeholder' => '- Select -',
 				'allowClear' => TRUE
         	)
@@ -35,9 +39,12 @@
 			'#options' => array('' => '-- Select --'),
 			'#required' => TRUE,
 			//'#weight' => -10,
-			'#prefix' => '<div class="two" id="flat_type_replace">',
-			'#suffix' => '</div>',
+			// '#prefix' => '<div class="two" id="flat_type_replace">',// sd 24-06-2024 turned off
+			// '#suffix' => '</div>',// sd 24-06-2024 turned off
 			//'#attributes' => array('class' => array('dropdown3')),
+			'#attributes' => array('class' => array('form-select')),//sd 24-06-2024
+			'#prefix' => '<div class="col-md-12"><div class="form-floating" id="flat_type_replace">',//sd 24-06-2024
+			'#suffix' => '</div></div>',//sd 24-06-2024
 			'#ajax' => array(
 				'event' => 'change',
 				'callback' => '_reload_rhewise_occupantlist',
@@ -52,9 +59,12 @@
 				'#options' => flat_type_under_rhe($rhe_name),
 				'#required' => TRUE,
 				//'#weight' => -10,
-				'#prefix' => '<div class="two" id="flat_type_replace">',
-				'#suffix' => '</div>',
+				// '#prefix' => '<div class="two" id="flat_type_replace">',// sd 24-06-2024 turned off
+				// '#suffix' => '</div>',// sd 24-06-2024 turned off
 				//'#attributes' => array('class'	=> array('dropdown3')),
+				'#attributes' => array('class' => array('form-select')),//sd 24-06-2024
+				'#prefix' => '<div class="col-md-12"><div class="form-floating" id="flat_type_replace">',//sd 24-06-2024
+				'#suffix' => '</div></div>',//sd 24-06-2024
 				'#ajax' => array(
 					'event' => 'change',
 					'callback' => '_reload_rhewise_occupantlist',
@@ -95,7 +105,7 @@
 			);*/
 			$result = rhe_flattype_wise_occupantlist_for_update($rhe_name, $flat_type);
 		
-			$header = array();
+			//$header = array();// sd turned off 24-06-2024
 			
 			$header = array(
 				'sl_no' => array('data' => 'Sl. No.'),
@@ -116,17 +126,21 @@
 				$form['submit_approve'] = array(
 					'#type' => 'submit',
 					'#value' => t('Click to Approve Occupants'),
-					'#attributes' => array('onclick' => $onclick),
-					'#prefix' => '<div class="two-one" id="submit_approve_occupantlist" style="height: 50%">',
-					'#suffix' => '</div>',
+					'#attributes' => array('onclick' => $onclick,'class'=>array('btn bg-danger btn-sm px-5 rounded-pill text-white mb-4 fw-bolder')),// sd 24-06-2024 
+					//'#prefix' => '<div class="two-one" id="submit_approve_occupantlist" style="height: 50%">',// sd 24-06-2024 turned off
+					//'#suffix' => '</div>',// sd 24-06-2024 turned off
+					'#prefix' => '<div class="col-md-6" id="submit_reject_occupantlist">',// sd 24-06-2024 
+					'#suffix' => '</div></div>',// sd 24-06-2024 
 				);
 				$form['submit_reject'] = array(
 					'#type' => 'submit',
 					'#value' => t('Click to Reject Occupants'),
-					'#attributes' => array('onclick' => $onclick1),
+					'#attributes' => array('onclick' => $onclick1,'class'=>array('btn bg-danger btn-sm px-5 rounded-pill text-white mb-4 fw-bolder')),// sd 24-06-2024 
 					'#submit' => array('occupant_list_reject'),
-					'#prefix' => '<div class="four" id="submit_reject_occupantlist" style="height: 50%">',
-					'#suffix' => '</div>',
+					//'#prefix' => '<div class="four" id="submit_reject_occupantlist" style="height: 50%">',// sd 24-06-2024 turned off
+					//'#suffix' => '</div>',// sd 24-06-2024 turned off
+					'#prefix' => '<div class="col-md-6" id="submit_reject_occupantlist">',// sd 24-06-2024 
+					'#suffix' => '</div></div>',// sd 24-06-2024 
 				);
 			}
 			
@@ -175,8 +189,7 @@
 				'#header' => $header,
 				'#options' => $options,
 				'#empty' => t('No occupant available.'),
-				'#prefix' => '<div id="occupant_info">',
-				'#suffix' => '</div>',
+				'#prefix' => '<div class="col-md-12"><div id="occupant_info" class="table table-list">',//sd 24-06-2024
 			);
 			
 			/*$form['pager'] = array(

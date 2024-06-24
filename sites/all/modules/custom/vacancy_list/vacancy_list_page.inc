@@ -13,8 +13,8 @@ function vacancy_list_page($district_id = 0, $flat_type_id = 0) {
 	$result2 = rhe_flat_allotment_list($district_id, $flat_type_id, $flat_status_id);
 	$data2 = $result2->fetchObject();
 	
-	$rows = array();
-	$header = array();
+	//$rows = array();//sd turned off 21-06-2024
+	//$header = array();//sd turned off 21-06-2024
 	$header['slno'] = array('data' => 'Sl. No.', 'width' => '5%');
 	$header['district_name'] = array('data' => 'District', 'width' => '14%');
 	$header['estate_name'] = array('data' => 'Name of the RHE', 'width' => '23%');
@@ -57,7 +57,21 @@ function vacancy_list_page($district_id = 0, $flat_type_id = 0) {
 		)
   	).theme('pager');*/
 	
-	if($result->rowCount() > 0) {
+	// sd 21-06-2024 start
+	$variables = array(
+		'attributes' => array('class'=>array('table table-list')),
+		'header' => $header,
+		'rows' => $rows,
+		'sticky' => true,
+		'empty' => t("No data found!") // The message to be displayed if table is empty
+	  );
+		
+	
+	$output = theme('datatable', $variables);
+	//end
+	
+	//sd turned off 21-06-2024
+	/*if($result->rowCount() > 0) {
 	// Render using Drupal's render API.
 		$build['datatable'] = array(
 		  '#theme' => 'datatable',
@@ -86,13 +100,15 @@ function vacancy_list_page($district_id = 0, $flat_type_id = 0) {
 							</tr>
 						</table>
 					</div>';
-	}
+	}*/
   
   
 	if($result->rowCount() > 0) {
-			return l('<img height="18" width="18" src="'.$base_path.drupal_get_path('module', 'vacancy_list').'/images/pdf_icon.png" title="Download Flat Vacancy List" alt="PDF Icon">Download Flat Vacancy List', 'flat_vacancy_list_pdf/'.encrypt_url($district_id).'/'.encrypt_url($flat_type_id).'/'.encrypt_url($flat_status_id).'/'.$data2->flat_type.'_type_flat_vacancy_list_'.time(), array('html'=>TRUE, 'attributes' => array('target' => '_blank', 'style' => 'color: #0090C7;font-weight: 400;text-decoration: none; font-size:14px'))).$output;
+		//sd turned off 21-06-2024
+		//return l('<img height="18" width="18" src="'.$base_path.drupal_get_path('module', 'vacancy_list').'/images/pdf_icon.png" title="Download Flat Vacancy List" alt="PDF Icon">Download Flat Vacancy List', 'flat_vacancy_list_pdf/'.encrypt_url($district_id).'/'.encrypt_url($flat_type_id).'/'.encrypt_url($flat_status_id).'/'.$data2->flat_type.'_type_flat_vacancy_list_'.time(), array('html'=>TRUE, 'attributes' => array('target' => '_blank', 'style' => 'color: #0090C7;font-weight: 400;text-decoration: none; font-size:14px'))).$output;
+		return l('Download Flat Vacancy List','flat_vacancy_list_pdf/'.encrypt_url($district_id).'/'.encrypt_url($flat_type_id).'/'.encrypt_url($flat_status_id).'/'.$data2->flat_type.'_type_flat_vacancy_list_'.time(),array('html'=>TRUE,'attributes' => array('target' => '_blank','class' => 'btn bg-primary  px-5 rounded-pill text-white fw-bolder mb-2'))).$output;//sd 21-06-2024
 	}
-	else {
+	/*else {//sd turned off 21-06-2024
 		return $output;
-	}
+	}*/
 }

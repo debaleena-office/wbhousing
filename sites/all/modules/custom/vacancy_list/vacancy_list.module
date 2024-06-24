@@ -47,9 +47,12 @@
 			'#type' => 'select',
 			'#options' => district_list(),
 			'#required' => TRUE,
-			'#attributes' => array('class' => array('dropdown3')),
-			'#prefix' => '<div class="two">',
-			'#suffix' => '</div>',
+			//'#attributes' => array('class' => array('dropdown3')),//sd 24-06-2024 turned off
+			//'#prefix' => '<div class="two">',//sd 24-06-2024 turned off
+			//'#suffix' => '</div>',//sd 24-06-2024 turned off
+			'#attributes' => array('class' => array('form-select')),
+			'#prefix' => '<div class="col-md-12"><div class="form-floating">',//sd 24-06-2024
+			'#suffix' => '</div></div>',//sd 24-06-2024
 			'#ajax' => array(
 				'event' => 'change',
 				//'wrapper' => 'no_of_vacancy',
@@ -57,15 +60,18 @@
 				'method' => 'replace',
 			),
 			'#select2' => array(
-				'width' => '500',
+				//'width' => '500',//sd 24-06-2024 turned off
 				//'placeholder' => '- Select -',
 				'allowClear' => TRUE
         	)
 	 	);
 	 
 		$form['flat_type'] = array(
-			'#prefix' => '<div class="two" id="flat_type">',
-			'#suffix' => '</div>',
+			//'#prefix' => '<div class="two" id="flat_type">',//sd 24-06-2024 turned off
+			//'#suffix' => '</div>',//sd 24-06-2024 turned off
+			'#attributes' => array('class' => array('form-select')),
+			'#prefix' => '<div class="col-md-12"><div class="form-floating" id="flat_type">',//sd 24-06-2024
+			'#suffix' => '</div></div>',//sd 24-06-2024
 		);
 		
 		if($district_val != 0) {
@@ -74,9 +80,12 @@
 				'#type' => 'select',
 				'#options' => rhe_flat_type(),
 				'#required' => TRUE,
-				'#attributes' => array('class' => array('dropdown3')),
-				'#prefix' => '<div class="two" id="flat_type">',
-				'#suffix' => '</div>',
+				//'#attributes' => array('class' => array('dropdown3')), //sd 24-06-2024 turned off
+				//'#prefix' => '<div class="two" id="flat_type">',//sd 24-06-2024 turned off
+				//'#suffix' => '</div>',//sd 24-06-2024 turned off
+				'#attributes' => array('class' => array('form-select')),//sd 24-06-2024
+				'#prefix' => '<div class="col-md-12"><div class="form-floating" id="flat_type">',//sd 24-06-2024
+				'#suffix' => '</div></div>',//sd 24-06-2024
 				'#ajax' => array(
 					'event' => 'change',
 					//'wrapper' => 'no_of_vacancy',
@@ -84,7 +93,7 @@
 					'method' => 'replace',
 				),
 				'#select2' => array(
-					'width' => '500',
+					//'width' => '500',//sd 24-06-2024 turned off
 					//'placeholder' => '- Select -',
 					'allowClear' => TRUE
 				)

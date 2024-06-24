@@ -14,14 +14,17 @@
 			'#type' => 'select',
 			'#options' => allotment_process_date(),
 			'#required' => TRUE,
-			'#attributes' => array('class' => array('dropdown3')),
+			//'#attributes' => array('class' => array('dropdown3')),//sd 24-06-2024 turned off
 			'#ajax' => array(
 					   'event' => 'change',
 					   'callback' => '_reload_allotment_process_no',
 					   'method' => 'replace',
 			),
-			'#prefix' => '<div class="three">',
-			'#suffix' => '</div>',
+			//'#prefix' => '<div class="three">',//sd 24-06-2024 turned off
+			//'#suffix' => '</div>',//sd 24-06-2024 turned off
+			'#attributes' => array('class' => array('form-select')),//sd 24-06-2024
+			'#prefix' => '<div class="col-md-12"><div class="form-floating">',//sd 24-06-2024
+			'#suffix' => '</div></div>',//sd 24-06-2024
 			'#default_value' => $allotment_process_date,
 	  	);
 		
@@ -37,8 +40,12 @@
 					   'callback' => '_reload_allotment_process_type',
 					   'method' => 'replace',
 			),*/
-			'#prefix' => '<div class="three" id="allotment_process_no_replace">',
-			'#suffix' => '</div>',
+			//'#prefix' => '<div class="three" id="allotment_process_no_replace">', //sd 24-06-2024 turned off
+			//'#suffix' => '</div>', //sd 24-06-2024 turned off
+			'#attributes' => array('class' => array('form-select')),//sd 24-06-2024 turned off
+			'#prefix' => '<div class="col-md-12"><div class="form-floating" id="allotment_process_no_replace">',//sd 24-06-2024
+			'#suffix' => '</div></div>',//sd 24-06-2024
+
 			//'#default_value' => $allotment_process_no,
 		);		
 
@@ -55,8 +62,12 @@
 						   'callback' => '_reload_allotment_process_type',
 						   'method' => 'replace',
 				),
-				'#prefix' => '<div class="three" id="allotment_process_no_replace">',
-				'#suffix' => '</div>',
+				//'#prefix' => '<div class="three" id="allotment_process_no_replace">', //sd 24-06-2024 turned off
+				//'#suffix' => '</div>', //sd 24-06-2024 turned off
+				'#attributes' => array('class' => array('form-select')),//sd 24-06-2024
+				'#prefix' => '<div class="col-md-12"><div class="form-floating" id="allotment_process_no_replace">',//sd 24-06-2024
+				'#suffix' => '</div></div>',//sd 24-06-2024
+
 				'#default_value' => $allotment_process_no,
 			);
 		}
@@ -72,8 +83,12 @@
 					   'callback' => '_reload_allotment_list',
 					   'method' => 'replace',
 			),*/
-			'#prefix' => '<div class="three" id="allotment_process_type_replace">',
-			'#suffix' => '</div>',
+			//'#prefix' => '<div class="three" id="allotment_process_type_replace">', //sd 24-06-2024  turned off
+			//'#suffix' => '</div>', //sd 24-06-2024  turned off
+			'#attributes' => array('class' => array('form-select')),//sd 24-06-2024
+			'#prefix' => '<div class="col-md-12"><div class="form-floating" id="allotment_process_type_replace">',//sd 24-06-2024
+			'#suffix' => '</div></div>',//sd 24-06-2024
+
 			//'#default_value' => $allotment_process_type,
 		);		
 
@@ -84,14 +99,17 @@
 				'#type' => 'select',
 				'#options' => array('' => 'Select Allotment Process Type', 'NAL' => 'New Allotment', 'VSAL' => 'Floor Shifting', 'CSAL' => 'Category Shifting'),
 				'#required' => TRUE,
-				'#attributes' => array('class' => array('dropdown3')),
+				//'#attributes' => array('class' => array('dropdown3')),//sd 24-06-2024 turned off
 				'#ajax' => array(
 						   'event' => 'change',
 						   'callback' => '_reload_allottee_list',
 						   'method' => 'replace',
 				),
-				'#prefix' => '<div class="three" id="allotment_process_type_replace">',
-				'#suffix' => '</div>',
+				//'#prefix' => '<div class="three" id="allotment_process_type_replace">',//sd 24-06-2024 turned off
+				//'#suffix' => '</div>',//sd 24-06-2024 turned off
+				'#attributes' => array('class' => array('form-select')),//sd 24-06-2024
+				'#prefix' => '<div class="col-md-12"><div class="form-floating" id="allotment_process_type_replace">',//sd 24-06-2024
+				'#suffix' => '</div></div>',//sd 24-06-2024
 				'#default_value' => $allotment_process_type,
 			);
 		}
@@ -113,7 +131,7 @@
 		if($allotment_process_date != '' && $allotment_process_no != '' && $allotment_process_type != '') {
 			$result = fetch_all_allottee_details_for_approve($allotment_process_date, $allotment_process_no, $allotment_process_type);
 			
-			$header = array();
+			//$header = array(); //sd 24-06-2024 turned off
 			
 			if($allotment_process_type == 'NAL') {
 				$header = array(
@@ -148,17 +166,21 @@
 				$form['submit_approve'] = array(
 					'#type' => 'submit',
 					'#value' => t('Click to Approve Allotment'),
-					'#attributes' => array('onclick' => $onclick),
-					'#prefix' => '<div class="two-one" id="submit_approve_allotteelist" style="height: 50%">',
+					'#attributes' => array('onclick' => $onclick,'class'=>array('btn bg-success btn-sm px-5 rounded-pill text-white mb-4 fw-bolder')),// sd 24-06-2024
+					//'#prefix' => '<div class="two-one" id="submit_approve_allotteelist" style="height: 50%">',// sd 24-06-2024 turned off
+					//'#suffix' => '</div>',// sd 24-06-2024 turned off
+					'#prefix' => '<div class="row"><div class="col-md-6 two-one" id="submit_approve_allotteelist">',
 					'#suffix' => '</div>',
 				);
 				$form['submit_reject'] = array(
 					'#type' => 'submit',
 					'#value' => t('Click to Reject Allotment'),
-					'#attributes' => array('onclick' => $onclick1),
+					'#attributes' => array('onclick' => $onclick1,'class'=>array('btn bg-danger btn-sm px-5 rounded-pill text-white mb-4 fw-bolder')),// sd 24-06-2024
 					'#submit' => array('allottee_list_reject'),
-					'#prefix' => '<div class="four" id="submit_reject_allotteelist" style="height: 50%">',
-					'#suffix' => '</div>',
+					//'#prefix' => '<div class="four" id="submit_reject_allotteelist" style="height: 50%">',// sd 24-06-2024 turned off
+					//'#suffix' => '</div>',// sd 24-06-2024 turned off
+					'#prefix' => '<div class="col-md-6" id="submit_reject_allotteelist">',
+					'#suffix' => '</div></div>',
 				);
 			}
 			
@@ -166,13 +188,15 @@
 			
 			foreach($result as $record) {
 				
-				if(trim($record->floor) == 'F') {
+				/*if(trim($record->floor) == 'F') {
 					$floor = '1st';	
 				} else if(trim($record->floor) == 'S') {
 					$floor = '2nd';	
 				} else {
 					$floor = $record->floor;	
-				}
+				}*/
+
+				$floor = $record->floor; // sd 24-06-2024 
 				
 				if($record->allowed_for_floor_shifting != '' && $record->allowed_for_floor_shifting == 'N') {
 					$allowed_for_fs = 'No Floor Shifting Henceforth';		
@@ -239,6 +263,7 @@
 				'#empty' => t('No allottee available.'),
 				'#prefix' => '<div id="allottee_info">',
 				'#suffix' => '</div>',
+				'#attributes'=>array('class'=>array('table table-list')),//sd 24-06-2024
 			); 	
 			
 	  	}

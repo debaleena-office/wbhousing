@@ -13,14 +13,17 @@
 			'#type' => 'select',
 			'#options' => allotment_process_date(),
 			'#required' => TRUE,
-			'#attributes' => array('class' => array('dropdown3')),
+			//'#attributes' => array('class' => array('dropdown3')),//sd 24-06-2024 turned off
+			'#attributes' => array('class' => array('form-select')),//sd 24-06-2024
+			'#prefix' => '<div class="col-md-12"><div class="form-floating">',//sd 24-06-2024
+			'#suffix' => '</div></div>',//sd 24-06-2024
 			'#ajax' => array(
 					   'event' => 'change',
 					   'callback' => '_reload_allotment_process_no',
 					   'method' => 'replace',
 			),
-			'#prefix' => '<div class="three">',
-			'#suffix' => '</div>',
+			//'#prefix' => '<div class="three">',//sd 24-06-2024 turned off
+			//'#suffix' => '</div>',//sd 24-06-2024 turned off
 			'#default_value' => $allotment_process_date,
 	  	);
 		
@@ -36,8 +39,11 @@
 					   'callback' => '_reload_allotment_process_type',
 					   'method' => 'replace',
 			),*/
-			'#prefix' => '<div class="three" id="allotment_process_no_replace">',
-			'#suffix' => '</div>',
+			//'#prefix' => '<div class="three" id="allotment_process_no_replace">',// sd 24-06-2024 turned off
+			//'#suffix' => '</div>',// sd 24-06-2024 turned off
+			'#attributes' => array('class' => array('form-select')),//sd 24-06-2024
+			'#prefix' => '<div class="col-md-12"><div class="form-floating" id="allotment_process_no_replace">',//sd 24-06-2024
+			'#suffix' => '</div></div>',//sd 24-06-2024
 			//'#default_value' => $allotment_process_no,
 		);		
 
@@ -48,14 +54,17 @@
 				'#type' => 'select',
 				'#options' => allotment_process_no($allotment_process_date),
 				'#required' => TRUE,
-				'#attributes' => array('class' => array('dropdown3')),
+				//'#attributes' => array('class' => array('dropdown3')),//sd 24-06-2024 turned off
 				'#ajax' => array(
 						   'event' => 'change',
 						   'callback' => '_reload_allotment_process_type',
 						   'method' => 'replace',
 				),
-				'#prefix' => '<div class="three" id="allotment_process_no_replace">',
-				'#suffix' => '</div>',
+				//'#prefix' => '<div class="three" id="allotment_process_no_replace">',//sd 24-06-2024 turned off
+				//'#suffix' => '</div>',//sd 24-06-2024 turned off
+				'#attributes' => array('class' => array('form-select')),//sd 24-06-2024
+				'#prefix' => '<div class="col-md-12"><div class="form-floating" id="allotment_process_no_replace">',//sd 24-06-2024
+				'#suffix' => '</div></div>',//sd 24-06-2024
 				'#default_value' => $allotment_process_no,
 			);
 		}
@@ -71,8 +80,11 @@
 					   'callback' => '_reload_allotment_list',
 					   'method' => 'replace',
 			),*/
-			'#prefix' => '<div class="three" id="allotment_process_type_replace">',
-			'#suffix' => '</div>',
+			//'#prefix' => '<div class="three" id="allotment_process_type_replace">', //sd 24-06-2024 turned off
+			//'#suffix' => '</div>', //sd 24-06-2024 turned off
+			'#attributes' => array('class' => array('form-select')),//sd 24-06-2024
+			'#prefix' => '<div class="col-md-12"><div class="form-floating" id="allotment_process_type_replace">',//sd 24-06-2024
+			'#suffix' => '</div></div>',//sd 24-06-2024
 			//'#default_value' => $allotment_process_type,
 		);		
 
@@ -83,14 +95,17 @@
 				'#type' => 'select',
 				'#options' => array('' => 'Select Allotment Process Type', 'NAL' => 'New Allotment', 'VSAL' => 'Floor Shifting', 'CSAL' => 'Category Shifting'),
 				'#required' => TRUE,
-				'#attributes' => array('class' => array('dropdown3')),
+				//'#attributes' => array('class' => array('dropdown3')),//sd 24-06-2024 turned off
 				'#ajax' => array(
 						   'event' => 'change',
 						   'callback' => '_reload_allotment_list',
 						   'method' => 'replace',
 				),
-				'#prefix' => '<div class="three" id="allotment_process_type_replace">',
-				'#suffix' => '</div>',
+				//'#prefix' => '<div class="three" id="allotment_process_type_replace">', //sd 24-06-2024 turned off
+				//'#suffix' => '</div>', //sd 24-06-2024 turned off
+				'#attributes' => array('class' => array('form-select')),//sd 24-06-2024
+				'#prefix' => '<div class="col-md-12"><div class="form-floating" id="allotment_process_type_replace">',//sd 24-06-2024
+				'#suffix' => '</div></div>',//sd 24-06-2024
 				'#default_value' => $allotment_process_type,
 			);
 		}
@@ -154,8 +169,8 @@
 			$data1 = $result1->fetchObject();
 		}
 		
-		$header = array();
-		$rows = array();
+		//$header = array(); //sd 24-06-2024 turned off
+		//$rows = array(); //sd 24-06-2024 turned off
 		
 		$header[] = array('data' => 'Sl. No.');
 		if($allotment_process_type == 'NAL') {
@@ -368,16 +383,17 @@
 			
 				// Or, render using a theme function.
 				$variables = array(
-				  'attributes' => array(),
+				  //'attributes' => array(), //sd 24-06-2024 turned off
 				  'header' => $header,
 				  'rows' => $rows,
+				  'attributes' => array('class'=>array('table table-list')),//sd 24-06-2024
 				);
 				
 				$output = '<br>'.theme('datatable', $variables);
 			}
 			else {
 				$output = '<br><div>
-								<table class="datatable_no_data_found">
+								<table class="datatable_no_data_found table table-list">
 									<tr class="tr_no_data_found">
 										<th class="th_no_data_found"></th>
 									</tr>
@@ -412,16 +428,17 @@
 			
 				// Or, render using a theme function.
 				$variables = array(
-				  'attributes' => array(),
+				   //'attributes' => array(), sd 24-06-2024 turned off
 				  'header' => $header,
 				  'rows' => $rows,
+				  'attributes' => array('class'=>array('table table-list')),//sd 24-06-2024
 				);
 				
 				$output = '<br>'.theme('datatable', $variables);
 			}
 			else {
 				$output = '<br><div>
-								<table class="datatable_no_data_found">
+								<table class="datatable_no_data_found table table-list">
 									<tr class="tr_no_data_found">
 										<th class="th_no_data_found"></th>
 									</tr>
@@ -457,16 +474,17 @@
 			
 				// Or, render using a theme function.
 				$variables = array(
-				  'attributes' => array(),
+				  //'attributes' => array(),// sd 24-06-2024 turned off
 				  'header' => $header,
 				  'rows' => $rows,
+				  'attributes' => array('class'=>array('table table-list')),//sd 24-06-2024
 				);
 				
 				$output = '<br>'.theme('datatable', $variables);
 			}
 			else {
 				$output = '<br><div>
-								<table class="datatable_no_data_found">
+								<table class="datatable_no_data_found table table-list">
 									<tr class="tr_no_data_found">
 										<th class="th_no_data_found"></th>
 									</tr>

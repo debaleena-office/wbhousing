@@ -8,9 +8,12 @@
 			'#type' => 'select',
 			'#options' => rhe_flat_type(),
 			'#required' => TRUE,
-			'#attributes' => array('class' => array('dropdown3')),
-			'#prefix' => '<div >',
-			'#suffix' => '</div>',
+			// '#attributes' => array('class' => array('dropdown3')),//turned off sd 21-06-2024
+			//'#prefix' => '<div >',//turned off sd 21-06-2024
+			//'#suffix' => '</div>',//turned off sd 21-06-2024
+			'#attributes' => array('class' => array('form-select')),
+			'#prefix' => '<div class="col-md-12"><div class="form-floating">',//sd 20-06-2024
+			'#suffix' => '</div></div>',//sd 21-06-2024
 			'#ajax' => array(
 				'event' => 'change',
 				//'wrapper' => 'no_of_vacancy',
@@ -75,6 +78,17 @@
 			$header[] = array('data' => 'Computer Serial No.');	
 		}
 		//$header[] = array('data' => 'Status');
+
+		// sd 21-06-2024 start
+		$variables = array(
+			'attributes' => array('class'=>array('table table-list')),
+			'header' => $header,
+			'rows' => $rows,
+			'sticky' => true,
+			'empty' => t("No data found!") // The message to be displayed if table is empty
+		);
+		$output = theme('datatable', $variables);
+		//end
 		
 		
 		/*$output = theme_table(
@@ -89,7 +103,8 @@
 			)
 		).theme('pager');*/
 		
-		if(count($rows) > 0) {
+		//sd turned off 21-06-2024
+		/*if(count($rows) > 0) {
 		// Render using Drupal's render API.
 		$build['datatable'] = array(
 		  '#theme' => 'datatable',
@@ -118,13 +133,16 @@
 							</tr>
 						</table>
 					</div>';	
-		}
+		}*/
 	
 	
 		if(count($rows) > 0) {
-			return l('<img height="18" width="18" src="'.$base_path.drupal_get_path('module', 'waiting_list').'/images/pdf_icon.png" title="Download Flat Type Wise Waiting List" alt="PDF Icon">Download Flat Type Wise Waiting List', 'flat_type_waiting_list_pdf/'.encrypt_url($flat_type).'/flat_type_waiting_list_'.time(), array('html'=>TRUE, 'attributes' => array('target' => '_blank', 'style' => 'color: #0090C7;font-weight: 400;text-decoration: none; font-size:14px'))).$output;
+			//return l('<img height="18" width="18" src="'.$base_path.drupal_get_path('module', 'waiting_list').'/images/pdf_icon.png" title="Download Flat Type Wise Waiting List" alt="PDF Icon">Download Flat Type Wise Waiting List', 'flat_type_waiting_list_pdf/'.encrypt_url($flat_type).'/flat_type_waiting_list_'.time(), array('html'=>TRUE, 'attributes' => array('target' => '_blank', 'style' => 'color: #0090C7;font-weight: 400;text-decoration: none; font-size:14px'))).$output;
+			$url = l('Download Flat Type Wise Waiting List','flat_type_waiting_list_pdf/'.encrypt_url($flat_type).'/flat_type_waiting_list_'.time(),array('html' => true, 'attributes' => array('target' => '_blank','class' => array('btn bg-primary  px-5 rounded-pill text-white fw-bolder mb-2'))));
+
+			return $url.$output;//sd 21-06-2024
 		}
-		else {
+		/*else {//sd 21-06-2024 turned off
 			return $output;
-		}
+		}*/
 	}

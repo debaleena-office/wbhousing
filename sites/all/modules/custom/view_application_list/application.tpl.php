@@ -45,7 +45,7 @@ if($user_role == 11){
 		<div class="counter-box p-3 rounded mb-3 position-relative">
 			<span class="counter">0</span>
 			<p>Action List</p>
-			<a href="<?= $base_root.$base_path.'view_application/'.encrypt_url($status).'/'.encrypt_url($url).'/action-list' ?>" class="badge rounded-pill text-bg-success">View Deatils</a>
+			<a href="<?= $base_root.$base_path.'view_application/'.encrypt_url($status).'/'.encrypt_url($url).'/action-list' ?>" class="badge rounded-pill text-bg-success">View Details</a>
 			<img src="<?= $base_root.$base_path ?>sites/all/themes/housingtheme/images/allotment-icon.png" class="position-absolute end-0 counter-box-icon top-0" />
 		</div>
 	</div>
@@ -54,7 +54,7 @@ if($user_role == 11){
 			<i class="fa fa-group"></i>
 			<span class="counter">3275</span>
 			<p>Verified List</p>
-			<a href="<?= $base_root.$base_path.'view_application/'.encrypt_url($next_status_app).'/'.encrypt_url('new-apply').'/'.'verified-list' ?>" class="badge rounded-pill text-bg-success">View Deatils</a>
+			<a href="<?= $base_root.$base_path.'view_application/'.encrypt_url($next_status_app).'/'.encrypt_url('new-apply').'/'.'verified-list' ?>" class="badge rounded-pill text-bg-success">View Details</a>
 			<img src="<?= $base_root.$base_path ?>sites/all/themes/housingtheme/images/floor-icon.png" class="position-absolute end-0 counter-box-icon top-0" />
 		</div>
 	</div>
@@ -68,7 +68,7 @@ if($user_role == 11){
 				// $dec= decrypt_url($enc);
 				//print(encrypt_url($next_status_rej));//print($dec);die;
 			?>
-			<a href="<?= $base_root.$base_path.'view_application/'.encrypt_url($next_status_rej).'/'.encrypt_url('new-apply').'/'.'reject-list' ?>" class="badge rounded-pill text-bg-success">View Deatils</a>
+			<a href="<?= $base_root.$base_path.'view_application/'.encrypt_url($next_status_rej).'/'.encrypt_url('new-apply').'/'.'reject-list' ?>" class="badge rounded-pill text-bg-success">View Details</a>
 			<img src="<?= $base_root.$base_path ?>sites/all/themes/housingtheme/images/allotment-icon.png" class="position-absolute end-0 counter-box-icon top-0" />
 		</div>
 	</div>
