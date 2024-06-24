@@ -8,17 +8,23 @@
 			'#type' => 'textfield',
 			'#default_value' => '',
 			'#required' => TRUE,
-			'#prefix' => '<div class="two">',
-			'#suffix' => '</div>',
+			// '#prefix' => '<div class="two">', // 24-06-2024 sd
+			// '#suffix' => '</div>', // 24-06-2024 sd
+			'#attributes' => array('class' => array('form-control form-control-sm'),'oninput'=>"this.value=this.value.toUpperCase()"),//sd 24-06-2024
+			'#prefix' => '<div class="col-md-12"><div class="form-floating">',//sd 24-06-2024
+			'#suffix' => '</div></div>',//sd 24-06-2024
 			'#element_validate' => array('validate_rhe_block'),
-			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()"), 
+			//'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()"), //sd 24-06-2024
 		);
 		
 		$form['submit'] = array(
 			'#value' => t('Add'),
 			'#type' => 'submit',
-			'#prefix' => '<div class="two" style="padding-top: 42px">',
-			'#suffix' => '</div>',
+			// '#prefix' => '<div class="two" style="padding-top: 42px">',//sd 24-06-2024
+			// '#suffix' => '</div>',//sd 24-06-2024
+			'#prefix' => '<div class="col-md-12"><div class="form-floating">',//sd 24-06-2024
+			'#suffix' => '</div></div>',//sd 24-06-2024
+			'#attributes' => array('class' => array('btn bg-primary  px-5 rounded-pill text-white fw-bolder mb-2')),//sd 24-06-2024
 	  	);
 		
 		$form['#attributes'] = array('onsubmit' => 'return validate_add_flat_block_form()');
@@ -38,8 +44,8 @@
 	function viewRHEBlockList() {
 		$output = '';
 		$result = rhe_block_list_full();
-		$rows =array();
-		$header = array();
+		//$rows =array(); // sd 24-06-2204
+		//$header = array(); // sd 24-06-2204
 		$header[] = array('data' => 'Sl. No.');
 		$header[] = array('data' => 'Block Name');
 		
@@ -77,16 +83,17 @@
 		
 			// Or, render using a theme function.
 			$variables = array(
-			  'attributes' => array(),
+			  //'attributes' => array(),// sd 24-06-2024
 			  'header' => $header,
 			  'rows' => $rows,
+			  'attributes'=> array('class'=>array('table table-list')),// sd 24-06-2024
 			);
 			
 			$output = theme('datatable', $variables);
 		}
 		else {
 			$output = '<div>
-							<table class="datatable_no_data_found">
+							<table class="datatable_no_data_found table table-list">
 								<tr class="tr_no_data_found">
 									<th class="th_no_data_found"></th>
 								</tr>

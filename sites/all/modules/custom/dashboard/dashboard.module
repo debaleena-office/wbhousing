@@ -11,21 +11,22 @@ function dashboard_menu(){
         'type' => MENU_NORMAL_ITEM,
     );
 
+     // Done by Subham 21/06/2024
+    $items['profile'] = array(
+      'title' => 'User Profile',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('user_profile_form'),
+      'file' => 'include/user_profile.inc',
+      'access arguments' => array('access content'),
+    );
+
     return $items;
 }
-
 function dashboard_content() {
   // Done by Subham 20/06/2024 & 21/06/2024
   global $user;
-  $query = db_select('housing_applicant_official_detail', 'haod');
-  $query->innerJoin('housing_applicant', 'ha', 'ha.uid = haod.uid');
-  $query->fields('ha', array('applicant_name','gender','mobile_no'));
-  $query->fields('haod', array('applicant_designation'));
-  $query->condition('ha.uid',$user->uid);
-  $result =$query->execute();
-  $result = $result->fetchAssoc();
   
-  $output['user_info'] = $result;
+  $output['user_info'] = getApplicantInfo();
   return theme('custom_dashboard_template', $output);
 }
 
@@ -37,3 +38,18 @@ function dashboard_theme() {
       ),
     );
   }
+
+  function getApplicantInfo($user_id = 0){
+    global $user;
+
+    $user_id = ($user_id==0) ? $user->uid: $user_id;
+
+    $query = db_select('housing_applicant_official_detail', 'haod');
+    $query->innerJoin('housing_applicant', 'ha', 'ha.uid = haod.uid');
+    $query->fields('ha', array('applicant_name','mobile_no','permanent_street','permanent_city_town_village','permanent_post_office','permanent_pincode'));
+    $query->fields('haod', array('applicant_designation'));
+    $query->condition('ha.uid',$user_id);
+    $result =$query->execute();
+    $result = $result->fetchAssoc();
+    return $result;
+}

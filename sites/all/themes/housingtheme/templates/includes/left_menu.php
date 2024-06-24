@@ -228,12 +228,14 @@ global $user, $user_role;
             <?php if($user_role == 7){?>
                 <li class=""><?= l('Occupant Data Entry','rhewise_flatlist',array('html'=>true, 'attributes'=>array('class'=>array('nav-link')))); ?></li>
             <?php }else if($user_role == 8){?>
-                <li class=""><?= l('Occupant Data Entry','rhewise_occupantlist',array('html'=>true, 'attributes'=>array('class'=>array('nav-link')))); ?></li>
+                <li class=""><?= l('Occupant Data Entry','rhewise_occupantlist',array('html'=>true, 'attributes'=>array('class'=>array('nav-link')))); 
+                }
+            ?></li>
         </ul>
         </li>
 
         <?php
-            }}
+            }
             //sd end 20-06-2024
         ?>
 
@@ -245,6 +247,7 @@ global $user, $user_role;
             <?= l('Logout','/user/logout',array('html' =>true, 'attributes' => array('class' => array('nav-link')))); ?>
         </li>        
     </ul>
+    <!-- <br><br><br><br><br><br><br><br><br><br> -->
     <hr/>
     <!-- <button type="button" class="btn btn-outline-light border-dashed"><img src="<?= $base_root.$base_path ?>sites/all/themes/housingtheme/images/complaint_icon.png" /><br/>Complaint Management</button> -->
 </div>

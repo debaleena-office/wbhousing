@@ -20,7 +20,7 @@
 
         <?php print $scripts; ?>
     </head>
-    <body>
+    <body class="min-vh-100">
         <?php // print $page_top; ?>
         <?php print $page; ?>
         <?php // print $page_bottom; ?>

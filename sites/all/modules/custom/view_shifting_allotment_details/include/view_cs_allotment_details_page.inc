@@ -8,8 +8,8 @@
 		
 		$result1 = fetch_cs_allotment_details();
 		$data1 = $result1->fetchObject();
-		$rows =array();
-		$header = array();
+		//$rows =array();
+		//$header = array();
 		$header[] = array('data' => 'Allotment No', 'width' => '20%');
 		$header[] = array('data' => 'Allotment Date', 'width' => '10%');
 		$header[] = array('data' => 'District', 'width' => '15%');

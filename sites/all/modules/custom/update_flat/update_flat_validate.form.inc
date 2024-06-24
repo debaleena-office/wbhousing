@@ -44,8 +44,8 @@
 		}
 	}
 	
-/*function validate_flat_no($element, &$form_state) {
-	echo "<pre>";print_r($form_state['values']);die;
+function validate_flat_no($element, &$form_state) {
+	// echo "<pre>";print_r($form_state['values']);die;
   	$flat_no = trim($element['#value']);
 	//$estate_id = trim($form_state['values']['rhe_name']);//10-06-2024
 	
@@ -68,7 +68,7 @@
 			}
 		}
 	}
-}*/
+}
 
 function edit_validate_flat_no($element, &$form_state) {
   	$flat_no = trim($element['#value']);

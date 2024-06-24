@@ -7,8 +7,8 @@ function view_app_page($status ='', $entity = '',$page_status ='') {
 	$entity = decrypt_url($entity);
 	//echo $status; die();
 	$output = '';
-	$rows =array();
-	$header = array();
+	//$rows =array(); //sd turned off 21-06-2024
+	//$header = array(); //sd turned off 21-06-2024
 	$statusMsg ='';
 	
 	if($status !== '' && $entity !== '' && preg_match("/^[a-zA-Z0-9\-\_]*$/",$status) && preg_match("/^[a-zA-Z0-9\-\_]*$/",$entity)){
@@ -266,8 +266,19 @@ function view_app_page($status ='', $entity = '',$page_status ='') {
 			  'empty' => t("No data found!") // The message to be displayed if table is empty
 			)
 	  	).theme('pager');*/
+
 		
-		if(count($rows) > 0) {
+		// sd 21-06-2024 start
+		$variables = array(
+			'attributes' => array('class'=>array('table table-list')),
+			'header' => $header,
+			'rows' => $rows,
+			'sticky' => true,
+			'empty' => t("No data found!") // The message to be displayed if table is empty
+		  );
+  		//end
+		//sd turned off 21-06-2024
+		/*if(count($rows) > 0) {
 			// Render using Drupal's render API.
 			$build['datatable'] = array(
 			  '#theme' => 'datatable',
@@ -296,7 +307,7 @@ function view_app_page($status ='', $entity = '',$page_status ='') {
 								</tr>
 							</table>
 						</div>';
-		}
+		}*/
 	}
 	return $output;
 }

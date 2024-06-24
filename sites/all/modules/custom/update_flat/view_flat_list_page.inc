@@ -41,7 +41,8 @@
 			 $fields[] = $data->flat_no;
 			 $str = $data->flat_status;
 			 //if($data->is_occupied == FALSE) {
-				  $options['attributes']['class'] = array('button','small','round','link-button','steel_blue');
+				//  $options['attributes']['class'] = array('button','small','round','link-button','steel_blue');
+				$options['attributes']['class'] = array('btn bg-primary btn-sm px-5 mb-4 rounded-pill text-white fw-bolder');
 				 $str.='</br></br>'.l('Edit', 'update_flat/edit/'.encrypt_url($data->flat_id),$options);
 			 //}
 			 /*else if($data->is_occupied == TRUE) {
@@ -76,21 +77,22 @@
 			  '#theme' => 'datatable',
 			  '#header' => $header,
 			  '#rows' => $rows,
-			  '#attributes' => array(),
+			  '#attributes' => array('class'=>array('table table-list')),
 			);
 		
 			// Or, render using a theme function.
 			$variables = array(
-			  'attributes' => array(),
+			  //'attributes' => array(),
 			  'header' => $header,
 			  'rows' => $rows,
+			  'attributes' => array('class'=>array('table table-list')),
 			);
 			
 			$output = theme('datatable', $variables);
 		}
 		else {
 			$output = '<div>
-							<table class="datatable_no_data_found">
+							<table class="datatable_no_data_found table table-list">
 								<tr class="tr_no_data_found">
 									<th class="th_no_data_found"></th>
 								</tr>

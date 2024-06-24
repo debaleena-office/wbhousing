@@ -12,8 +12,11 @@ function rhe_allotment_form($form, $form_state) {
 		'#type' => 'select',
 		'#options' => rhe_flat_type(),
 		'#required' => TRUE,
-		'#prefix' => '<div class="three">',
-		'#suffix' => '</div>',
+		//'#prefix' => '<div class="three">',//sd 24-06-2024 turned off
+		//'#suffix' => '</div>',//sd 24-06-2024 turned off
+		'#attributes' => array('class' => array('form-select')),//sd 24-06-2024
+		'#prefix' => '<div class="col-md-12"><div class="form-floating">',//sd 24-06-2024
+		'#suffix' => '</div></div>',//sd 24-06-2024
 	);  
 
 	$form['district_code'] = array(
@@ -24,16 +27,18 @@ function rhe_allotment_form($form, $form_state) {
 	$form['show_vacancy'] = array(
 		'#type' => 'submit',
 		'#value' => 'Show vacancy',
-		'#prefix' => '<div class="three" style="margin-top:43px;height: 30px; width: auto;">',
-		'#suffix' => '</div>',
+		'#attributes' => array('class'=>array('btn bg-primary btn-sm px-5 rounded-pill text-white mb-4 fw-bolder')),//sd 24-06-2024;
+		'#prefix' => '<div class="row"><div class="col-md-6" >',//sd 24-06-2024;
+		'#suffix' => '</div>',//sd 24-06-2024;
 	);
 
 	if($report_content != '') {
 		$form['allotment'] = array(
 			'#type' => 'submit',
 			'#value' => 'Allot flat',
-			'#prefix' => '<div class="three" style="margin-top:43px;height: 30px;; width: auto;">',
-			'#suffix' => '</div>',
+			'#attributes' => array('class'=>array('btn bg-danger btn-sm px-5 rounded-pill text-white mb-4 fw-bolder')),//sd 24-06-2024;
+			'#prefix' => '<div class="col-md-6">',//sd 24-06-2024;
+			'#suffix' => '</div></div>',//sd 24-06-2024;
 		);
 	}
 
@@ -62,7 +67,7 @@ function get_vacancy_applicant($allotment_type, $district_code = 0) {
 	$allvacancy = "";
 	$allvacancy = get_estatewise_vacancy($allotment_type, $district_code );
 
-	$report_table = '<table class="allotment">
+	$report_table = '<table class="allotment table table-list">
 		<tr>
 			<th rowspan="2">Housing</th>
 			<th colspan="12">No. of Vacancy</th>

@@ -12,18 +12,16 @@
 				'#options' => rhe_list_specific(),
 				'#required' => TRUE,
 				//'#weight' => -10,
-				'#prefix' => '<div>',
-				'#suffix' => '</div>',
+				// '#prefix' => '<div>',// sd 24-06-2024
+				// '#suffix' => '</div>',// sd 24-06-2024
+				'#attributes' => array('class' => array('form-select')),//sd 20-06-2024
+				'#prefix' => '<div class="col-md-12"><div class="form-floating">',//sd 20-06-2024
+				'#suffix' => '</div></div>',//sd 21-06-2024
 				'#ajax' => array(
 					'event' => 'change',
 					//'wrapper' => 'no_of_vacancy',
 					'callback' => '_reload_rhe_wise_flat_list',
 					'method' => 'replace',
-				),
-				'#select2' => array(
-					'width' => '500',
-					//'placeholder' => '- Select -',
-					'allowClear' => TRUE
 				),
 				//'#attributes' => array('class' => array('update_rhe_selectize')),
 			);
@@ -34,26 +32,23 @@
 				'#options' => rhe_list(),
 				'#required' => TRUE,
 				//'#weight' => -10,
-				'#prefix' => '<div>',
-				'#suffix' => '</div>',
+				//'#prefix' => '<div>',// sd 24-06-2024
+				//'#suffix' => '</div>', //sd 24-06-2024
+				'#attributes' => array('class' => array('form-select')),//sd 20-06-2024
+				'#prefix' => '<div class="col-md-12"><div class="form-floating">',//sd 20-06-2024
+				'#suffix' => '</div></div>',//sd 21-06-2024
 				'#ajax' => array(
 					'event' => 'change',
 					//'wrapper' => 'no_of_vacancy',
 					'callback' => '_reload_rhe_wise_flat_list',
 					'method' => 'replace',
 				),
-				'#select2' => array(
-					'width' => '500',
-					//'placeholder' => '- Select -',
-					'allowClear' => TRUE
-				),
-				//'#attributes' => array('class' => array('update_rhe_selectize')),
 			);
 		}
 		
 		$form['rhe_wise_flat_list'] = array(
-			'#prefix' => '<div  id="rhe_wise_flat_list">',
-			'#suffix' => '</div>',
+			'#type' => 'markup',
+			'#markup' => '<div  id="rhe_wise_flat_list"></div>'
 		);
 		
 		if($rhe_name != 0) {
@@ -95,8 +90,8 @@
 		$result1 = rhe_wise_flat_list_detail($rhe_name);
 		$data1 = $result1->fetchObject();
 		
-		$header = array();
-		$rows =array();
+		//$header = array(); // sd 24-06-2024 turned off
+		//$rows =array(); // sd 24-06-2024 turned off
 		
 		$header[] = array('data' => 'Sl. No.');
 		$header[] = array('data' => 'District');
@@ -159,16 +154,17 @@
 		
 			// Or, render using a theme function.
 			$variables = array(
-			  'attributes' => array(),
+			  //'attributes' => array(),// sd 24-06-2024
 			  'header' => $header,
 			  'rows' => $rows,
+			  'attributes'=>array('class'=>array('table table-list')),// sd 24-06-2024
 			);
 			
 			$output = theme('datatable', $variables);
 		}
 		else {
 			$output = '<div>
-							<table class="datatable_no_data_found">
+							<table class="datatable_no_data_found table table-list">
 								<tr class="tr_no_data_found">
 									<th class="th_no_data_found"></th>
 								</tr>
@@ -184,7 +180,11 @@
 			$replace_item = array(',', '/', ' ', '.', '(', ')');
 			$file_name = str_replace($replace_item, '_', trim($data1->estate_name));
 			
-			return l('<img height="18" width="18" src="'.$base_path.drupal_get_path('module', 'update_flat').'/images/pdf_icon.png" title="Download Flat List" alt="PDF Icon">Download Flat List Of '.$data1->estate_name,'rhe_wise_flat_list_pdf/'.encrypt_url($rhe_name).'/'.$file_name, array('html'=>TRUE, 'attributes' => array('target' => '_blank', 'style' => 'color: #0090C7;font-weight: 400;text-decoration: none; font-size:14px'))).$output;
+			//sd 24-06-2024 turned off
+			//return l('<img height="18" width="18" src="'.$base_path.drupal_get_path('module', 'update_flat').'/images/pdf_icon.png" title="Download Flat List" alt="PDF Icon">Download Flat List Of '.$data1->estate_name,'rhe_wise_flat_list_pdf/'.encrypt_url($rhe_name).'/'.$file_name, array('html'=>TRUE, 'attributes' => array('target' => '_blank', 'style' => 'color: #0090C7;font-weight: 400;text-decoration: none; font-size:14px'))).$output;
+			$url = l('Download Flat List of '.$data1->estate_name,'rhe_wise_flat_list_pdf/'.encrypt_url($rhe_name).'/'.$file_name,array('html' => true, 'attributes' => array('target' => '_blank','class' => array('btn bg-primary  px-5 rounded-pill text-white fw-bolder mb-4'))));
+
+			return $url.$output;//sd 24-06-2024
 		}
 		else {
 			return $output;

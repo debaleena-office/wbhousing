@@ -14,19 +14,22 @@
 			'#options' => rhe_list_specific(),
 			'#required' => TRUE,
 			//'#weight' => -10,
-			'#prefix' => '<div>',
-			'#suffix' => '</div>',
+			//'#prefix' => '<div>',
+			//'#suffix' => '</div>',
+			'#prefix' => '<div class="row"><div class="col-md-6"><div class="form-floating">',
+			'#suffix' => '</div></div>',
+			'#attributes' => array('class'=>array('form-select')),
 			'#ajax' => array(
-				'event' => 'change',
-				'callback' => '_reload_rhewise_flat_type',
-				'method' => 'replace',
+			'event' => 'change',
+			'callback' => '_reload_rhewise_flat_type',
+			'method' => 'replace',
 			),
-			'#select2' => array(
-				'width' => '500',
-				//'placeholder' => '- Select -',
-				'allowClear' => TRUE
-        	)
-		);
+			// '#select2' => array(
+			//  'width' => '500',
+			//  //'placeholder' => '- Select -',
+			//  'allowClear' => TRUE
+			   //       )
+			);
 		
 		$form['flat_type'] = array(
 			'#prefix' => '<div class="three" id="flat_type_replace">',
@@ -40,9 +43,10 @@
 				'#options' => flat_type_under_rhe($rhe_name),
 				'#required' => TRUE,
 				//'#weight' => -10,
-				'#prefix' => '<div class="three" id="flat_type_replace">',
-				'#suffix' => '</div>',
-				'#attributes' => array('class'	=> array('dropdown3')),
+				'#prefix' => '<div class="col-md-6" id="flat_type_replace"><div class="form-floating">',
+				'#suffix' => '</div></div></div>',
+				//'#attributes' => array('class' => array('dropdown3')),
+				'#attributes' => array('class'=>array('form-select')),
 				'#ajax' => array(
 					'event' => 'change',
 					'callback' => '_reload_rhewise_blocklist',
@@ -63,9 +67,10 @@
 				'#options' => block_name_under_rhe($rhe_name, $flat_type),
 				'#required' => TRUE,
 				//'#weight' => -10,
-				'#prefix' => '<div class="three" id="block_name_replace">',
-				'#suffix' => '</div>',
-				'#attributes' => array('class'	=> array('dropdown3')),
+				'#prefix' => '<div class="col-md-6" id="block_name_replace"><div class="form-floating">',
+				'#suffix' => '</div></div>',
+				//'#attributes' => array('class' => array('dropdown3')),
+				'#attributes' => array('class'=>array('form-select')),
 				'#ajax' => array(
 					'event' => 'change',
 					'callback' => '_reload_rhewise_flatlist',
@@ -86,9 +91,10 @@
 				'#options' => flatno_under_rhe($rhe_name, $flat_type, $block_name),
 				'#required' => TRUE,
 				//'#weight' => -10,
-				'#prefix' => '<div class="three" id="flat_no_replace">',
+				'#prefix' => '<div class="col-md-6" id="flat_no_replace"><div class="form-floating">',
 				'#suffix' => '</div>',
-				'#attributes' => array('class'	=> array('dropdown3')),
+				//'#attributes' => array('class' => array('dropdown3')),
+				'#attributes' => array('class'=>array('form-select')),
 				'#ajax' => array(
 					'event' => 'change',
 					'callback' => '_reload_rhewise_occupant_entry',
@@ -121,11 +127,12 @@
 			
 			$form['submit_button']=array(
 				'#type' => 'submit',
-				'#prefix' => '<div class="two-one" id="submit_button_replace">',
+				'#prefix' => '<div id="submit_button_replace">',
 				'#suffix' => '</div>',
+				'#attributes' => array('class'=>array('btn bg-primary btn-sm px-5 rounded-pill text-white fw-bolder')),
 				//'#value' => t('Search Details'),
 				'#value' => t('Insert Occupant Details'),
-			);
+				);
 		}
 		$form['#attributes'] = array('onsubmit' => 'return validate_rhewise_occupant_entry_form()');
 		
