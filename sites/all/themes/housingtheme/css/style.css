@@ -102,8 +102,7 @@ footer a:hover{ color: #b0d589;}
 .mb-6 {margin-bottom: 10rem !important;}
 .mh-100 {max-height: 100px!important;}
 .cus-login .form-floating .form-item.form-item-name .form-control, .form-floating .form-item.form-item-pass .form-control  {
-    padding: 1rem .75rem;height: calc(3.5rem + calc(var(--bs-border-width)* 2));
-    min-height: calc(3.5rem + calc(var(--bs-border-width)* 2)); line-height: 1.25; }
+    padding: 10px 15px!important; }
 .cus-login .form-floating label.form-label {
     position: absolute;
     top: -28px;
@@ -130,10 +129,11 @@ footer a:hover{ color: #b0d589;}
 }
 .cus-login .form-control:focus {box-shadow: none!important;}
 .cus-login .captcha {overflow: hidden;}
-.cus-login .form-item.form-item-captcha-response {float: left; width: 66%; margin-top: 0;}
-.cus-login .captcha img {float: right; max-width: 125px; height: auto; display: block; margin-top: 40px;}
+.cus-login .form-item.form-item-captcha-response {float: left; width: 66%; margin-top: 0; margin-bottom: 5px;}
+.cus-login .captcha img {float: right; max-width: 125px; height: auto; display: block; margin-top: 25px;}
 .cus-login .captcha .reload-captcha-wrapper {float: none; clear: both; width: 100%;}
-.cus-login .captcha .form-item #edit-captcha-response {border: 1px solid #ccc!important; width: 100%; padding: 15px!important; -webkit-border-radius: 6px; border-radius: 6px;}
+.cus-login .captcha .reload-captcha-wrapper .reload-captcha {color: var(--theme-color);}
+.cus-login .captcha .form-item #edit-captcha-response {border: 1px solid #ccc!important; width: 100%; padding: 10px 15px!important; -webkit-border-radius: 6px; border-radius: 6px;}
 .cus-login .captcha .form-item .description {font-size: 12px;}
 .cus-login .form-actions {margin-bottom: 0!important;}
 .dashboard .after-login-footer {position: absolute; bottom: 0; width: 76%;}
