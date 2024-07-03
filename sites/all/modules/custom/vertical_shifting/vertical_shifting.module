@@ -515,6 +515,7 @@ function vertical_shifting_form_application_form_alter(&$form, &$form_state, $fo
 		$online_application_id = trim($form_state['values']['online_vs_id']);
 		
 		
+		
 		if($online_application_id == 0) {
 			$online_application_id = add_online_application($action,'VS',$form,$form_state);
 			add_vertical_shifting_application($form,$form_state,$online_application_id);

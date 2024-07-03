@@ -69,7 +69,7 @@ function application_status_form($form,&$form_state) {
 		//$header[] = array('data' => 'Application No.', 'class' => array('text-align-c'));
 		//$header[] = array('data' => 'Date of Application', 'class' => array('text-align-c'));
 		$header[] = array('data' => 'Status', 'class' => array('text-align-c'));
-		$header[] = array('data' => 'Verification Date', 'class' => array('text-align-r'));
+		$header[] = array('data' => 'Verification Date', 'class' => array('text-align-c'), 'width'=>'40%');
 		//$header[] = array('data' => 'Computer Serial No', 'class' => array('text-align-r'));
 		//$header[] = array('data' => 'Combined Waiting No', 'class' => array('text-align-r'));
 		//$header[] = array('data' => 'View Details');
@@ -144,7 +144,7 @@ function application_status_form($form,&$form_state) {
 		array(
 		  'header' => $header,
 		  'rows' => $rows,
-		  'attributes' => array(),
+		  'attributes' => array('class'=>array('table table-list')),
 		  'sticky' => true,
 		  'caption' => '',
 		  'colgroups' => array(),

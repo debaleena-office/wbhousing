@@ -248,8 +248,8 @@ function get_applicant($estate_id, $flat_type_id, $shifting_type) {
     inner join {housing_applicant_official_detail} as haod on haod.applicant_official_detail_id = hoa.applicant_official_detail_id
     inner join {" . $shifting_applicant_table[$shifting_type] . "} as hca on hca.online_application_id = hoa.online_application_id
     where hoa.status = 'housing_sup_approved_1' and hca.occupation_estate = $estate_id and hca.flat_type_id = $flat_type_id
-    order by hoa.computer_serial_no ASC limit 1");// after (done by Moumita)
-    //order by hoa.online_application_id ASC limit 1"); before(done by prasenjit)
+    order by hoa.online_application_id ASC limit 1"); //before(done by prasenjit)
+    //order by hoa.computer_serial_no ASC limit 1");// after (done by Moumita)
 
     return $result;
 }

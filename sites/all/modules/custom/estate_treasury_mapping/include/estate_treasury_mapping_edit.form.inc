@@ -11,18 +11,20 @@ function estate_treasury_mapping_edit_form($form, &$form_state, $en_id = 0){
       '#title' => 'Select housing estate',
       '#options' => getEstateList(),
       '#default_value' => getEstateList($result['estate_id']),
-      '#prefix' => '<div id="dropdown-wrapper">',
-      '#suffix' => '</div>',
+      '#prefix' => '<div class="row"><div class="col-md-6"><div class="form-floating">',
+      '#suffix' => '</div></div>',
+      '#attributes' => array('class' => array('form-control')),
       '#required' => TRUE,
     );
   
     $form['treasury_edit_dropdown'] = array(
       '#type' => 'select',
       '#title' => 'Select respective treasury',
-      '#prefix' => '<div id="dropdown-wrapper">',
-      '#suffix' => '</div>',
+      '#prefix' => '<div class="col-md-6"><div class="form-floating">',
+      '#suffix' => '</div></div></div>',
       '#options' => getTresaryList(),
       '#default_value' => getTresaryList($result['treasury_id']),
+      '#attributes' => array('class' => array('form-control')),
       '#required' => TRUE,
     );
   
@@ -30,12 +32,17 @@ function estate_treasury_mapping_edit_form($form, &$form_state, $en_id = 0){
       '#type' => 'radios',
       '#title' => t('Select Activation Status'),
       '#options' => array(1 => t('Active'),0 => t('Inactive')),
+      '#prefix' => '<div class="col-md-6"><div class="form-floating">',
+      '#suffix' => '</div></div>',
       '#default_value' => $result['is_active']
     );
   
     $form['submit'] = array(
       '#type' => 'submit',
-      '#value' => t('Edit Mapping'),
+      '#value' => t('Submit'),
+      '#prefix' => '<div class="col-md-6"><div class="form-floating"><br><br>',
+      '#suffix' => '</div></div>',
+      '#attributes' => array('class'=>array('btn bg-primary btn-sm px-5 rounded-pill text-white fw-bolder')),
       '#submit' => array('estate_treasury_edit_submit')
     );
   }

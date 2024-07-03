@@ -13,12 +13,8 @@
 			'#type' => 'select',
 			'#options' => rhe_list_specific(),
 			'#required' => TRUE,
-			//'#weight' => -10,
-			// '#prefix' => '<div>',// sd 24-06-2024 turned off
-			// '#suffix' => '</div>',// sd 24-06-2024 turned off
-			//'#attributes' => array('class' => array('dropdown3')),
 			'#attributes' => array('class' => array('form-select')),//sd 24-06-2024
-			'#prefix' => '<div class="col-md-12"><div class="form-floating">',//sd 24-06-2024
+			'#prefix' => '<div class="row"><div class="col-md-6"><div class="form-floating">',//sd 24-06-2024
 			'#suffix' => '</div></div>',//sd 24-06-2024
 			'#ajax' => array(
 				'event' => 'change',
@@ -26,11 +22,11 @@
 				'callback' => '_reload_rhewise_flat_type',
 				'method' => 'replace',
 			),
-			'#select2' => array(
-				//'width' => '500',// sd 24-06-2024 turned off
-				//'placeholder' => '- Select -',
-				'allowClear' => TRUE
-        	)
+			// '#select2' => array(
+			// 	//'width' => '500',// sd 24-06-2024 turned off
+			// 	//'placeholder' => '- Select -',
+			// 	'allowClear' => TRUE
+        	// )
 		);
 		
 		$form['flat_type'] = array(
@@ -38,13 +34,9 @@
 			'#type' => 'select',
 			'#options' => array('' => '-- Select --'),
 			'#required' => TRUE,
-			//'#weight' => -10,
-			// '#prefix' => '<div class="two" id="flat_type_replace">',// sd 24-06-2024 turned off
-			// '#suffix' => '</div>',// sd 24-06-2024 turned off
-			//'#attributes' => array('class' => array('dropdown3')),
 			'#attributes' => array('class' => array('form-select')),//sd 24-06-2024
-			'#prefix' => '<div class="col-md-12"><div class="form-floating" id="flat_type_replace">',//sd 24-06-2024
-			'#suffix' => '</div></div>',//sd 24-06-2024
+			'#prefix' => '<div class="col-md-6" id="flat_type_replace"><div class="form-floating">',//sd 24-06-2024
+			'#suffix' => '</div></div></div>',//sd 24-06-2024
 			'#ajax' => array(
 				'event' => 'change',
 				'callback' => '_reload_rhewise_occupantlist',
@@ -58,13 +50,9 @@
 				'#type' => 'select',
 				'#options' => flat_type_under_rhe($rhe_name),
 				'#required' => TRUE,
-				//'#weight' => -10,
-				// '#prefix' => '<div class="two" id="flat_type_replace">',// sd 24-06-2024 turned off
-				// '#suffix' => '</div>',// sd 24-06-2024 turned off
-				//'#attributes' => array('class'	=> array('dropdown3')),
 				'#attributes' => array('class' => array('form-select')),//sd 24-06-2024
-				'#prefix' => '<div class="col-md-12"><div class="form-floating" id="flat_type_replace">',//sd 24-06-2024
-				'#suffix' => '</div></div>',//sd 24-06-2024
+				'#prefix' => '<div class="col-md-6" id="flat_type_replace"><div class="form-floating">',//sd 24-06-2024
+				'#suffix' => '</div></div></div>',//sd 24-06-2024
 				'#ajax' => array(
 					'event' => 'change',
 					'callback' => '_reload_rhewise_occupantlist',
@@ -78,6 +66,10 @@
 			'#prefix' => '<div  id="rhewise_occupantlist">',
 			'#suffix' => '</div>',
 		);*/
+		$form['submit_approve_start'] = array(
+			'#type' => 'markup',
+			'#markup' => '<div class="row">'
+		);
 		$form['submit_approve'] = array(
 			'#prefix' => '<div  id="submit_approve_occupantlist">',
 			'#suffix' => '</div>',
@@ -86,6 +78,11 @@
 			'#prefix' => '<div  id="submit_reject_occupantlist">',
 			'#suffix' => '</div>',
   		);
+		
+		$form['submit_approve_end'] = array(
+			'#type' => 'markup',
+			'#markup' => '</div>'
+		);
 		$form['occupant_info'] = array(
 			'#prefix' => '<div  id="occupant_info">',
 			'#suffix' => '</div>',
@@ -122,14 +119,15 @@
 			$onclick="return confirm('Are you sure you want to Approve?')";
 			$onclick1="return confirm('Are you sure you want to Reject?')";
 			
+			
 			if($result->rowCount() > 0) {
 				$form['submit_approve'] = array(
 					'#type' => 'submit',
 					'#value' => t('Click to Approve Occupants'),
-					'#attributes' => array('onclick' => $onclick,'class'=>array('btn bg-danger btn-sm px-5 rounded-pill text-white mb-4 fw-bolder')),// sd 24-06-2024 
+					'#attributes' => array('onclick' => $onclick,'class'=>array('btn bg-success btn-sm px-5 rounded-pill text-white mb-4 fw-bolder')),// sd 24-06-2024 
 					//'#prefix' => '<div class="two-one" id="submit_approve_occupantlist" style="height: 50%">',// sd 24-06-2024 turned off
 					//'#suffix' => '</div>',// sd 24-06-2024 turned off
-					'#prefix' => '<div class="col-md-6" id="submit_reject_occupantlist">',// sd 24-06-2024 
+					'#prefix' => '<div class="col-md-6" id="submit_approve_occupantlist">',// sd 24-06-2024 
 					'#suffix' => '</div></div>',// sd 24-06-2024 
 				);
 				$form['submit_reject'] = array(
@@ -140,9 +138,10 @@
 					//'#prefix' => '<div class="four" id="submit_reject_occupantlist" style="height: 50%">',// sd 24-06-2024 turned off
 					//'#suffix' => '</div>',// sd 24-06-2024 turned off
 					'#prefix' => '<div class="col-md-6" id="submit_reject_occupantlist">',// sd 24-06-2024 
-					'#suffix' => '</div></div>',// sd 24-06-2024 
+					'#suffix' => '</div></div></div>',// sd 24-06-2024 
 				);
 			}
+			
 			
 			$options = array();
 			$src=$base_path.drupal_get_path('module', 'existing_occupant').'/images/view1.png';
@@ -173,11 +172,11 @@
 					'applicant_name' => $record->applicant_name,
 					'applicant_designation' => $record->applicant_designation,
 					'view_details' => l(
-							'<img src="'.$src.'" alt="View Icon">',
+							'View Details',
 							'occupant_detail/'.encrypt_url($record->online_application_id), 
 							array(
 									'html'=>TRUE,
-									'attributes'=> array('target' => '_blank'),
+									'attributes'=> array('target' => '_blank', 'class' => array('btn bg-primary btn-sm px-5 rounded-pill text-white fw-bolder')),
 							)
 						)
 				);
@@ -188,8 +187,10 @@
 				'#type' => 'tableselect',
 				'#header' => $header,
 				'#options' => $options,
+				'#attributes' => array('class' =>array('table table-list')),
 				'#empty' => t('No occupant available.'),
-				'#prefix' => '<div class="col-md-12"><div id="occupant_info" class="table table-list">',//sd 24-06-2024
+				'#prefix' => '<div class="col-md-12"><div id="occupant_info" class="">',//sd 24-06-2024
+				'#suffix' => '</div></div>'
 			);
 			
 			/*$form['pager'] = array(

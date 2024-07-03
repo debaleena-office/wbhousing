@@ -61,7 +61,8 @@
   }
   
 	function app_page($status='',$url = '',$page_status='') {
-		//echo url();die;
+		global $user, $user_role; 
+		// echo url();die;
 		// echo $url;echo decrypt_url($url);
 
 		// echo decrypt_url($status);die;
@@ -75,8 +76,9 @@
 		// echo $status;
 		$status = decrypt_url($status);//echo $status;die;
 		$url1 = decrypt_url($url);
+		// echo $status;
 		// echo '<br>';
-		// echo $url;  die;
+		// echo $url1;  die;
 		$output = array();
 		if($status !== '' && $url !== '' && preg_match("/^[a-zA-Z0-9\-\_]*$/",$status) && preg_match("/^[a-zA-Z0-9\-\_]*$/",$url1)){
 		//if($status !== '' && $url !== ''){
@@ -99,11 +101,40 @@
 
 			// new code added by moumita 24-05-24
 			$output['new-apply'] = application_list_fetch('new-apply',$status)->rowCount();
+			
+			// new code added by sd 01-07-2024 start
+			if($user_role == 11 && $status == 'applied'){//"DDO"
+                $verified_status_app = 'ddo_verified_1';
+                $rejected_status_app = 'ddo_rejected_1';
+
+            }else if($user_role == 11 && $status == 'applicant_acceptance'){
+				$verified_status_app = 'ddo_verified_2';
+				$rejected_status_app = 'ddo_rejected_2';
+
+			}else if($user_role == 10 && $status == 'ddo_verified_1'){//"Housing Supervisor"
+                $verified_status_app = 'housing_sup_approved_1';
+                $rejected_status_app = 'housing_sup_reject_1';
+
+            }else if($user_role == 10 && $status == 'ddo_verified_2'){
+				$verified_status_app = 'housing_sup_approved_2';
+				$rejected_status_app = 'housing_sup_reject_2';
+
+			}else if($user_role == 6){//"Housing Official"
+                $verified_status_app = 'housing_official_approved';
+                $rejected_status_app = 'housing_official_reject';
+            }
+			$output['new-apply-verified'] = application_list_fetch_for_verified_reject('new-apply',$verified_status_app)->rowCount();//print_r($output['new-apply-verified']);//die;
+			$output['new-apply-rejected'] = application_list_fetch_for_verified_reject('new-apply',$rejected_status_app)->rowCount();
+			$output['vs-verified'] = application_list_fetch_for_verified_reject('vs',$verified_status_app)->rowCount();//print_r($output['new-apply-verified']);//die;
+			$output['vs-rejected'] = application_list_fetch_for_verified_reject('vs',$rejected_status_app)->rowCount();
+			$output['cs-verified'] = application_list_fetch_for_verified_reject('cs',$verified_status_app)->rowCount();//print_r($output['new-apply-verified']);//die;
+			$output['cs-rejected'] = application_list_fetch_for_verified_reject('cs',$rejected_status_app)->rowCount();
+			//end sd
 
 
 			$output['url'] = $url;
 			$output['status'] = $status;
-
+ 
 			// new code added by sayantika 28-05-24
 			$output['page_status']=$page_status;
 		}
@@ -722,7 +753,6 @@ function decrypt_url($string) {
 
 function application_list_fetch($entity = '',$status = ''){
 	global $user, $user_role;
-		
 		$query = db_select('housing_applicant_official_detail', 'haod');
 		$query->innerJoin('housing_applicant', 'ha',
 		'ha.uid = haod.uid');
@@ -859,14 +889,15 @@ function application_list_fetch($entity = '',$status = ''){
 			$query->orderBy('online_application_id','ASC');
 		}
 		
-	
+		//$d=$query->execute()->fetchObject();echo($query);die;
 		//$query = $query->extend('PagerDefault')->limit(10);
 		return $query->execute();
+		//echo $query;die;
 
 }
 
 function application_list_fetch_for_verified_reject($entity = '',$status = ''){
-	//echo $status;die;
+	//echo $entity;$status;die;
 	global $user, $user_role;
 
 		// $query = db_select('housing_process_flow', 'hpf');
@@ -1047,6 +1078,7 @@ function application_list_fetch_for_verified_reject($entity = '',$status = ''){
 		
 	
 		//$query = $query->extend('PagerDefault')->limit(10);
+		//$a=$query->execute();print_r($a);die;
 		return $query->execute();
 
 }

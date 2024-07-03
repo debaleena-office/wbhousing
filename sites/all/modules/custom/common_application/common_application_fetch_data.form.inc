@@ -471,7 +471,7 @@ function allotment_category_list($rhe_flat_type = '') {
 	}
 
 /* fetch all ddo designation respective to dictrict code*/
-	function ddo_desig_list($district = '') {
+	function ddo_desig_list($district = 0) {
 		
 		$district = trim($district);	
 		$ddo_desig_options = array('' => '-- Choose DDO Designation --');
@@ -517,6 +517,20 @@ function get_ddo_desig($ddo_code ='')
 	}
 	return $ddo_desig_options1;
 	//return $result->ddo_designation;
+}
+
+function get_ddo_all_data($ddo_code =''){
+	$query = db_select('housing_ddo', 'hd');
+	$query->fields('hd',array());
+	$query->condition('ddo_code', $ddo_code, '=');
+	$query->condition('is_active', 'Y', '=');
+	$result = $query->execute();
+	$result = $result->fetchAssoc();
+	if($result != NULL){
+		return $result;
+	}else{
+		return '';
+	}
 }
 
 

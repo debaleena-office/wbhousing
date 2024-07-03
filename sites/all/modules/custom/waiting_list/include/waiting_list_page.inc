@@ -81,7 +81,7 @@
 		array(
 		  'header' => $header,
 		  'rows' => $rows,
-		  'attributes' => array('class' => array('table-css')),
+		  'attributes' => array('class' => array('table table-list')),
 		  'sticky' => true,
 		  'caption' => '',
 		  'colgroups' => array(),

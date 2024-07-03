@@ -28,22 +28,22 @@
 		$applicant_personal_detail_arr['permanent_district']  =  trim($form_state['values']['permanent_district']);
 		$applicant_personal_detail_arr['permanent_pincode']  =  trim($form_state['values']['permanent_pincode']);
 		
-		$applicant_personal_detail_arr['permanent_present_same']  =  trim($form_state['values']['chk_permanent_address']);
+		$applicant_personal_detail_arr['permanent_present_same']  =  0;
 		
-		if(trim($form_state['values']['chk_permanent_address']) != 1) {
+		//if(trim($form_state['values']['chk_permanent_address']) != 1) {
 			//$applicant_personal_detail_arr['permanent_present_same'] = 0;
 			$applicant_personal_detail_arr['present_street']  =  strtoupper(trim($form_state['values']['present_street']));
 			$applicant_personal_detail_arr['present_city_town_village']  =  strtoupper(trim($form_state['values']['present_city_town_village']));
 			$applicant_personal_detail_arr['present_post_office']  =  strtoupper(trim($form_state['values']['present_post_office']));
 			$applicant_personal_detail_arr['present_district']  =  trim($form_state['values']['present_district']);
 			$applicant_personal_detail_arr['present_pincode']  =  trim($form_state['values']['present_pincode']);
-		} else {
-			$applicant_personal_detail_arr['present_street']  =  NULL;
+		//} else {
+			/*$applicant_personal_detail_arr['present_street']  =  NULL;
 			$applicant_personal_detail_arr['present_city_town_village']  =  NULL;
 			$applicant_personal_detail_arr['present_post_office']  =  NULL;
 			$applicant_personal_detail_arr['present_district']  =  NULL;
-			$applicant_personal_detail_arr['present_pincode']  =  NULL;	
-		}
+			$applicant_personal_detail_arr['present_pincode']  =  NULL;	*/
+		//}
 		
 		/*echo '<pre>';
 		print_r($applicant_personal_detail_arr);

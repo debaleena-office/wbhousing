@@ -418,7 +418,7 @@
 		
 		$online_application_id = trim($form_state['values']['online_cs_id']);
 
-		if($online_application_id == 0) {
+		/*if($online_application_id == 0) {
 			$online_application_id = max_online_application_id(array('reject','cancel'));
 			$result1 = fetch_applicant_official_info_rst_to_online_app_id($online_application_id);
 			if($result1->rowcount() > 0){
@@ -435,7 +435,7 @@
 					form_set_error('payband_check', 'You can\'t choose same Payband as your previous Payband.');	
 				}
 			}	
-		}
+		}*/
 		
   }
   

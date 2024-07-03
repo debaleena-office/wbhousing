@@ -1,6 +1,7 @@
 <?php
 
 	function status_update_page_vs($online_application_id = '', $status = '') {
+		global $user;
 		$online_id = decrypt_url($online_application_id);
 		$accept_reject_status = decrypt_url($status);
 		
@@ -13,20 +14,45 @@
 			->fields(array('accept_reject_status' => 'Accept'))
 			->condition('online_application_id', $online_id, '=')
 			->execute();
+
+			// added by Moumita 26-06-2024
+			db_update('housing_online_application')
+			->fields(array('status' => 'applicant_acceptance'))
+			->condition('online_application_id', $online_id, '=')
+			->execute();
+
+			$ins_arr = array(
+				'online_application_id'=>$online_id,
+				'status_id' => 10,
+				'created_at' => date('Y-m-d H:i:s'),
+				'uid' => $user->uid,
+				'short_code' => 'applicant_acceptance'
+			);
+
+			db_insert('housing_process_flow')->fields($ins_arr)->execute();
+
 			
-			drupal_set_message('You accept the allotment.');
-			drupal_goto('view_vs_allotment_details');
+			drupal_set_message('You accepted the allotment.');
+			drupal_goto('download-and-upload/'.$online_application_id);
+
+			// drupal_goto('view_vs_allotment_details');
 		}
 		else if($accept_reject_status == 'Reject'){
 			
-			/*$reject_offer_arr = array();
-			$reject_offer_arr['status']  = 'reject_offer';
-			$reject_offer_arr['online_application_id']  = $online_id;
-		
 			db_update('housing_online_application')
-			->fields($reject_offer_arr)
-			->condition('online_application_id', $reject_offer_arr['online_application_id'])
-			->execute();*/
+			->fields(array('status' => 'applicant_reject'))
+			->condition('online_application_id', $online_id, '=')
+			->execute();
+
+			$ins_arr = array(
+				'online_application_id'=>$online_id,
+				'status_id' => 10,
+				'created_at' => date('Y-m-d H:i:s'),
+				'uid' => $user->uid,
+				'short_code' => 'applicant_reject'
+			);
+
+			db_insert('housing_process_flow')->fields($ins_arr)->execute();
 			
 			db_update('housing_flat')
 			->fields(array('flat_status_id' => 1))
