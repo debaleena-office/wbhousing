@@ -1,4 +1,4 @@
-<section class="slider" style="overflow-x: hidden;    overflow-y: inherit;">
+<section class="slider" style="overflow-x: hidden; overflow-y: inherit;">
     <div class="overlay-1"></div>
     <div class="overlay-2"></div>
     <div class="p-3 text-center position-absolute start-0 end-0">
@@ -13,10 +13,10 @@
             <p class="lead">
                 <b>Admin Sign</b> in to Continue
             </p>
-            <div class="d-flex justify-content-center h-100 end-0 mb-6">
+            <div class="d-flex justify-content-center h-100 end-0 mb-6# mb-4">
                 <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
                     <div class="card border border-light-subtle rounded-4">
-                        <div class="card-body p-3 p-md-4 p-xl-4 cus-login">                        
+                        <div class="card-body p-3 p-md-3 p-xl-4 cus-login">                        
                         <?php print render($page['content']); ?>
                         </div>
                     </div>
@@ -26,42 +26,10 @@
     </div>
 
 
-    <div class="position-fixed# start-0# end-0# bottom-0# fixed-bottom bg-dark">
-    <div class="container">
-        <div class="d-flex flex-wrap justify-content-between align-items-center p-3 my-3">
-            <div class="col-md-2 d-flex align-items-center">
-            <a href="#" class="mb-3 me-2 mb-md-0 text-decoration-none lh-1">
-                <img src="<?= $base_root.$base_path ?>sites/all/themes/housingtheme/images/nic_logo.png" class="img-fluid" alt="NIC logo" loading="lazy">
-            </a>
-            
-            </div>
-        
-            <div class="col-md-10 justify-content-end list-unstyled d-flex">
-            <span class="mb-3 mb-md-0 text-light">
-                <small>All contents of the this site are owned and maintained by Department of West Bengal. National Informatics Centre (NIC), will not be responsible for any loss to any person caused by inaccuracy in the information available on this Website.</small>
-            </span>
-            </div>
-        </div>
-        <p class="text-center text-body-secondary"> Copyright © All Rights Reserved</p>
-    </div>
-    </div>
+    <?php include('includes/footer-content.php'); ?>
 
     
-    <footer class="text-center p-3 fixed-bottom">
-        <div class="container-lg">
-            <div class="row">
-                <div class="col-md-6 text-start">
-                    <p class="copyright">Copyright &copy; All Rights Reserved</p>
-                </div>
-                <div class="col-md-6 text-end">
-                    <p>
-                        <a href="./contact.html">Contact</a> &nbsp;|&nbsp;
-                        <a href="#">Site Map</a> &nbsp;|&nbsp;
-                        <a href="#">Privacy Policy</a> &nbsp;|&nbsp;
-                        <a href="#">Disclaimer</a></p>
-                </div>
-            </div>
-    </footer>
+    
 </section>
 
 <div class="position-absolute collapse accessibility-panel" id="navbarToggleExternalContent">
