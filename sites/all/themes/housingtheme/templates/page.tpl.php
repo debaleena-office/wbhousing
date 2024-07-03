@@ -13,11 +13,14 @@
                   </div>
                </div>
                <?php print render($page['content']); ?>
-               <br><br><br><br><br><br><br><br><br><br><br><br><hr/>
+               
                <!-- <footer class="text-center p-3 mt-auto"> -->
-                  <div class="row">
-                     <p class="copyright">Copyright © All Rights Reserved</p>
-                  </div>
+                  <div class="after-login-footer">
+                    <!-- <div class="row"> -->
+                        <hr/>
+                        <p class="copyright">Copyright © All Rights Reserved</p>
+                     </div>
+                 <!--  </div> -->
                <!-- </footer> -->
 
 

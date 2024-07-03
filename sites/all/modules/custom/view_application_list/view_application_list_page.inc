@@ -5,7 +5,7 @@ function view_app_page($status ='', $entity = '',$page_status ='') {
 	global $user_role;
 	$status = decrypt_url($status);
 	$entity = decrypt_url($entity);
-	//echo $status; die();
+	//echo $status;echo $entity;echo $page_status; die();
 	$output = '';
 	//$rows =array(); //sd turned off 21-06-2024
 	//$header = array(); //sd turned off 21-06-2024
@@ -223,9 +223,9 @@ function view_app_page($status ='', $entity = '',$page_status ='') {
 					$fields[] = l(
 					'<span class="badge text-bg-success rounded">
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-circle" viewBox="0 0 16 16">
-															<path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0"/>
-															<path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
-														</svg></span>' ,
+						<path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0"/>
+						<path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
+					</svg></span>' ,
 
 					'application-approve/'.encrypt_url($data->online_application_id).'/'.encrypt_url($update_status).'/'.encrypt_url($status).'/
 					'.encrypt_url($entity), array('html'=>TRUE, 'attributes' => array('onclick' => $onclick&nbsp))).' '.
@@ -233,9 +233,9 @@ function view_app_page($status ='', $entity = '',$page_status ='') {
 
 
 					l('<span class="badge text-bg-danger rounded"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
-															<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-															<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
-														</svg> </span>' ,
+						<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+						<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+					</svg> </span>' ,
 
 					'update_status/'.encrypt_url($data->online_application_id).'/'.encrypt_url($reject_status).'/'.
 					encrypt_url($status).'/'.encrypt_url($entity),
@@ -278,7 +278,7 @@ function view_app_page($status ='', $entity = '',$page_status ='') {
 		  );
   		//end
 		//sd turned off 21-06-2024
-		/*if(count($rows) > 0) {
+		if(count($rows) > 0) {
 			// Render using Drupal's render API.
 			$build['datatable'] = array(
 			  '#theme' => 'datatable',
@@ -289,7 +289,7 @@ function view_app_page($status ='', $entity = '',$page_status ='') {
 			
 			// Or, render using a theme function.
 			$variables = array(
-			  'attributes' => array(),
+			  'attributes' => array('class'=>array('table table-list')),
 			  'header' => $header,
 			  'rows' => $rows,
 			);
@@ -298,7 +298,7 @@ function view_app_page($status ='', $entity = '',$page_status ='') {
 		}
 		else {
 			$output = '<div>
-							<table class="datatable_no_data_found">
+							<table class="datatable_no_data_found table table-list">
 								<tr class="tr_no_data_found">
 									<th class="th_no_data_found"></th>
 								</tr>
@@ -307,7 +307,7 @@ function view_app_page($status ='', $entity = '',$page_status ='') {
 								</tr>
 							</table>
 						</div>';
-		}*/
+		}
 	}
 	return $output;
 }

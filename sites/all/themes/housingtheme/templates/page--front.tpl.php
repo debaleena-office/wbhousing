@@ -11,10 +11,12 @@
                     <h1 class="text-white">e-Allotment of Rental Housing Estate</h1>
                     <h4 class="text-white">Housing Department | Government of West Bengal</h4>
                     </div>
-                </a> 
-                <p class="lead">
-                    Search for a flat in any <b>Housing Estates</b>
-                </p>
+                </a>
+                <div id="messages">
+                  <div class="section clearfix">
+                     <?php print $messages; ?>
+                  </div>
+               </div>
                 <?php print render($page['content']); ?>
             </div>
         </div>

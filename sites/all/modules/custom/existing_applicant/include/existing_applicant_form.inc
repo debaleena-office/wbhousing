@@ -23,29 +23,29 @@
 		$form['prrsonal_info'] = array(
 			'#type' => 'fieldset',
 			'#title' => t('Personal Information(According to Service Book)'),
-			'#collapsible' => TRUE, // Added
+			'#collapsible' => FALSE, // Added
 			'#collapsed' => FALSE,  // Added
 		);
 						
 		$form['prrsonal_info']['applicant_name'] = array(
 			'#title' => t('Applicant\'s Name'),
 			'#type' => 'textfield',
-			'#prefix' => '<div class="two">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="row"><div class="col-md-6"><div class="form-floating">',
+			'#suffix' => '</div></div>',
 			'#element_validate' => array('element_validate_alphabatic_fullstop'), 
 			'#required' => TRUE,
-			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()"),
+			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()", 'class'=>array('form-control')),
 		);
 		
 		$form['prrsonal_info']['applicant_father_name'] = array(
 			'#title' => t('Father / Husband Name'),
 			'#type' => 'textfield',
 			'#default_value' => '',
-			'#prefix' => '<div class="two">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="col-md-6"><div class="form-floating">',
+			'#suffix' => '</div></div></div>',
 			'#element_validate' => array('element_validate_alphabatic_fullstop'), 
 			'#required' => TRUE,
-			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()"),
+			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()", 'class'=>array('form-control')),
 		);
 		
 	//Permanent Address
@@ -59,41 +59,41 @@
 			'#title' => t('Address'),
 			'#type' => 'textfield',
 			//'#required' => TRUE,
-			'#prefix' => '<div class="two-one">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="row"><div class="col-md-6"><div class="form-floating">',
+			'#suffix' => '</div></div>',
 			'#element_validate' => array('element_validate_streetaddress'), 
-			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()"),
+			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()", 'class'=>array('form-control')),
 		);
 		$form['prrsonal_info']['permanent_address']['permanent_city_town_village'] = array(
 			'#title' => t('City / Town / Village'),
 			'#type' => 'textfield',
 			//'#required' => TRUE,
-			'#prefix' => '<div class="three">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="col-md-6"><div class="form-floating">',
+			'#suffix' => '</div></div></div>',
 			'#element_validate' => array('element_validate_alphabatic_text'), 
-			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()"),
+			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()", 'class'=>array('form-control')),
 		);
 		$form['prrsonal_info']['permanent_address']['permanent_post_office'] = array(
 			'#title' => t('Post Office'),
 			'#type' => 'textfield',
 			//'#required' => TRUE,
-			'#prefix' => '<div class="three">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="row"><div class="col-md-4"><div class="form-floating">',
+			'#suffix' => '</div></div>',
 			'#element_validate' => array('element_validate_alphabatic_text'), 
-			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()"),
+			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()", 'class'=>array('form-control')),
 		);
 		$form['prrsonal_info']['permanent_address']['permanent_district'] = array(
 			'#title' => t('District'),
 			'#type' => 'select',
 			'#options' => district_list(),
 			//'#required' => TRUE,
-			'#prefix' => '<div class="three">',
-			'#suffix' => '</div>',
-			'#select2' => array(
-				'width' => '500',
-				//'placeholder' => '- Select -',
-				'allowClear' => TRUE
-        	)
+			'#prefix' => '<div class="col-md-4"><div class="form-floating">',
+			'#suffix' => '</div></div>',
+			// '#select2' => array(
+			// 	'width' => '500',
+			// 	//'placeholder' => '- Select -',
+			// 	'allowClear' => TRUE
+   //      	)
 		);
 		$form['prrsonal_info']['permanent_address']['permanent_pincode'] = array(
 			'#title' => t('Pincode'),
@@ -101,9 +101,9 @@
 			'#maxlength' => 6,
 			//'#required' => TRUE,
 			'#element_validate' => array('element_validate_numeric_positive'), 
-			'#prefix' => '<div class="four">',
-			'#suffix' => '</div>',
-			'#attributes' => array('class' => array('numeric_positive')),
+			'#prefix' => '<div class="col-md-4"><div class="form-floating">',
+			'#suffix' => '</div></div></div>',
+			'#attributes' => array('class' => array('numeric_positive'), 'class'=>array('form-control')),
 		);
 	//end
 	
@@ -142,42 +142,43 @@
 				'#title' => t('Address'),
 				'#type' => 'textfield',
 				//'#required' => TRUE,
-				'#prefix' => '<div class="two-one" id="reload_present_street">',
-				'#suffix' => '</div>',
+				'#prefix' => '<div class="row"><div class="col-md-6" id="reload_present_street"><div class="form-floating">',
+				'#suffix' => '</div></div>',
 				'#element_validate' => array('element_validate_streetaddress'), 
-				'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()"), //'id' => 'present_street', 
+				'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()", 'class'=>array('form-control')), //'id' => 'present_street', 
 			);
 			$form['prrsonal_info']['present_address']['present_city_town_village'] = array(
 				'#title' => t('City / Town / Village'),
 				'#type' => 'textfield',
 				//'#required' => TRUE,
-				'#prefix' => '<div class="three" id="reload_present_city_town_village">',
-				'#suffix' => '</div>',
+				'#prefix' => '<div class="col-md-6" id="reload_present_city_town_village"><div class="form-floating">',
+				'#suffix' => '</div></div></div>',
 				'#element_validate' => array('element_validate_alphabatic_text'), 
-				'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()"), //'id' => 'present_city_town_village', 
+				'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()", 'class'=>array('form-control')), //'id' => 'present_city_town_village', 
 			);
 			$form['prrsonal_info']['present_address']['present_post_office'] = array(
 				'#title' => t('Post Office'),
 				'#type' => 'textfield',
 				//'#required' => TRUE,
-				'#prefix' => '<div class="three" id="reload_present_post_office">',
-				'#suffix' => '</div>',
+				'#prefix' => '<div class="row"><div class="col-md-4" id="reload_present_post_office"><div class="form-floating">',
+				'#suffix' => '</div></div>',
 				'#element_validate' => array('element_validate_alphabatic_text'), 
-				'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()"), //'id' => 'present_post_office', 
+				'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()", 'class'=>array('form-control')), //'id' => 'present_post_office', 
 			);
 			$form['prrsonal_info']['present_address']['present_district'] = array(
 				'#title' => t('District'),
 				'#type' => 'select',
 				'#options' => district_list(),
 				//'#required' => TRUE,
-				'#prefix' => '<div class="three" id="reload_present_district">',
-				'#suffix' => '</div>',
+				'#prefix' => '<div class="col-md-4" id="reload_present_district"><div class="form-floating">',
+				'#suffix' => '</div></div>',
+				'#attributes' => array('class'=>array('form-control')),
 				//'#attributes' => array('id' => 'present_district'),
-				'#select2' => array(
-					'width' => '500',
-					//'placeholder' => '- Select -',
-					'allowClear' => TRUE
-				),
+				// '#select2' => array(
+				// 	'width' => '500',
+				// 	//'placeholder' => '- Select -',
+				// 	'allowClear' => TRUE
+				// ),
 			);
 			$form['prrsonal_info']['present_address']['present_pincode'] = array(
 				'#title' => t('Pincode'),
@@ -185,9 +186,9 @@
 				'#maxlength' => 6,
 				//'#required' => TRUE,
 				'#element_validate' => array('element_validate_numeric_positive'), 
-				'#prefix' => '<div class="four" id="reload_present_pincode">',
-				'#suffix' => '</div>',
-				'#attributes' => array('class' => array('numeric_positive')), //'id' => 'present_pincode', 
+				'#prefix' => '<div class="col-md-4" id="reload_present_pincode"><div class="form-floating">',
+				'#suffix' => '</div></div></div>',
+				'#attributes' => array('class' => array('numeric_positive'),'class'=>array('form-control')), //'id' => 'present_pincode', 
 			);
 		} else {
 			$form['prrsonal_info']['present_address'] = array(
@@ -223,28 +224,29 @@
 			'#default_value' => '',
 			'#maxlength' => 10,
 			//'#required' => TRUE,
-			'#prefix' => '<div class="four">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="row"><div class="col-md-4"><div class="form-floating">',
+			'#suffix' => '</div></div>',
 			'#element_validate' => array('element_validate_mobile'),
-			'#attributes' => array('id' => 'mobile_no'),
+			'#attributes' => array('id' => 'mobile_no', 'class'=>array('form-control')),
 		);
 		$form['prrsonal_info']['email'] = array(
 			'#title' => t('Email ID'),
 			'#type' => 'textfield',
-			'#prefix' => '<div class="two">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="col-md-4"><div class="form-floating">',
+			'#suffix' => '</div></div>',
 			'#element_validate' => array('element_validate_email'),
-			'#attributes' => array('oninput'=>"this.value=this.value.toLowerCase()"),
+			'#attributes' => array('oninput'=>"this.value=this.value.toLowerCase()", 'class'=>array('form-control')),
+
 		);
 		
 		$form['prrsonal_info']['dob'] = array(
 			'#title' => t('Date of Birth(According to Service Book)'),
 			'#type' => 'textfield',
-			'#attributes' => array('readonly' => 'readonly', 'id' => 'edit-dob'),
+			'#attributes' => array('readonly' => 'readonly', 'id' => 'edit-dob', 'class'=>array('form-control')),
 			'#required' => TRUE,
 			//'#validated' => TRUE,
-			'#prefix' => '<div class="two">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="col-md-4"><div class="form-floating">',
+			'#suffix' => '</div></div></div>',
 			'#element_validate' => array('element_validate_date', 'element_validate_age'),
 		);
 		
@@ -254,8 +256,8 @@
 			'#options' => array('M' => 'Male', 'F' => 'Female'),
 			'#attributes' => array('class' => array('gender')),
 			'#default_value' => 'M',
-			'#prefix' => '<div class="three">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="col-md-4"><div class="">',
+			'#suffix' => '</div></div>',
 			'#required' => TRUE,
 		);
 		
@@ -263,20 +265,17 @@
 		$form['official_info'] = array(
 			'#type' => 'fieldset',
 			'#title' => t('Applicant\'s Official Information'),
-			'#collapsible' => TRUE, // Added
-			'#collapsed' => TRUE,  // Added
+			'#collapsible' => FALSE, // Added
+			'#collapsed' => FALSE,  // Added
 		);
 		$form['official_info']['hrms_id'] = array(
 			'#title' => t('Employee HRMS ID'),
 			'#type' => 'textfield',
 			'#default_value' => '',
-			//'#default_value' => $hrms_id,
-			//for api or hrms custom table
-			//'#attributes' => array('readonly' => 'readonly', 'class' => array('numeric_positive')),
 			'#maxlength' => 10,
-			'#attributes' => array('class' => array('numeric_positive')),
-			'#prefix' => '<div class="three">',
-			'#suffix' => '</div>',
+			'#attributes' => array('class' => array('numeric_positive'), 'class'=>array('form-control')),
+			'#prefix' => '<div class="row"><div class="col-md-4"><div class="form-floating">',
+			'#suffix' => '</div></div>',
 			'#element_validate' => array('element_validate_hrms_id'),
 			//'#required' => TRUE,
 		);
@@ -284,10 +283,10 @@
 			'#title' => t('Designation'),
 			'#type' => 'textfield',
 			'#required' => TRUE,
-			'#prefix' => '<div class="two">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="col-md-4"><div class="form-floating">',
+			'#suffix' => '</div></div>',
 			'#element_validate' => array('element_validate_textarea'), 
-			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()"),
+			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()", 'class'=>array('form-control')),
 			//'#attributes' => array('id' => 'edit-app-designation', 'oncopy' => "return false", 'onpaste' => "return false"),
 		);
 		
@@ -297,17 +296,17 @@
 			'#options' => pay_band_list(),
 			'#required' => TRUE,
 			'#validated' => TRUE,
-			'#prefix' => '<div class="two">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="col-md-4"><div class="form-floating">',
+			'#suffix' => '</div></div></div>',
 		);
 		$form['official_info']['pay_in'] = array(
 			'#title' => t('Basic Pay'),
 			'#type' => 'textfield',
 			'#required' => TRUE,
 			'#element_validate' => array('element_validate_numeric_positive'), 
-			'#prefix' => '<div class="four">',
-			'#suffix' => '</div>',
-			'#attributes' => array('class' => array('numeric_positive')),
+			'#prefix' => '<div class="row"><div class="col-md-4"><div class="form-floating">',
+		 	'#suffix' => '</div></div>',
+			'#attributes' => array('class' => array('numeric_positive form-control')),
 		);
 		
 		/*$form['official_info']['grade_pay'] = array(
@@ -334,28 +333,28 @@
 			'#title' => t('Place of Posting'),
 			'#type' => 'textfield',
 			'#required' => TRUE,
-			'#prefix' => '<div class="two">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="col-md-4"><div class="form-floating">',
+			'#suffix' => '</div></div>',
 			'#element_validate' => array('element_validate_alphabatic_text'), 
-			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()"),
+			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()", 'class' => array('numeric_positive form-control')),
 		); 
 		$form['official_info']['app_headquarter'] = array(
 			'#title' => t('Headquarter'),
 			'#type' => 'textfield',
 			//'#required' => TRUE,
-			'#prefix' => '<div class="two">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="col-md-4"><div class="form-floating">',
+			'#suffix' => '</div></div></div>',
 			'#element_validate' => array('element_validate_alphabatic_text'), 
-			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()"),
+			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()", 'class' => array('numeric_positive form-control')),
 		);
 		$form['official_info']['doj'] = array(
 			'#title' => t('Date of Joining'),
 			'#type' => 'textfield',
-			'#attributes' => array('readonly' => 'readonly', 'id' => 'edit-doj'),
+			'#attributes' => array('readonly' => 'readonly', 'id' => 'edit-doj', 'class' => array('numeric_positive form-control')),
 			'#default_value' => '',
 			//'#required' => TRUE,
-			'#prefix' => '<div class="three">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="row"><div class="col-md-6"><div class="form-floating">',
+			'#suffix' => '</div></div>',
 			'#element_validate' => array('element_validate_date', 'element_validate_joining_age'),
 		);
 		
@@ -363,11 +362,11 @@
 			'#title' => t('Date of Retirement(According to Service Book)'),
 			'#type' => 'textfield',
 			//'#attributes' => array('readonly' => 'readonly'),
-			'#attributes' => array('readonly' => 'readonly', 'id' => 'edit-dor'),
+			'#attributes' => array('readonly' => 'readonly', 'id' => 'edit-dor', 'class' => array('numeric_positive form-control')),
 			'#default_value' => '',
 			'#required' => TRUE,
-			'#prefix' => '<div class="two">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="col-md-6"><div class="form-floating">',
+			'#suffix' => '</div></div></div>',
 			'#element_validate' => array('element_validate_date'),
 		);
 		
@@ -376,58 +375,59 @@
 		$form['office_add'] = array(
 			'#type' => 'fieldset',
 			'#title' => t('Name and Address of the Office'),
-			'#collapsible' => TRUE, // Added
-			'#collapsed' => TRUE,  // Added
+			'#collapsible' => FALSE, // Added
+			'#collapsed' => FALSE,  // Added
 		);
 		$form['office_add']['office_name'] = array(
 			'#title' => t('Name of the Office'),
 			'#type' => 'textfield',
 			'#required' => TRUE,
-			'#prefix' => '<div class="two-one">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="row"><div class="col-md-4"><div class="form-floating">',
+			'#suffix' => '</div></div>',
 			'#element_validate' => array('element_validate_textarea'), 
-			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()"),
+			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()", 'class' => array('numeric_positive form-control')),
 		);
 		
 		$form['office_add']['office_street'] = array(
 			'#title' => t('Address'),
 			'#type' => 'textfield',
 			'#required' => TRUE,
-			'#prefix' => '<div class="two-one">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="col-md-4"><div class="form-floating">',
+			'#suffix' => '</div></div>',
 			'#element_validate' => array('element_validate_streetaddress'),
-			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()"), 
+			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()", 'class' => array('numeric_positive form-control')), 
 		);
 		$form['office_add']['office_city'] = array(
 			'#title' => t('City / Town / Village'),
 			'#type' => 'textfield',
 			'#required' => TRUE,
-			'#prefix' => '<div class="three">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="col-md-4"><div class="form-floating">',
+			'#suffix' => '</div></div></div>',
 			'#element_validate' => array('element_validate_alphabatic_text'), 
-			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()"),
+			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()", 'class' => array('numeric_positive form-control')),
 		);
 		$form['office_add']['office_post_office'] = array(
 			'#title' => t('Post Office'),
 			'#type' => 'textfield',
 			//'#required' => TRUE,
-			'#prefix' => '<div class="three">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="row"><div class="col-md-3"><div class="form-floating">',
+			'#suffix' => '</div></div>',
 			'#element_validate' => array('element_validate_alphabatic_text'), 
-			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()"),
+			'#attributes' => array('oninput'=>"this.value=this.value.toUpperCase()", 'class' => array('numeric_positive form-control')),
 		);
 		$form['office_add']['office_district'] = array(
 			'#title' => t('District'),
 			'#type' => 'select',
 			'#options' => district_list(),
 			'#required' => TRUE,
-			'#prefix' => '<div class="three">',
-			'#suffix' => '</div>',
-			'#select2' => array(
-				'width' => '500',
-				//'placeholder' => '- Select -',
-				'allowClear' => TRUE
-        	)
+			'#prefix' => '<div class="col-md-3"><div class="form-floating">',
+			'#suffix' => '</div></div>',
+			'#attributes' => array('class' => array('numeric_positive form-control')),
+			// '#select2' => array(
+			// 	'width' => '500',
+			// 	//'placeholder' => '- Select -',
+			// 	'allowClear' => TRUE
+        	//)
 		);
 		$form['office_add']['office_pincode'] = array(
 			'#title' => t('Pincode'),
@@ -435,9 +435,9 @@
 			'#maxlength' => 6,
 			'#required' => TRUE,
 			'#element_validate' => array('element_validate_numeric_positive'), 
-			'#prefix' => '<div class="four">',
-			'#suffix' => '</div>',
-			'#attributes' => array('class' => array('numeric_positive')),
+			'#prefix' => '<div class="col-md-3"><div class="form-floating">',
+			'#suffix' => '</div></div>',
+			'#attributes' => array('class' => array('numeric_positive'), 'class' => array('form-control')),
 		);
 		$form['office_add']['office_phone_no'] = array(
 			'#title' => t('Phone No.(With STD Code)'),
@@ -445,17 +445,17 @@
 			'#maxlength' => 15,
 			//'#required' => TRUE,
 			'#element_validate' => array('element_validate_telephoneno'), 
-			'#prefix' => '<div class="three">',
-			'#suffix' => '</div>',
-			'#attributes' => array('class' => array('numeric_positive')),
+			'#prefix' => '<div class="col-md-3"><div class="form-floating">',
+			'#suffix' => '</div></div></div>',
+			'#attributes' => array('class' => array('numeric_positive'), 'class' => array('form-control')),
 		);
 		
 		// ddo details
 		$form['ddo'] = array(
 			'#type' => 'fieldset',
 			'#title' => t('DDO with full address'),
-			'#collapsible' => TRUE, // Added
-			'#collapsed' => TRUE,  // Added
+			'#collapsible' => FALSE, // Added
+			'#collapsed' => FALSE,  // Added
 		);
 		$form['ddo']['district'] = array(
 			'#title' => t('DDO District'),
@@ -473,13 +473,8 @@
 			 ),
 			'#required' => TRUE,
 			'#validated' => TRUE,
-			'#prefix' => '<div class="two">',
-			'#suffix' => '</div>',
-			'#select2' => array(
-				'width' => '500',
-				//'placeholder' => '- Select -',
-				'allowClear' => TRUE
-			)
+			'#prefix' => '<div class="row"><div class="col-md-6"><div class="form-floating">',
+			'#suffix' => '</div></div>',
 		);
 		
 		
@@ -501,21 +496,17 @@
 			'#default_value' => $designation,
 			'#required' => TRUE,
 			'#validated' => TRUE,
-			'#prefix' => '<div id="replace_designation" class="two">',
-			'#suffix' => '</div>',
-			'#select2' => array(
-				'width' => '500',
-				//'placeholder' => '- Select -',
-				'allowClear' => TRUE
-			)
+			'#prefix' => '<div id="replace_designation" class="col-md-6"><div class="form-floating">',
+			'#suffix' => '</div></div>',
 		);
 		
 		$form['ddo']['address'] = array(
 			'#title' => t('DDO Address'),
 			'#type' => 'textarea',
-			'#attributes' => array('readonly' => 'readonly'),
-			'#prefix' => '<div id="replace_ddo_address" >',
-			'#suffix' => '</div>',
+			'#attributes' => array('readonly' => 'readonly', 'class' => array('form-control')),
+			'#prefix' => '<div id="replace_ddo_address" class="col-md-12"><div class="form-floating">',
+			'#suffix' => '</div></div>',
+			
 			//'#required' => TRUE,
 			//'#validated' => TRUE,
 		);
@@ -524,18 +515,18 @@
 		$form['allotment_reason'] = array(
 			'#type' => 'fieldset',
 			'#title' => t('Allotment Category'),
-			'#collapsible' => TRUE, // Added
-			'#collapsed' => TRUE,  // Added
+			'#collapsible' => FALSE, // Added
+			'#collapsed' => FALSE,  // Added
 		);
 		
 		$form['allotment_reason']['rhe_flat_type'] = array(
 			'#title' => t('Flat TYPE'),
 			'#type' => 'textfield',
-			'#attributes' => array('readonly' => 'readonly'),
+			'#attributes' => array('readonly' => 'readonly', 'class' => array('form-control')),
 			'#default_value' => '',
 			'#required' => TRUE,
-			'#prefix' => '<div class="two" id="replace_rhe_flat_type" >',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="row"><div class="col-md-6" id="replace_rhe_flat_type" ><div class="form-floating">',
+			'#suffix' => '</div></div>',
 			'#element_validate' => array('element_validate_flat_type'),
 		 );
 	     
@@ -548,18 +539,19 @@
 			'#default_value' => $reason,
 			'#required' => TRUE,
 			'#validated' => TRUE,
-			'#prefix' => '<div id="replace_allotment_category" class="two">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div id="replace_allotment_category" class="col-md-6"><div class="form-floating">',
+			'#suffix' => '</div></div></div>',
+			'#attributes' => array('class' => array('form-control')),
 		 );
 		 
 		 $form['allotment_reason']['doa'] = array(
 			'#title' => t('Date of Application'),
 			'#type' => 'textfield',
-			'#attributes' => array('readonly' => 'readonly', 'id' => 'edit-doa'),
+			'#attributes' => array('readonly' => 'readonly', 'id' => 'edit-doa','class' => array('form-control')),
 			'#required' => TRUE,
 			//'#validated' => TRUE,
-			'#prefix' => '<div class="two">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="row"><div class="col-md-6"><div class="form-floating">',
+			'#suffix' => '</div></div>',
 			'#element_validate' => array('element_validate_date'),
 		);
 		
@@ -568,16 +560,18 @@
 			'#type' => 'textfield',
 			'#required' => TRUE,
 			'#element_validate' => array('element_validate_alphanumeric'), 
-			'#prefix' => '<div class="two">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="col-md-6"><div class="form-floating">',
+			'#suffix' => '</div></div></div>',
+			'#attributes' => array('class' => array('form-control')),
 		);
 		
 		$form['allotment_reason']['remarks'] = array(
 			'#title' => t('Remarks'),
 			'#type' => 'textarea',
-			'#prefix' => '<div class="one">',
-			'#suffix' => '</div>',
+			'#prefix' => '<div class="col-md-12"><div class="form-floating">',
+			'#suffix' => '</div></div>',
 			'#element_validate' => array('element_validate_textarea'), 
+			'#attributes' => array('class' => array('form-control')),
 		);
 		 
 		 $form['official_info']['pay_band']['#ajax'] = array(
@@ -598,9 +592,10 @@
 		);
 		
 		$form['submit_button']=array(
-										'#type'=>'submit',
-										'#value'=>t('Submit')
-								);
+				'#type'=>'submit',
+				'#value'=>t('Submit'),
+				'#attributes' => array('class'=>array('btn bg-primary btn-sm px-5 rounded-pill text-white fw-bolder')),
+			);
 								
 		
 		return $form; 

@@ -9,13 +9,15 @@ if($isVal){
 
 	$fields = $entityList['fields'];
 	$expressions = $entityList['expressions'];
-	/*echo '<pre>';
-	print_r($entityList); die('ok');*/
+	
 	
 	$entityType = $entityList['type'];
 	$application_data = $application_arr[1]; 
 	$common_data = $output[1];
 	$applicant_data = $output[3];
+
+  // echo '<pre>';
+	// print_r($common_data); die('ok');
 
   if(isset($output[4]))
   $status_description=$output[4];	

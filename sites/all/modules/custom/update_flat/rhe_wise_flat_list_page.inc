@@ -11,11 +11,8 @@
 				'#type' => 'select',
 				'#options' => rhe_list_specific(),
 				'#required' => TRUE,
-				//'#weight' => -10,
-				// '#prefix' => '<div>',// sd 24-06-2024
-				// '#suffix' => '</div>',// sd 24-06-2024
 				'#attributes' => array('class' => array('form-select')),//sd 20-06-2024
-				'#prefix' => '<div class="col-md-12"><div class="form-floating">',//sd 20-06-2024
+				'#prefix' => '<div class="col-md-6"><div class="form-floating">',//sd 20-06-2024
 				'#suffix' => '</div></div>',//sd 21-06-2024
 				'#ajax' => array(
 					'event' => 'change',
@@ -35,7 +32,7 @@
 				//'#prefix' => '<div>',// sd 24-06-2024
 				//'#suffix' => '</div>', //sd 24-06-2024
 				'#attributes' => array('class' => array('form-select')),//sd 20-06-2024
-				'#prefix' => '<div class="col-md-12"><div class="form-floating">',//sd 20-06-2024
+				'#prefix' => '<div class="col-md-6"><div class="form-floating">',//sd 20-06-2024
 				'#suffix' => '</div></div>',//sd 21-06-2024
 				'#ajax' => array(
 					'event' => 'change',

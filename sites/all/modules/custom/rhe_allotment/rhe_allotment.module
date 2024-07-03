@@ -75,7 +75,7 @@ function get_estatewise_vacancy($allotment_type, $district_code = 0) {
 }
 function get_no_of_applicant_vs($allotment_type, $occupation_estate) {
 	$no_of_applicant = 0;
-	//echo $occupation_estate;die;
+	// echo $occupation_estate;die;
 	
 	if(!empty($allotment_type) && !empty($occupation_estate)) {
 		$result = db_query("SELECT count(*) as total_applicant FROM housing_online_application as t1

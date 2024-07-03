@@ -12,10 +12,8 @@ function rhe_allotment_form($form, $form_state) {
 		'#type' => 'select',
 		'#options' => rhe_flat_type(),
 		'#required' => TRUE,
-		//'#prefix' => '<div class="three">',//sd 24-06-2024 turned off
-		//'#suffix' => '</div>',//sd 24-06-2024 turned off
 		'#attributes' => array('class' => array('form-select')),//sd 24-06-2024
-		'#prefix' => '<div class="col-md-12"><div class="form-floating">',//sd 24-06-2024
+		'#prefix' => '<div class="col-md-6"><div class="form-floating">',//sd 24-06-2024
 		'#suffix' => '</div></div>',//sd 24-06-2024
 	);  
 
@@ -57,6 +55,7 @@ function rhe_allotment_form_submit($form, &$form_state) {
 		$allotment_type = $form_state['values']['allotment_type'];
 		$district_code = $form_state['values']['district_code'];
 		rhe_allotment_update($allotment_type, $district_code);
+		drupal_set_message('Allotment Process Completed Successfully', 'success');
 	}
 	$form_state['rebuild'] = TRUE;
 }

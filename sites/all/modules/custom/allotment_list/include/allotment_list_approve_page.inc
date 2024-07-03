@@ -23,7 +23,7 @@
 			//'#prefix' => '<div class="three">',//sd 24-06-2024 turned off
 			//'#suffix' => '</div>',//sd 24-06-2024 turned off
 			'#attributes' => array('class' => array('form-select')),//sd 24-06-2024
-			'#prefix' => '<div class="col-md-12"><div class="form-floating">',//sd 24-06-2024
+			'#prefix' => '<div class="row"><div class="col-md-4"><div class="form-floating">',//sd 24-06-2024
 			'#suffix' => '</div></div>',//sd 24-06-2024
 			'#default_value' => $allotment_process_date,
 	  	);
@@ -43,7 +43,7 @@
 			//'#prefix' => '<div class="three" id="allotment_process_no_replace">', //sd 24-06-2024 turned off
 			//'#suffix' => '</div>', //sd 24-06-2024 turned off
 			'#attributes' => array('class' => array('form-select')),//sd 24-06-2024 turned off
-			'#prefix' => '<div class="col-md-12"><div class="form-floating" id="allotment_process_no_replace">',//sd 24-06-2024
+			'#prefix' => '<div class="col-md-4" id="allotment_process_no_replace"><div class="form-floating">',//sd 24-06-2024
 			'#suffix' => '</div></div>',//sd 24-06-2024
 
 			//'#default_value' => $allotment_process_no,
@@ -65,7 +65,7 @@
 				//'#prefix' => '<div class="three" id="allotment_process_no_replace">', //sd 24-06-2024 turned off
 				//'#suffix' => '</div>', //sd 24-06-2024 turned off
 				'#attributes' => array('class' => array('form-select')),//sd 24-06-2024
-				'#prefix' => '<div class="col-md-12"><div class="form-floating" id="allotment_process_no_replace">',//sd 24-06-2024
+				'#prefix' => '<div class="col-md-4" id="allotment_process_no_replace"><div class="form-floating">',//sd 24-06-2024
 				'#suffix' => '</div></div>',//sd 24-06-2024
 
 				'#default_value' => $allotment_process_no,
@@ -86,8 +86,8 @@
 			//'#prefix' => '<div class="three" id="allotment_process_type_replace">', //sd 24-06-2024  turned off
 			//'#suffix' => '</div>', //sd 24-06-2024  turned off
 			'#attributes' => array('class' => array('form-select')),//sd 24-06-2024
-			'#prefix' => '<div class="col-md-12"><div class="form-floating" id="allotment_process_type_replace">',//sd 24-06-2024
-			'#suffix' => '</div></div>',//sd 24-06-2024
+			'#prefix' => '<div class="col-md-4" id="allotment_process_type_replace"><div class="form-floating">',//sd 24-06-2024
+			'#suffix' => '</div></div></div>',//sd 24-06-2024
 
 			//'#default_value' => $allotment_process_type,
 		);		
@@ -105,11 +105,9 @@
 						   'callback' => '_reload_allottee_list',
 						   'method' => 'replace',
 				),
-				//'#prefix' => '<div class="three" id="allotment_process_type_replace">',//sd 24-06-2024 turned off
-				//'#suffix' => '</div>',//sd 24-06-2024 turned off
 				'#attributes' => array('class' => array('form-select')),//sd 24-06-2024
-				'#prefix' => '<div class="col-md-12"><div class="form-floating" id="allotment_process_type_replace">',//sd 24-06-2024
-				'#suffix' => '</div></div>',//sd 24-06-2024
+				'#prefix' => '<div class="col-md-4" id="allotment_process_type_replace"><div class="form-floating">',//sd 24-06-2024
+				'#suffix' => '</div></div></div>',//sd 24-06-2024
 				'#default_value' => $allotment_process_type,
 			);
 		}

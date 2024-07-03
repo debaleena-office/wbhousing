@@ -79,52 +79,31 @@
 		}
 		//$header[] = array('data' => 'Status');
 
-		// sd 21-06-2024 start
-		$variables = array(
+		
+
+		
+		
+		if(count($rows) > 0) {
+			// Render using Drupal's render API.
+			$build['datatable'] = array(
+			'#theme' => 'datatable',
+			'#header' => $header,
+			'#rows' => $rows,
+			'#attributes' => array('class'=>array('table table-list')),
+			);
+	
+			// Or, render using a theme function.
+			$variables = array(
 			'attributes' => array('class'=>array('table table-list')),
 			'header' => $header,
 			'rows' => $rows,
-			'sticky' => true,
-			'empty' => t("No data found!") // The message to be displayed if table is empty
-		);
-		$output = theme('datatable', $variables);
-		//end
-		
-		
-		/*$output = theme_table(
-			array(
-			'header' => $header,
-			'rows' => $rows,
-			'attributes' => array(),
-			'sticky' => true,
-			'caption' => '',
-			'colgroups' => array(),
-			'empty' => t("No data found!") // The message to be displayed if table is empty
-			)
-		).theme('pager');*/
-		
-		//sd turned off 21-06-2024
-		/*if(count($rows) > 0) {
-		// Render using Drupal's render API.
-		$build['datatable'] = array(
-		  '#theme' => 'datatable',
-		  '#header' => $header,
-		  '#rows' => $rows,
-		  '#attributes' => array(),
-		);
- 
-		// Or, render using a theme function.
-		$variables = array(
-		  'attributes' => array(),
-		  'header' => $header,
-		  'rows' => $rows,
-		);
-		
-		$output = theme('datatable', $variables);
+			);
+			
+			$output = theme('datatable', $variables);
 		}
 		else {
 			$output = '<div>
-						<table class="datatable_no_data_found">
+						<table class="table table-list">
 							<tr class="tr_no_data_found">
 								<th class="th_no_data_found"></th>
 							</tr>
@@ -133,7 +112,7 @@
 							</tr>
 						</table>
 					</div>';	
-		}*/
+		}
 	
 	
 		if(count($rows) > 0) {
@@ -142,7 +121,7 @@
 
 			return $url.$output;//sd 21-06-2024
 		}
-		/*else {//sd 21-06-2024 turned off
+		else {//sd 21-06-2024 turned off
 			return $output;
-		}*/
+		}
 	}

@@ -124,7 +124,7 @@ function estate_treasury_mapping_view(){
     $result = db_query($query);
 
     if ($result->rowCount() > 0) {
-      $output .= '<table>';
+      $output .= '<table class = "table table-list">';
       $output .= '<tr><th>Serial No.</th><th>Estate Name</th><th>Treasury Name</th><th>Activation Status</th><th>Action</th></tr>';
       $serialNumber = 1;
       foreach ($result as $row) {
@@ -133,7 +133,7 @@ function estate_treasury_mapping_view(){
         $output .= '<td>' . $row->estate_name . '</td>';
         $output .= '<td>' . $row->treasury_name . '</td>';
         $output .= '<td>' . ($row->is_active ? 'Active' : 'Inactive') . '</td>';
-        $output .= '<td>'.l(t('Edit'), $base_root.$base_path.'estate-treasury-selection/edit/'. $row->housing_treasury_estate_mapping_id, array('html' => true, 'attributes' => array('class' => array('form-submit button small round steel_blue')))).'<br><hr>'.l(t('Delete'), $base_root.$base_path.'estate-treasury-selection/delete/'. $row->housing_treasury_estate_mapping_id, array('html' => true, 'attributes' => array('class' => array('form-submit button small round steel_blue'), 'onclick' => $onclick))).'</td>';
+        $output .= '<td>'.l(t('Edit'), $base_root.$base_path.'estate-treasury-selection/edit/'. $row->housing_treasury_estate_mapping_id, array('html' => true, 'attributes' => array('class' => array('btn bg-success btn-sm px-4 rounded-pill text-white fw-bolder')))).'<br><hr>'.l(t('Delete'), $base_root.$base_path.'estate-treasury-selection/delete/'. $row->housing_treasury_estate_mapping_id, array('html' => true, 'attributes' => array('class' => array('btn bg-danger btn-sm px-3 rounded-pill text-white fw-bolder'), 'onclick' => $onclick))).'</td>';
         $output .= '</tr>';
         $serialNumber++;
       }

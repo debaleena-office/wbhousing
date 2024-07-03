@@ -11,15 +11,15 @@
 		
 		if($fetchDoc->rowCount() >0){
 			$doc_arr = $fetchDoc->fetchAllKeyed($key_index = 8, $value_index = 7);
-			$license_application_signed_form_url = $base_root.$base_path.'/sites/default/files/doc/'.$user->uid.'/'.$doc_arr['license_application_signed_form'];
-
+			$license_application_signed_form_url = $base_root.$base_path.'sites/default/files/doc/'.$user->uid.'/'.$doc_arr['license_application_signed_form']; 
+			
 			$license_application_signed_form_url = l('<img height="20" width="20" src="'.$base_path.drupal_get_path('module', 'application_of_registration_list').'/images/download_icon.png " title="Licence Form" alt="PDF Icon">Uploaded Licence Application Signed Form',$license_application_signed_form_url,array('html'=>true,'attributes'=>array('class'=>array())));
 
-			$declaration_signed_form_url = $base_root.$base_path.'/sites/default/files/doc/'.$user->uid.'/'.$doc_arr['declaration_signed_form'];
+			$declaration_signed_form_url = $base_root.$base_path.'sites/default/files/doc/'.$user->uid.'/'.$doc_arr['declaration_signed_form'];
 
 			$declaration_signed_form_url = l('<img height="20" width="20" src="'.$base_path.drupal_get_path('module', 'application_of_registration_list').'/images/download_icon.png " title="Declaration Form" alt="PDF Icon">Uploaded Declaration Signed Form',$declaration_signed_form_url,array('html'=>true,'attributes'=>array('class'=>array())));
 
-			$current_pay_slip_url = $base_root.$base_path.'/sites/default/files/doc/'.$user->uid.'/'.$doc_arr['current_pay_slip'];
+			$current_pay_slip_url = $base_root.$base_path.'sites/default/files/doc/'.$user->uid.'/'.$doc_arr['current_pay_slip'];
 
 			$current_pay_slip_url = l('<img height="20" width="20" src="'.$base_path.drupal_get_path('module', 'application_of_registration_list').'/images/download_icon.png " title="Download Offer Letter" alt="PDF Icon">Uploaded Current Pay Slip',$current_pay_slip_url,array('html' => true));
 

@@ -2,7 +2,7 @@
     <div class="title">
         <h3><?= $title?></h3>
         <ul class="breadcrumb text-muted fs-6 fw-normal ms-1">
-        <li class="breadcrumb-item text-muted"><a href="dashboard.html" class="text-muted text-hover-primary">Home</a></li>
+        <li class="breadcrumb-item text-muted"><a href="dashboard" class="text-muted text-hover-primary">Home</a></li>
         <li class="breadcrumb-item text-dark"><?= $title?></li>
         </ul>
     </div>
@@ -15,7 +15,7 @@
         </div>
         </a>
         <ul class="dropdown-menu text-small shadow" style="">
-        <li><a class="dropdown-item" href="#">Profile</a></li>
+        <li><a class="dropdown-item" href="<?= $base_root.$base_path.'profile' ?>">Profile</a></li>
         
         </ul>
     </div>
