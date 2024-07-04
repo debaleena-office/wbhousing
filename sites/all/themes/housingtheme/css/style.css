@@ -138,3 +138,38 @@ footer a:hover{ color: #b0d589;}
 .cus-login .form-actions {margin-bottom: 0!important;}
 .dashboard .after-login-footer {position: absolute; bottom: 0; width: 76%;}
 
+@media screen and (max-width: 767px) and (min-width: 481px) {
+
+  .cus-responsive .position-absolute.start-0.end-0, .cus-responsive .fixed-bottom {position: inherit!important;left: auto!important; right: auto!important; bottom: auto!important;top: auto!important;}
+  nav.navbar.position-absolute{display: none;}
+  .cus-login .form-item.form-item-captcha-response {float: none; width: auto;}
+  .cus-login .captcha img {float: none; width: auto;}
+  .cus-responsive .fixed-bottom.mb-5 {margin-bottom: 0!important;}
+  .cus-responsive .fixed-bottom .pb-3 {padding-bottom: 0!important;margin: auto!important;}
+  footer .text-start, footer .text-end {text-align: center!important;}
+
+}
+
+@media screen and (max-width: 480px) and (min-width: 321px) {
+
+  .cus-responsive .position-absolute.start-0.end-0, .cus-responsive .fixed-bottom {position: inherit!important;left: auto!important; right: auto!important; bottom: auto!important;top: auto!important;}
+  nav.navbar.position-absolute{display: none;}
+  .cus-login .form-item.form-item-captcha-response {float: none; width: auto;}
+  .cus-login .captcha img {float: none; width: auto;}
+  .cus-responsive .fixed-bottom.mb-5 {margin-bottom: 0!important;}
+  .cus-responsive .fixed-bottom .pb-3 {padding-bottom: 0!important;margin: auto!important;}
+  footer .text-start, footer .text-end {text-align: center!important;}
+
+}
+
+@media screen and (max-width: 320px) and (min-width: 200px) {
+
+  .cus-responsive .position-absolute.start-0.end-0, .cus-responsive .fixed-bottom {position: inherit!important;left: auto!important; right: auto!important; bottom: auto!important;top: auto!important;}
+  nav.navbar.position-absolute{display: none;}
+  .cus-login .form-item.form-item-captcha-response {float: none; width: auto;}
+  .cus-login .captcha img {float: none; width: auto;}
+  .cus-responsive .fixed-bottom.mb-5 {margin-bottom: 0!important;}
+  .cus-responsive .fixed-bottom .pb-3 {padding-bottom: 0!important;margin: auto!important;}
+  footer .text-start, footer .text-end {text-align: center!important;}
+
+}

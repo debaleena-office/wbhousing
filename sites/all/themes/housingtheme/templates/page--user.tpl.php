@@ -1,4 +1,4 @@
-<section class="slider" style="overflow-x: hidden; overflow-y: inherit;">
+<section class="slider cus-responsive" style="overflow-x: hidden; overflow-y: inherit;">
     <div class="overlay-1"></div>
     <div class="overlay-2"></div>
     <div class="p-3 text-center position-absolute start-0 end-0">
