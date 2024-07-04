@@ -1,4 +1,4 @@
-<section class="slider">
+<section class="slider cus-responsive">
         <div class="overlay-1"></div>
         <div class="overlay-2"></div>
         <?php echo l('Admin Login','user/login',array('html' => true, 'attributes' => array('class'=>array('admin-login position-absolute end-0 mx-4 mt-5')))); ?>
