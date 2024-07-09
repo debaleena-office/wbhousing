@@ -5,9 +5,10 @@
 		
 		$output = '';
 		$result = fetch_allotment_details();
-
+		//print_r($result);die;
 		// get document info
 		$fetchDoc = get_applicant_upload_docs();
+		//print_r($fetchDoc);die;
 		
 		if($fetchDoc->rowCount() >0){
 			$doc_arr = $fetchDoc->fetchAllKeyed($key_index = 8, $value_index = 7);
@@ -42,6 +43,8 @@
 		//$header[] = array('data' => 'Alloted Estate Address');
 		//$header[] = array('data' => 'Alloted Flat No');
 		$header[] = array('data' => 'Status', 'width' => '25%');
+
+		$rows[] = '';    //by debaleena 08-07-2024
 		
 		while($data = $result->fetchObject()) {
 			//$data_val = isset($data_arr[$data->online_application_id]) ? $data_arr[$data->online_application_id] : NULL;
@@ -55,7 +58,7 @@
 			//$fields[] =	$data->estate_address;
 			//$fields[] = $data->flat_no;
 			if($data->accept_reject_status == '') {
-				$fields[] = '';	
+				$fields[] = 'In Progress';	
 			}
 			else if($data->accept_reject_status == 'Accept') {
 				$fields[] = 'You '.$data->accept_reject_status.' the Offer of Allotment.';	
@@ -66,8 +69,11 @@
 			else if($data->accept_reject_status == 'Cancel') {
 				$fields[] = 'Your Offer of Allotment has been '.$data->accept_reject_status.' because you have not accept Offer of Allotment within one month from the Date of Allotment.';	
 			}
+
 			$rows[] = $fields;
 		}
+
+
 		
 		//sd 20-06-2024 turned off
 		/*$output = theme_table(

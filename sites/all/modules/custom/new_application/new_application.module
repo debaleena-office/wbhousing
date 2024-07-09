@@ -700,7 +700,7 @@ function new_application_element_process($element, &$form_state, $form)
 
 function new_application_submit($form, &$form_state)
 {   
-    //echo 'dd';die;
+    
     //print_r($form_state['values']['first_preference']);die;
     //exit();
     /*echo '<pre>';
@@ -718,11 +718,13 @@ function new_application_submit($form, &$form_state)
     //die($online_application_id);
     if ($online_application_id == 0)
     {
+        
         $online_application_id = add_online_application($action, 'NA', $form, $form_state);
         add_new_allotment_application($form, $form_state, $online_application_id);
     }
     else
     {
+        
         update_online_application($action, $form, $form_state, $online_application_id);
         update_new_allotment_application($form, $form_state, $online_application_id);
     }

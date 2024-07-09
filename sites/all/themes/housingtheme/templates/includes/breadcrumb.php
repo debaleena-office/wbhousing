@@ -1,4 +1,5 @@
 <div class="d-flex flex-row justify-content-between">
+    <?php global $base_path,$base_root;?>
     <div class="title">
         <h3><?= $title?></h3>
         <ul class="breadcrumb text-muted fs-6 fw-normal ms-1">

@@ -228,7 +228,7 @@ function view_app_page($status ='', $entity = '',$page_status ='') {
 					</svg></span>' ,
 
 					'application-approve/'.encrypt_url($data->online_application_id).'/'.encrypt_url($update_status).'/'.encrypt_url($status).'/
-					'.encrypt_url($entity), array('html'=>TRUE, 'attributes' => array('onclick' => $onclick&nbsp))).' '.
+					'.encrypt_url($entity), array('html'=>TRUE, 'attributes' => array('onclick' => $onclick))).' '.
 
 
 

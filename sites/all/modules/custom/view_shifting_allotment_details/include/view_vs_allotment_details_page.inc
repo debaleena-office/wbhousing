@@ -5,7 +5,7 @@
 		
 		$output = '';
 		$result = fetch_vs_allotment_details();
-		
+		//print_r($result);die;
 		$result1 = fetch_vs_allotment_details();
 		$data1 = $result1->fetchObject();
 		//$rows =array();
@@ -19,6 +19,7 @@
 		//$header[] = array('data' => 'Alloted Flat No');
 		$header[] = array('data' => 'Status', 'width' => '25%');
 		
+		$rows[] = '';    //by debaleena 08-07-2024
 		while($data = $result->fetchObject()) {
 			//$data_val = isset($data_arr[$data->online_application_id]) ? $data_arr[$data->online_application_id] : NULL;
 			
@@ -45,6 +46,7 @@
 			
 			$rows[] = $fields;
 		}
+
 		
 		//sd 20-06-2024 turned off
 		/*$output = theme_table(

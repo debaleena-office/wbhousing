@@ -1,5 +1,5 @@
 <?php 
-global $user, $user_role; 
+global $user, $user_role,$base_path,$base_root; 
 
 ?>
 <div class="sidebar d-flex flex-column p-3" >

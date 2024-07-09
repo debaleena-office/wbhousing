@@ -1,3 +1,7 @@
+<?php 
+global $base_path,$base_root; 
+
+?>
 <section class="slider cus-responsive">
         <div class="overlay-1"></div>
         <div class="overlay-2"></div>
