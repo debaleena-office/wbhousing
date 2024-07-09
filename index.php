@@ -20,6 +20,8 @@ require_once DRUPAL_ROOT . '/includes/bootstrap.inc';
 drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
 menu_execute_active_handler();
 
+//$base_url = 'http://localhost/rhewbhousing/rhe-wbhousing-v2';
+
 
 // global $user;
 // $user = user_load(1);

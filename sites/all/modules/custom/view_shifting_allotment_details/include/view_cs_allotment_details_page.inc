@@ -18,6 +18,8 @@
 		//$header[] = array('data' => 'Alloted Estate Address');
 		//$header[] = array('data' => 'Alloted Flat No');
 		$header[] = array('data' => 'Status', 'width' => '25%');
+
+		$rows[] = '';    //by debaleena 08-07-2024
 		
 		while($data = $result->fetchObject()) {
 			//$data_val = isset($data_arr[$data->online_application_id]) ? $data_arr[$data->online_application_id] : NULL;

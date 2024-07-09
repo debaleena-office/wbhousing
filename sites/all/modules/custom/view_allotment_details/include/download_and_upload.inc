@@ -128,7 +128,7 @@ function download_and_upload_submit($form, &$form_state) {
         $fid = $file->fid;
         $docArr['declaration_file']['fid'] = $fid;
         $docArr['declaration_file']['filename'] = $file_name;
-        $docArr['licence_file']['filetype'] = 'declaration_signed_form';
+        $docArr['declaration_file']['filetype'] = 'declaration_signed_form';
     }
     if (!empty($form_state['values']['payslip_file'])) {
         // Load the file object.
@@ -143,7 +143,7 @@ function download_and_upload_submit($form, &$form_state) {
         $fid = $file->fid;
         $docArr['payslip_file']['fid'] = $fid;
         $docArr['payslip_file']['filename'] = $file_name;
-        $docArr['licence_file']['filetype'] = 'current_pay_slip';
+        $docArr['payslip_file']['filetype'] = 'current_pay_slip';
     }
 
     if(!empty($docArr)){
@@ -157,10 +157,13 @@ function download_and_upload_submit($form, &$form_state) {
                 'doc_filename' => $r['filename'],
                 'doc_type' => $r['filetype']
             );
+            
             db_insert('housing_online_application_upload_doc')->fields($arrins)->execute();
         }
+
     }
     drupal_set_message(t('The documents has been uploaded successfully.'));
+    drupal_goto('dashboard');
 }
 
 

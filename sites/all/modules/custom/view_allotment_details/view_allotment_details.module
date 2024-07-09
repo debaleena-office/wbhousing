@@ -112,7 +112,7 @@
 		$query->addField('hd', 'district_name');
 		
 		// allowed application to view
-		$status_arr = array('housing_official_approved','applicant_acceptance','applicant_reject','ddo_verified_2','ddo_reject_2','housing_sup_approved_2','housing_sup_reject_2','license_generate');
+		$status_arr = array('housing_official_approved','allotted','applicant_acceptance','applicant_reject','ddo_verified_2','ddo_reject_2','housing_sup_approved_2','housing_sup_reject_2','license_generate');
 
 
 		if($online_application_id == ''){
@@ -150,13 +150,13 @@
 			$db_and = db_and();
 			$db_and->condition('haod.uid', $user->uid, '=');
 			// $db_and->condition('hoa.status', 'allotted_approved', '=');
-			$db_and->condition('hoa.status', 'housing_official_approved', '=');
+			$db_and->condition('hoa.status', 'applicant_acceptance', '=');
 			$query->condition($db_and);
 		} else{
 			$db_and = db_and();
 			$db_and->condition('hoa.online_application_id', $online_application_id, '=');
 			// $db_and->condition('hoa.status', 'allotted_approved', '=');
-			$db_and->condition('hoa.status', 'housing_official_approved', '=');
+			$db_and->condition('hoa.status', 'applicant_acceptance', '=');
 			$query->condition($db_and);
 		}
 		
@@ -179,12 +179,12 @@
 
 		if($online_application_id == ''){
 			$db_and = db_and();
-			$db_and->condition('hoa.status', 'housing_official_approved', '=');
+			$db_and->condition('hoa.status', 'applicant_acceptance', '=');
 			$query->condition($db_and);
 		} else{
 			$db_and = db_and();
 			$db_and->condition('hoa.online_application_id', $online_application_id, '=');
-			$db_and->condition('hoa.status', 'housing_official_approved', '=');
+			$db_and->condition('hoa.status', 'applicant_acceptance', '=');
 			$query->condition($db_and);
 		}
 		

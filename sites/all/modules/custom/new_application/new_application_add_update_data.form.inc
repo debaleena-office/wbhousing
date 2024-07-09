@@ -171,6 +171,7 @@
 			->fields($new_allotment_app_arr)
 			->execute();
 		}
+		
 
    }
    function update_new_allotment_application($form, &$form_state, $online_application_id){

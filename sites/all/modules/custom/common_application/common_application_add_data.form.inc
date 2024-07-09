@@ -54,6 +54,7 @@
 		  ->fields($applicant_personal_detail_arr)
 		  ->condition('uid', $user->uid, '=')
 		  ->execute();
+		  
 		
    }
     function add_applicant_official_detail($form, &$form_state, $app_type){

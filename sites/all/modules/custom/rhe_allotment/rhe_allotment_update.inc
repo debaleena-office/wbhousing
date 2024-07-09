@@ -127,9 +127,9 @@ function update_rhe_allotment_new($allotment_type, $district_code = 0) {
                 // Vacancy fetching ends
                 update_housing_online_application($applicant -> online_application_id);
                 update_housing_flat($flat_id);
-                update_housing_flat_occupant($flat_id, $applicant -> online_application_id, 'NAL');
+                $flat_occupant_id = update_housing_flat_occupant($flat_id, $applicant -> online_application_id, 'NAL'); //05-07-2024 returning flat_occupant_id
                 update_housing_allotment_roaster_counter($allotment_type, $next_roaster_counter);
-                update_housing_allotment_roaster_details($allotment_type, $next_roaster_counter, $applicant -> allotment_category);
+                update_housing_allotment_roaster_details($allotment_type, $next_roaster_counter, $applicant -> allotment_category,$flat_occupant_id);//05-07-2024 adding flat_occupant_id
 
                 $applicant_allotted_counter = $applicant_allotted_counter + 1;
                 //$vacancy_filled_counter = $vacancy_filled_counter + 1;
@@ -205,6 +205,15 @@ function update_housing_flat_occupant($flat_id, $online_application_id, $allotme
     db_insert('housing_flat_occupant')
     ->fields($allotment_ins_arr)
     ->execute();   
+
+    // 05-07-2024
+    $query = db_select('housing_flat_occupant', 'hfa');
+    $query->addExpression('MAX(flat_occupant_id)','flat_occupant_id');
+    $result =$query->execute();
+    $data = $result->fetchObject();
+
+    return $data->flat_occupant_id;
+    //end
 }
 function update_housing_allotment_roaster_counter($allotment_type, $next_roaster_counter) {
     if(!empty($allotment_type) && !empty($next_roaster_counter)) {
@@ -217,7 +226,7 @@ function update_housing_allotment_roaster_counter($allotment_type, $next_roaster
             ) ->execute();
     }    	
 }
-function update_housing_allotment_roaster_details($allotment_type, $next_roaster_counter, $allotment_category) {
+function update_housing_allotment_roaster_details($allotment_type, $next_roaster_counter, $allotment_category,$flat_occupant_id) {
     $allotment_roaster_details_arr = array(); $allotment_process_no = "";
     $result = db_query("select allotment_process_no from housing_allotment_process
     where allotment_flat_type = " . $allotment_type . "
@@ -232,7 +241,8 @@ function update_housing_allotment_roaster_details($allotment_type, $next_roaster
     $allotment_roaster_details_arr['roaster_vacancy_position'] = $next_roaster_counter;
     $allotment_roaster_details_arr['allotment_reason'] = $allotment_category;
     $allotment_roaster_details_arr['roaster_list_no'] = NULL;
-    $allotment_roaster_details_arr['flat_occupant_id'] = NULL;
+    //$allotment_roaster_details_arr['flat_occupant_id'] = NULL; /////by prasenjit
+    $allotment_roaster_details_arr['flat_occupant_id'] = $flat_occupant_id;// 05-07-2024 
 
     db_insert('housing_allotment_roaster_details')
     ->fields($allotment_roaster_details_arr)
