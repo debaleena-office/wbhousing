@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="<?= $base_root.$base_path ?>sites/all/themes/housingtheme/css/style.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Freeman&display=swap">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-
+        <link rel="stylesheet" href="<?= $base_root.$base_path ?>sites/all/themes/housingtheme/css/font-awesome.css">
         
 
         <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
