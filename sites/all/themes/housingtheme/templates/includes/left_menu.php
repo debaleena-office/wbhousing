@@ -1,6 +1,7 @@
 <?php 
 global $user, $user_role; 
 
+
 ?>
 <div class="sidebar d-flex flex-column p-3" >
     <a href="<?= $base_root.$base_path ?>" class="d-flex flex-column align-items-center mb-5 text-center">
